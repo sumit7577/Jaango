@@ -1,0 +1,594 @@
+{% extends "base.html" %}
+{% block title %} Flats {% endblock %}
+{% block button %} <a href="/addFlat"><button id="tablesModify"
+        class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Add Flat
+    </button></a>{% endblock %}
+{% block body %}
+<style>
+    #advance {
+        display: none;
+    }
+
+    .tab-content {
+        max-height: 0;
+        -webkit-transition: max-height .35s;
+        -o-transition: max-height .35s;
+        transition: max-height .35s;
+    }
+
+    /* :checked - resize to full height */
+    .tab input:checked~.tab-content {
+        max-height: 100vh;
+    }
+
+    /* Label formatting when open */
+    .tab input:checked+label {
+        /*@apply text-xl p-5 border-l-2 border-indigo-500 bg-gray-100 text-indigo*/
+        font-size: 1.25rem;
+        /*.text-xl*/
+        padding: 1.25rem;
+        /*.p-5*/
+        border-left-width: 2px;
+        /*.border-l-2*/
+        /*.border-indigo*/
+        /*.bg-gray-100 */
+        /*.text-indigo*/
+    }
+
+    /* Icon */
+    .tab label::after {
+        float: right;
+        right: 0;
+        top: 0;
+        display: block;
+        width: 1.5em;
+        height: 1.5em;
+        line-height: 1.5;
+        font-size: 1.25rem;
+        text-align: center;
+        -webkit-transition: all .35s;
+        -o-transition: all .35s;
+        transition: all .35s;
+    }
+
+    /* Icon formatting - closed */
+    .tab input[type=checkbox]+label::after {
+        content: "+";
+        font-weight: bold;
+        /*.font-bold*/
+        border-width: 1px;
+        /*.border*/
+        border-radius: 9999px;
+        /*.rounded-full */
+        border-color: #b8c2cc;
+        /*.border-grey*/
+    }
+
+    .tab input[type=radio]+label::after {
+        content: "\25BE";
+        font-weight: bold;
+        /*.font-bold*/
+        border-width: 1px;
+        /*.border*/
+        border-radius: 9999px;
+        /*.rounded-full */
+        border-color: #b8c2cc;
+        /*.border-grey*/
+    }
+
+    /* Icon formatting - open */
+    .tab input[type=checkbox]:checked+label::after {
+        transform: rotate(315deg);
+        background-color: #6574cd;
+        /*.bg-indigo*/
+        color: #f8fafc;
+        /*.text-grey-lightest*/
+    }
+
+    .tab input[type=radio]:checked+label::after {
+        transform: rotateX(180deg);
+        background-color: #6574cd;
+        /*.bg-indigo*/
+        color: #f8fafc;
+        /*.text-grey-lightest*/
+    }
+
+    select {
+        border-radius: 6px;
+        height: 46px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ccc!important;
+    }
+
+    input {
+        font-size: 16px!important;
+        padding: 10px!important;
+        border-radius: 6px!important;
+        height: 46px!important;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        border: 2px solid #ccc!important;
+    }
+    .tab-content ul h6{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        font-size: 16px!important;
+    }
+    h6{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+    }
+</style>
+
+
+
+
+
+</html>
+<div class="container-fluid content">
+    <div class="row search-filter-row">
+
+        <div class="col-md-4 col-lg-3 search-filters" id="default" style="background-color:rgb(243, 229, 229);">
+            <form method="POST" action="/flats">{% csrf_token %}
+                <ul class="list-unstyled">
+                    <li>
+                        <div class="radio">
+                            <lable style="margin-left: 10px;">Property Search for</lable>
+                            <div class="radiocheck">
+                                <ul id="id_sale" class="validation">
+                                    <li><label for="id_sale_0"><input type="radio" name="sale" value="Sale"
+                                                class="validation" id="id_sale_0">
+                                            Shared</label>
+
+                                    </li>
+                                    <li><label for="id_sale_1"><input type="radio" name="sale" value="Rent"
+                                                class="validation" id="id_sale_1">
+                                            Rent</label>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <h6>LOCATION</h6>
+                        <input type="text" class="selectpicker form-control location-input" id="lst-city" name="lst-city"
+                            data-validation="required" />
+
+                    </li>
+
+                    <li>
+                        <h6>ROOMS</h6>
+
+                        <select class="selectpicker" title="Any" id="lst-bed-rooms" name="lst-bed-rooms">
+                            <option value="" style="display: none;">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5-gt">5+</option>
+                        </select>
+                    </li>
+
+
+                    <li>
+                        <h6>CURRENCY</h6>
+                        <select class="selectpicker lst-currency" title="₦ NGN" id="lst-currency" name="lst-currency">
+                            {% for i in currency %}
+                            <option value="" style="display: none;">Any</option>
+                            <option value="{{ i.0 }}">{{ i.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+
+                    <li>
+                        <h6>RENT</h6>
+                        <div class="rent" style="display: flex;">
+                            <input type="number" style="margin-right: 5px;  border-radius: 5px; height: 45px;"
+                                class="selectpicker form-control location-input" placeholder="Min" id="rent"
+                                name="rent" />
+                            <input type="number" style="border-radius:5px; height: 45px;"
+                                class="selectpicker form-control location-input" placeholder="Max" id="rent1"
+                                name="rent1" />
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <h6>GENDER</h6>
+                        <select class="selectpicker" id="gender" name="gender" title="All Types">
+                            {% for i in ptype %}
+                            <option value="" style="display: none;">Any</option>
+                            <option value="{{ i.0 }}">{{ i.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+
+                    <li>
+                        <h6>TERM</h6>
+                        <select class="selectpicker lst-currency" id="term" name="term">
+                            {% for i in term %}
+                            <option value="" style="display: none;">Any</option>
+                            <option value="{{ i.0 }}">{{ i.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+
+
+
+                </ul>
+                <button type="submit" class="btn btn-default search-filters-submit"
+                    id="property-filters-submit">&nbsp;SEARCH</button>
+                <button type="button" class="btn btn-default search-filters-submit" id="advanceButton">&nbsp;ADVANCE
+                    SEARCH</button>
+                <a href="/flats"><button type="button" class="btn btn-default search-filters-submit"
+                        id="property-filters-clear">&nbsp;CLEAR
+                        SEARCH</button></a>
+            </form>
+
+        </div>
+
+        <div class="col-md-4 col-lg-3 search-filters" id="advance" style="background-color:rgb(243, 229, 229);">
+            <form method="POST" action="/flats">{% csrf_token %}
+                <ul class="list-unstyled">
+
+                    <li>
+                        <h6>LOCATION</h6>
+                        <input type="text" class="selectpicker form-control location-input" id="lst-city" name="lst-city"
+                            data-validation="required" />
+
+                    </li>
+
+                    <li>
+                        <h6>ROOMS</h6>
+
+                        <select class="selectpicker" title="Any" id="lst-bed-rooms" name="lst-bed-rooms">
+                            <option value="" style="display: none;">Any</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5-gt">5+</option>
+                        </select>
+                    </li>
+
+                    <li>
+
+
+                        <div class="shadow-md" style="margin-top: 25px;">
+                            <div class="tab w-full overflow-hidden border-t">
+                                <input class="absolute opacity-0" id="tab-single-one" type="radio" name="tabs2">
+                                <label class="block p-5 leading-normal cursor-pointer" for="tab-single-one">Rent</label>
+                                <div
+                                    class="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <h6>Currency</h6>
+                                            <select class="selectpicker lst-currency" title="₦ NGN" id="lst-currency"
+                                                name="lst-currency">
+                                                {% for i in currency %}
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Rent</h6>
+                                            <div class="rent" style="display: flex;">
+                                                <input type="number"
+                                                    style="margin-right: 5px;  border-radius: 5px; height: 45px;"
+                                                    class="selectpicker form-control location-input" placeholder="Min"
+                                                    id="rent" name="rent" />
+                                                <input type="number" style="border-radius:5px; height: 45px;"
+                                                    class="selectpicker form-control location-input" placeholder="Max"
+                                                    id="rent1" name="rent1" />
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <h6>Bills Included</h6>
+                                            <select class="selectpicker lst-currency" id="bill"
+                                                name="bill">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab w-full overflow-hidden border-t">
+                                <input class="absolute opacity-0" id="tab-single-two" type="radio" name="tabs2">
+                                <label class="block p-5 leading-normal cursor-pointer"
+                                    for="tab-single-two">Availability</label>
+                                <div
+                                    class="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <h6>Term</h6>
+                                            <select class="selectpicker lst-currency" id="term"
+                                                name="term">
+                                                {% for i in term %}
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Short Lets Considered</h6>
+                                            <select class="selectpicker lst-currency" id="short"
+                                                name="short">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab w-full overflow-hidden border-t">
+                                <input class="absolute opacity-0" id="tab-single-three" type="radio" name="tabs2">
+                                <label class="block p-5 leading-normal cursor-pointer"
+                                    for="tab-single-three">Amenities</label>
+                                <div
+                                    class="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <h6>Ensuite Toilets</h6>
+                                            <select class="selectpicker lst-currency" id="toilet"
+                                                name="toilet">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Furnishings</h6>
+                                            <select class="selectpicker lst-currency" id="furnish"
+                                                name="furnish">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Parking</h6>
+                                            <select class="selectpicker lst-currency" id="park"
+                                                name="park">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <h6>Garage</h6>
+                                            <select class="selectpicker lst-currency" id="garage"
+                                                name="garage">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <h6>Garden/Terrace</h6>
+                                            <select class="selectpicker lst-currency" id="garden"
+                                                name="garden">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <h6>Balcony/Patio</h6>
+                                            <select class="selectpicker lst-currency" id="balcony"
+                                                name="balcony">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Living Room</h6>
+                                            <select class="selectpicker lst-currency" id="living"
+                                                name="living">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <h6>Broadband Included</h6>
+                                            <select class="selectpicker lst-currency" id="broadband"
+                                                name="broadband">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tab w-full overflow-hidden border-t">
+                                <input class="absolute opacity-0" id="tab-single-four" type="radio" name="tabs2">
+                                <label class="block p-5 leading-normal cursor-pointer" for="tab-single-four">House
+                                    Rules</label>
+                                <div
+                                    class="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <h6>Maximum Age</h6>
+                                            <input type="number" class="selectpicker form-control location-input"
+                                                id="age" name="age" />
+                                        </li>
+
+                                        <li>
+                                            <h6>Occupation</h6>
+                                            <select class="selectpicker lst-currency" id="occu"
+                                                name="occu">
+                                                {% for i in occu %}
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Gender</h6>
+                                            <select class="selectpicker lst-currency" id="gender"
+                                                name="gender">
+                                                {% for i in ptype %}
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Smoker</h6>
+                                            <select class="selectpicker lst-currency" id="smoker"
+                                                name="smoker">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <h6>Pets</h6>
+                                            <select class="selectpicker lst-currency" id="pet"
+                                                name="pet">
+                                                <option value="" style="display: none;">Any</option>
+                                                <option value="True">Yes</option>
+                                                <option value="False">No</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </li>
+
+
+
+
+                </ul>
+                <button type="submit" class="btn btn-default search-filters-submit"
+                    id="property-filters-submit">&nbsp;SEARCH</button>
+                <button type="button" class="btn btn-default search-filters-submit" id="defaultButton">&nbsp;DEFAULT
+                    SEARCH</button>
+                <a href="/flats"><button type="button" class="btn btn-default search-filters-submit"
+                        id="property-filters-clear">&nbsp;CLEAR
+                        SEARCH</button></a>
+            </form>
+
+        </div>
+
+
+        <div class="col-md-8 col-lg-9 search-list">
+            <div>
+                <h3 class="no-padding">FLATS</h3>
+            </div>
+            <div class="row" id="properties-list-container">
+                {% for i in flat %}
+                <div class="col-sm-6 search-list-element">
+                    <a href="/{{i.id}}">
+                        <div class="search-list-img">
+                            <img src="Files/{{i.image1}}" class="img-responsive">
+                            <div class="opaque-heading-field">
+                            </div>
+                            <div class="hover-div hidden">
+                            </div>
+
+                            <div class="element-left-feature">
+                                <h6 class="no-margin">{{ i.Type }}</h6>
+                              </div>
+                              <div class="element-right-feature">
+                
+                                <h6 class="no-margin">{{ i.Currency }} {{ i.Price }}</h6>
+                              </div>
+
+
+                        </div>
+                    </a>
+                    <div class="info-panel">
+                        <div class="row no-margin features">
+
+                            <a class="modal-locat">
+                                <div class="location-tile">
+                                    <span
+                                        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
+                                        aria-hidden="true">Furnished: </span>
+                                    <h4 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
+                                        class="no-margin display-inline">{% if i.Furnishing == True %} Fully Furnished{% endif %}</h4>
+                                </div>
+                                <div class="location-tile">
+                                    <span
+                                        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
+                                        aria-hidden="true">Gender: </span>
+                                    <h4 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
+                                        class="no-margin display-inline">{{i.Gender}}</h4>
+                                </div>
+                                <div class="location-tile">
+                                    <span
+                                        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
+                                        aria-hidden="true">Rooms: </span>
+                                    <h4 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
+                                        class="no-margin display-inline">{{i.Rooms}}</h4>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+            <div id="no-property-data-found-message" class="hidden text-center"></div>
+            <nav class="text-center">
+                <div id="property-pagination"></div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+{% block footer %} {% endblock %}
+<script>
+    const def = document.getElementById("default");
+    const advance = document.getElementById("advance");
+    const button1 = document.getElementById("advanceButton");
+    const button2 = document.getElementById("defaultButton");
+    button1.addEventListener("click", (e) => {
+        advance.style.display = "block";
+        def.style.display = "none";
+    })
+    button2.addEventListener("click", (e) => {
+        advance.style.display = "none";
+        def.style.display = "block";
+    })
+
+    var myRadios = document.getElementsByName('tabs2');
+    var setCheck;
+    var x = 0;
+    for (x = 0; x < myRadios.length; x++) {
+        myRadios[x].onclick = function () {
+            if (setCheck != this) {
+                setCheck = this;
+            } else {
+                this.checked = false;
+                setCheck = null;
+            }
+        };
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block title %} Structure {% endblock %}
+{% block button %} <a href="/addStructure"><button id="tablesModify" class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+  Add Structure
+</button></a>{% endblock %}
+{% block body %}
+<style>
+  select {
+        border-radius: 6px;
+        height: 46px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ccc!important;
+    }
+
+    input {
+        font-size: 16px!important;
+        padding: 10px!important;
+        border-radius: 6px!important;
+        height: 46px!important;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        border: 2px solid #ccc!important;
+    }
+    h6{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+    }
+</style>
+<div class="container-fluid content">
+  <div class="row search-filter-row">
+
+    <div class="col-md-4 col-lg-3 search-filters" style="background-color:rgb(243, 229, 229);">
+      <form method="POST" action="/structure">{% csrf_token %}
+        <ul class="list-unstyled">
+
+          <li>
+            <h6>LOCATION</h6>
+            <input type="text" class="selectpicker form-control location-input" id="lst-city" name="lstcity"
+              data-validation="required" />
+
+          </li>
+
+
+          <li>
+            <h6>PROPERTY TYPE</h6>
+            <select class="selectpicker" id="lst-property-type" name="lst-property-type" title="All Types">
+              {% for i in ptype %}
+              <option value="" style="display: none;">Any</option>
+              <option value="{{ i.0 }}">{{ i.1 }}</option>
+              {% endfor %}
+            </select>
+          </li>
+
+          <li>
+            <h6>CURRENCY</h6>
+            <select class="selectpicker lst-currency" title="₦ NGN" id="lst-currency" name="lst-currency">
+              {% for i in currency %}
+              <option value="" style="display: none;">Any</option>
+              <option value="{{ i.0 }}">{{ i.1 }}</option>
+              {% endfor %}
+            </select>
+          </li>
+
+          <li>
+            <h6>PRICE</h6>
+            <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+              <option value="" style="display: none;">Any</option>
+              <option value="1000-lt"> <1000 </option>
+              <option value="1000-10000">1000-10000</option>
+              <option value="10000-20000">10000-20000</option>
+              <option value="2000-rt">20000></option>
+
+
+            </select>
+          </li>
+
+          <li>
+            <h6>FLOOR SPACE</h6>
+            <select class="selectpicker" title="Any" id="lst-size" name="lst-size">
+              <option value="" style="display: none;">Any</option>
+              <option value="500-lt"> <500 </option>
+              <option value="500-10000">500-10000</option>
+              <option value="1000-2000">1000-2000</option>
+              <option value="2000-rt">2000></option>
+            </select>
+          </li>
+
+          <li>
+            <h6>BEDROOMS</h6>
+
+            <select class="selectpicker" title="Any" id="lst-bed-rooms" name="lst-bed-rooms">
+              <option value="" style="display: none;">Any</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </li>
+        </ul>
+        <button type="submit" class="btn btn-default search-filters-submit"
+          id="property-filters-submit">&nbsp;SEARCH</button>
+        <a href="/structure"><button type="button" class="btn btn-default search-filters-submit" id="property-filters-clear">&nbsp;CLEAR
+          SEARCH</button></a>
+      </form>
+    </div>
+
+    <div class="col-md-8 col-lg-9 search-list">
+      <div>
+        <h3 class="no-padding">STRUCTURES</h3>
+      </div>
+      <div class="row" id="properties-list-container">
+        {% for i in structure %}
+        <div class="col-sm-6 search-list-element">
+          <a href="/{{i.id}}">
+            <div class="search-list-img">
+              <img src="Files/{{i.image1}}"
+                class="img-responsive">
+              <div class="opaque-heading-field">
+                <div class="element-heading">
+                  <h4>{{ i.Title }}</h4>
+                </div>
+              </div>
+              <div class="hover-div hidden">
+              </div>
+
+              <div class="element-left-feature">
+                <h6 class="no-margin">{{ i.Category }}</h6>
+              </div>
+              <div class="element-right-feature">
+
+                <h6 class="no-margin">{{ i.Currency }} {{ i.Price }}</h6>
+              </div>
+            </div>
+          </a>
+          <div class="info-panel">
+            <div class="row no-margin features">
+              <ul class="col-xs-12 list-unstyled no-margin no-padding">
+                <li><i class="fa fa-arrows" aria-hidden="true"></i>
+                  <h6>{{ i.Size }} SQ FT</h6>
+                </li>
+                <li><i class="fa fa-building-o" aria-hidden="true"></i>
+                  <h6>{% if i.PropertyType == "Land" %} Land {% endif %} {{ i.Rooms }} Rooms  </h6>
+                </li>
+                <li><i class="fa " aria-hidden="true"></i>
+                  <h6></h6>
+                </li>
+              </ul>
+              <a class="modal-location-link" prop-location="Abuja">
+                <div class="location-tile">
+                  <i class="fa fa-map-marker fa-2x display-inline" aria-hidden="true"></i>
+                  <h5 class="no-margin display-inline">{{ i.Location }}</h5>
+                </div>
+              </a>
+            </div>
+            <div class="list-element-bottom-row user vertical-align">
+              <div class="user-name-holder">
+                <i class="fa fa-user fa-2x display-inline" aria-hidden="true"></i>
+                <h5 class="no-margin display-inline">{{ i.user.username }}</h5>
+              </div>
+              <div class="date-holder">
+                <h4>Date Added</h4>
+                <span>
+                  <i class="fa fa-calendar-o fa-2x display-inline" aria-hidden="true"></i>
+                  <h5 class="no-margin display-inline">{{ i.Date }}</h5>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+
+      </div>
+      <div id="no-property-data-found-message" class="hidden text-center"></div>
+      <nav class="text-center">
+        <div id="property-pagination"></div>
+      </nav>
+    </div>
+  </div>
+</div>
+{% block footer %} {% endblock %}
+{% endblock %}

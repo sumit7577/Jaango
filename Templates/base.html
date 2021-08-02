@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id"
+    content="606519717766-oskathuo022vjh19tfpj9ef9hitush4q.apps.googleusercontent.com">
+  <title>{% block title %} {% endblock %} Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    referrerpolicy="no-referrer" />
+  {% block css %}
+  <link rel="stylesheet" href="/static/assets/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/static/assets/css/style.css"/>
+  <link rel="stylesheet" href="/static/assets/css/font-awesome/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="/static/assets/css/half-slider.css"/>
+  <link rel="stylesheet" href="/static/assets/css/models.css"/>
+  <link rel="stylesheet" href="/static/assets/css/add.css"/>
+  <link rel='shortcut icon' type='image/x-icon' href='/static/assets/fav-icon/favicon.ico'/>
+  {% endblock %}
+  
+</head>
+<style>
+  * {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .navbarCustom {
+    background-color: #02acfa !important;
+    width: 100%;
+    height: inherit;
+    margin: 0px !important;
+  }
+
+  .nav-item {
+    font-family: Roboto, sans-serif !important;
+    font-size: 17px;
+    color: white;
+    margin-right: 31px !important;
+  }
+
+  .nav-item:hover {
+    color: black;
+  }
+
+  .coros {
+    height: 300px;
+  }
+
+  #wrapper {
+    min-height: auto;
+  }
+
+  .carousel-item {
+    height: 300px;
+  }
+
+  #tablesModify {
+    width: fit-content;
+    font-size: small;
+    height: 35px;
+    align-items: center;
+  }
+</style>
+
+<body>
+
+
+  <div id="wrapper" class="main">
+    <div class="loading-div" id="loading-indicator"></div>
+    <header class="container-fluid" style="padding:0px;">
+      <div class="row header">
+        <div class="top-row">
+          <div class="logo-div">
+            <a href="/"><img src="/static/assets/images/logo.jpeg" class="img-responsive logo"></a>
+          </div>
+          <div class="col-xs-10 contact-top">
+            <div class="wrap-div">
+              <div class="wrap-static-div hidden">
+                <a href="tel:410-349-1933"><i class="fa fa-phone fa-3x"></i></a>
+                <div class="row">
+                  <h3 class="no-margin no-padding">410-349-1933</h3>
+                  <a href="mailto:email@jaango.com">
+                    <h5 class="no-margin">email@jaango.com</h5>
+                  </a>
+                </div>
+              </div>
+              <div class="wrap-dynamic-div">
+                {% block button %}<button class="open-modal"
+                  style="width: fit-content!important; height: 35px!important; padding: 5px; font-size: medium; border-radius: 5px; color: white;">Upload
+                  Files</button>{% endblock %}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--modals for file upload-->
+      <!-- Modal -->
+      <div class="modal hide">
+        <div class="modal-container hide">
+          <div class="modal-header">
+            <h2>Upload Documents</h2> <button class="close-modal"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-content">
+            <h2 class="detail font-mono">Name: {{ request.user.username }}</h2>
+            <h2 class="detail font-mono">Email: {{ request.user.email }}</h2>
+            <form method="POST" action="/" enctype="multipart/form-data">{% csrf_token %}
+              <input type="file" multiple id="files" name="files">
+              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="submit"
+                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <nav class="navbar navbar-expand-lg navbar-light navbarCustom">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 43%;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/property">Property</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Construction
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/structure">Structures</a></li>
+                  <li><a class="dropdown-item" href="/equipment">Equipments</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/services">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/materials">Materials</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/flats">Flats</a>
+              </li>
+
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+    </header>
+    {% block corousal %}
+    <div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+          aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+          aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5"
+          aria-label="Slide 6"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6"
+          aria-label="Slide 7"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="7"
+          aria-label="Slide 8"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/static/assets/images/1.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/2.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/3.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/4.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/5.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/6.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/7.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/8.jpg" class="d-block w-100" alt="image">
+        </div>
+        <div class="carousel-item">
+          <img src="/static/assets/images/9.jpg" class="d-block w-100" alt="image">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    {% endblock %}
+
+  </div>
+
+  {% block body %}{% endblock %}
+
+
+
+
+
+
+  <footer class="inclusive-material-slider">
+    {% block footer %}
+    <div class="container-fluid footer-wrapper mb-2">
+
+      <div id="home-material-footer-caption-container-1" class="row materials-row">
+        <h5 class="scroller-heading">Current Material Prices in Nigeria</h5>
+        <button id="expand-footer-btn" class="expand-button"></button>
+      </div>
+      <div id="home-material-footer-content-container-1" class="row materials-bottom-row">
+      </div>
+    </div>
+    {% endblock %}
+
+    <a href="#" id="return-to-top"><i class="icon-chevron-up"></i></a>
+    <div class="footer-bottom-row mt-4">
+      <div class="content">
+        <div class="row">
+          <div class="col-md-4">
+            <h4>About Us</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel
+              nibh eu molestie. Fusce pretium ex quis egestas facilisis.
+              Nulla facilisi. Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor.
+              Suspendisse eget odio auctor mi ultricies ullamcorper nec varius justo.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h4>Contact Us</h4>
+            <form name="sentMessage" id="contactForm" class="footer-contact-form home-contact-form"
+              id="contact-us-home-form">
+              <div class="form-group">
+                <label for="name" class="sr-only control-label">Your Name</label>
+                <input type="text" id="full-name-home-footer" class="form-control input-lg" placeholder="Your Name"
+                  data-validation="required custom" data-validation-required-message="Please enter a valid name"
+                  data-validation-regexp="^([a-zA-Z][a-zA-Z\-'\s]+)$"></p>
+                <span class="help-block text-danger"></span>
+              </div>
+              <div class="form-group">
+                <label for="" class="sr-only control-label">Your Email</label>
+                <input id="email-home-footer" class="form-control input-lg" placeholder="Your Email"
+                  data-validation="required email" data-validation-error-msg="You did not enter a valid e-mail address">
+                </p>
+                <span class="help-block text-danger"></span>
+              </div>
+              <div class="form-group">
+                <label for="message-home-footer" class="sr-only control-label">Message</label>
+                <textarea id="message-home-footer" class="form-control input-lg" rows="5" placeholder="Message"
+                  data-validation="required length" data-validation-length="max500"
+                  data-validation-required-message="Please enter a message." aria-invalid="false"></textarea></p>
+              </div>
+              <div id="btn"></div>
+              <button type="submit" class="btn btn-primary btn-lg">Send</button>
+              <span class="help-block text-danger request-status"></span>
+            </form>
+          </div>
+          <div class="col-md-4">
+            <h4>Follow us</h4>
+            <a rel="nofollow">
+              <i class="fa fa-facebook footer-social-icons"></i>
+            </a>
+            <a rel="nofollow">
+              <i class="fa fa-twitter footer-social-icons">
+              </i>
+            </a>
+            <a rel="nofollow">
+              <i class="fa fa-linkedin footer-social-icons"></i>
+            </a>
+            <a rel="nofollow">
+              <i class="fa fa-google-plus footer-social-icons">
+              </i>
+            </a>
+            <a rel="nofollow">
+              <i class="fa fa-instagram footer-social-icons"></i>
+            </a>
+          </div>
+        </div>
+        <div class="row copyright-row">
+          <h6>Copyright 2016 | Jaango.com All Rights Reserved</h6>
+        </div>
+      </div>
+    </div>
+
+
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+  /* const button = document.getElementById("tablesModify");
+   const modal = document.getElementById("exampleModal");
+   button.addEventListener("click",(e)=>{
+     if(modal.style.display == "block"){
+     modal.style.display = "none";
+     }
+     else{
+       modal.style.display= "block";
+     }
+   })*/
+
+  const openModalBtn = document.querySelectorAll(".open-modal");
+  const closeModal = document.querySelector(".close-modal");
+  const modal = document.querySelector(".modal");
+  const modalContainer = document.querySelector(".modal-container");
+
+  openModalBtn.forEach((openModal) => {
+    openModal.addEventListener("click", () => {
+      modal.classList.remove("hide");
+      modalContainer.classList.remove("hide");
+    });
+  });
+
+  closeModal.addEventListener("click", () => {
+    setTimeout(() => {
+      modal.classList.add("hide");
+    }, 800);
+    modalContainer.classList.add("hide");
+  });
+
+  modal.addEventListener("click", () => {
+    setTimeout(() => {
+      modal.classList.add("hide");
+    }, 800);
+    modalContainer.classList.add("hide");
+  });
+
+</script>
+
+</html>

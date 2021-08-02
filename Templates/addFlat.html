@@ -1,0 +1,420 @@
+{% extends "base.html" %}
+{% block title %} Flats {% endblock %}
+{% block button %} {% endblock %}
+{% block corousal %} {% endblock %}
+
+{% block body %}
+<style>
+  .navbar-nav .custom {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 300;
+    margin-left: 10px;
+    font-size: large;
+    color: black !important;
+    padding: 9px;
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .activa {
+    background-color: #34404d !important;
+    border-radius: 4px;
+    color: white !important;
+  }
+</style>
+<link rel="stylesheet" href="/static/assets/css/image.css" />
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-bold text-gray-900">
+      Add Flats
+    </h1>
+  </div>
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top:15px;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav dam" style="margin:20px; flex-direction: row;">
+        <a class="custom activa" id="1">Basic Info</a>
+        <a class="custom" id="2">Availability</a>
+        <a class="custom" id="3">Amenities</a>
+        <a class="custom" id="4">Preference For Tenants</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<form method="POST" action="/addFlat">{% csrf_token %}
+  <div class="formsCustom" id="form1">
+    <div class="formsFlex">
+      <div class="formleft">
+        <div class="formsContent">
+          <lable>Title</lable>
+          <div class="input">
+            {{ form.title }}
+          </div>
+          <div class="text-error">{{ form.title.errors }}</div>
+        </div>
+        <div class="radio">
+          <lable style="margin-left: 10px;">Sale/Rent</lable>
+          <div class="radiocheck">
+            {{ form.sale }}
+          </div>
+          <div class="text-error">{{ form.sale.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Location</lable>
+          <div class="input">
+            {{ form.location }}
+          </div>
+          <div class="text-error">{{ form.location.errors }}</div>
+        </div>
+
+
+        <div class="formsContent">
+          <lable>Address</lable>
+          <div class="input">
+            {{ form.address }}
+          </div>
+          <div class="text-error">{{ form.address.errors }}</div>
+        </div>
+      </div>
+
+      <div class="formRight">
+        <div class="formsContent">
+          <lable>Description</lable>
+          <div class="input">
+            {{ form.description }}
+          </div>
+          <div class="text-error">{{ form.description.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Total No. Of Rooms Up For Sharing</lable>
+          <div class="input">
+            {{ form.room }}
+          </div>
+          <div class="text-error">{{ form.room.errors }}</div>
+        </div>
+
+        <div class="formsContent">
+          <lable>Expected Rent</lable>
+          <div class="input">
+            {{ form.price }}
+          </div>
+          <div class="text-error">{{ form.price.errors }}</div>
+        </div>
+
+        <div class="formsContent">
+          <lable>Currency</lable>
+          <div class="input">
+            {{ form.currency }}
+          </div>
+          <div class="text-error">{{ form.curremcy.errors }}</div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Upload Area -->
+    <button class="btn btn-primary" id="form1Button" style="margin-top: 15px; margin-left: 12px; height:4rem ;"
+    type="button">Next</button>
+
+  </div>
+
+  <div class="formsCustom" id="form2">
+    <div class="formsFlex">
+      <div class="formleft">
+        <div class="formsContent">
+          <lable>Bills Included</lable>
+          <div class="input">
+            {{ form.bills }}
+          </div>
+          <div class="text-error">{{ form.bills.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Term</lable>
+          <div class="input">
+            {{ form.term }}
+          </div>
+          <div class="text-error">{{ form.term.errors }}</div>
+        </div>
+
+      </div>
+
+      <div class="formRight">
+        <div class="formsContent">
+          <lable>Short Lets Considered</lable>
+          <div class="input">
+            {{ form.short }}
+          </div>
+          <div class="text-error">{{ form.description.errors }}</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="form2Button" style="margin-top: 15px; margin-left: 12px; height:4rem ;"
+      type="button">Next</button>
+
+  </div>
+
+  <div class="formsCustom" id="form3">
+    <div class="formsFlex">
+      <div class="formleft">
+        <div class="formsContent">
+          <lable>Ensuite Toilets</lable>
+          <div class="input">
+            {{ form.toilet }}
+          </div>
+          <div class="text-error">{{ form.toilet.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Furnishings</lable>
+          <div class="input">
+            {{ form.furnishing }}
+          </div>
+          <div class="text-error">{{ form.furnishing.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Garage</lable>
+          <div class="input">
+            {{ form.garage }}
+          </div>
+          <div class="text-error">{{ form.garage.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Parking</lable>
+          <div class="input">
+            {{ form.parking }}
+          </div>
+          <div class="text-error">{{ form.parking.errors }}</div>
+        </div>
+
+      </div>
+
+      <div class="formRight">
+        <div class="formsContent">
+          <lable>Garden/Terrace</lable>
+          <div class="input">
+            {{ form.garden }}
+          </div>
+          <div class="text-error">{{ form.garden.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Balcony/Patio</lable>
+          <div class="input">
+            {{ form.balcony }}
+          </div>
+          <div class="text-error">{{ form.balcony.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Living Room</lable>
+          <div class="input">
+            {{ form.living }}
+          </div>
+          <div class="text-error">{{ form.living.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Broadband Included</lable>
+          <div class="input">
+            {{ form.broadband }}
+          </div>
+          <div class="text-error">{{ form.broadband.errors }}</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" value="third" id="form3Button"
+      style="margin-top: 15px; margin-left: 12px; height:4rem ;" type="button">Next</button>
+
+  </div>
+
+  <div class="formsCustom" id="form4">
+    <div class="formsFlex">
+      <div class="formleft">
+        <div class="formsContent">
+          <lable>Maximum Age</lable>
+          <div class="input">
+            {{ form.age }}
+          </div>
+          <div class="text-error">{{ form.age.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Occupation</lable>
+          <div class="input">
+            {{ form.occupation }}
+          </div>
+          <div class="text-error">{{ form.occupation.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Gender</lable>
+          <div class="input">
+            {{ form.gender }}
+          </div>
+          <div class="text-error">{{ form.gender.errors }}</div>
+        </div>
+
+      </div>
+
+      <div class="formRight">
+        <div class="formsContent">
+          <lable>Smoker</lable>
+          <div class="input">
+            {{ form.smoker }}
+          </div>
+          <div class="text-error">{{ form.smoker.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Pets</lable>
+          <div class="input">
+            {{ form.pets }}
+          </div>
+          <div class="text-error">{{ form.pets.errors }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-left: 21px; margin-top:35px;">
+      <lable>Featured Image</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported
+        Formats
+        JPG, JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
+    </div>
+    <div class="image">
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon0" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para0">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage0" draggable="false">
+          {{ form.image }}
+
+        </div>
+
+      </div>
+      <div class="text-error">{{ form.image.errors }}</div>
+    </div>
+
+    <div style="margin-left: 21px; margin-top:35px;">
+      <lable>Images</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported Formats JPG,
+        JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
+    </div>
+    <div class="image">
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon1" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para1">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage1" draggable="false">
+          {{ form.image1 }}
+
+        </div>
+        <div class="text-error">{{ form.image1.errors }}</div>
+
+      </div>
+
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon2" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para2">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage2" draggable="false">
+          {{ form.image2 }}
+
+        </div>
+        <div class="text-error">{{ form.image2.errors }}</div>
+
+      </div>
+
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon3" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para3">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage3" draggable="false">
+          {{ form.image3 }}
+
+        </div>
+        <div class="text-error">{{ form.image3.errors }}</div>
+
+      </div>
+
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon4" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para4">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage4" draggable="false">
+          {{ form.image4 }}
+
+        </div>
+        <div class="text-error">{{ form.image4.errors }}</div>
+
+      </div>
+
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon5" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para5">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage5" draggable="false">
+          {{ form.image5 }}
+
+        </div>
+        <div class="text-error">{{ form.image5.errors }}</div>
+
+      </div>
+
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon6" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para6">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage6" draggable="false">
+          {{ form.image6 }}
+
+        </div>
+        <div class="text-error">{{ form.image6.errors }}</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <button class="btn btn-primary" id="form4Button" style="margin-top: 15px; margin-left: 12px; height:4rem ;"
+    type="button">Submit</button>
+</form>
+
+{% block footer %} {% endblock %}
+
+<script src="/static/assets/js/image.js" type="text/javascript"></script>
+<script src="/static/assets/js/form.js" type="text/javascript"></script>
+{% endblock %}
