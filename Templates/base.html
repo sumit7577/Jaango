@@ -9,19 +9,18 @@
   <title>{% block title %} {% endblock %} Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     referrerpolicy="no-referrer" />
   {% block css %}
-  <link rel="stylesheet" href="/static/assets/css/bootstrap.css"/>
-  <link rel="stylesheet" href="/static/assets/css/style.css"/>
-  <link rel="stylesheet" href="/static/assets/css/font-awesome/css/font-awesome.min.css"/>
-  <link rel="stylesheet" href="/static/assets/css/half-slider.css"/>
-  <link rel="stylesheet" href="/static/assets/css/models.css"/>
-  <link rel="stylesheet" href="/static/assets/css/add.css"/>
-  <link rel='shortcut icon' type='image/x-icon' href='/static/assets/fav-icon/favicon.ico'/>
+  <link rel="stylesheet" href="/static/assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="/static/assets/css/style.css" />
+  <link rel="stylesheet" href="/static/assets/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/static/assets/css/half-slider.css" />
+  <link rel="stylesheet" href="/static/assets/css/models.css" />
+  <link rel="stylesheet" href="/static/assets/css/add.css" />
   {% endblock %}
-  
+
 </head>
 <style>
   * {
@@ -65,6 +64,28 @@
     height: 35px;
     align-items: center;
   }
+
+  .footer-bottom-row {
+    color: #ffffff;
+    background-color: #4b5868;
+    text-align: left;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:medium;
+}
+.footer_content{
+padding: 50px 20px
+}
+.solid-container {
+    max-width: 1420px;
+    margin   : 0 auto;
+    padding  : 0px 15px;
+}
+
+.row{
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
 </style>
 
 <body>
@@ -250,49 +271,70 @@
       </div>
     </div>
     {% endblock %}
-
-    <a href="#" id="return-to-top"><i class="icon-chevron-up"></i></a>
-    <div class="footer-bottom-row mt-4">
-      <div class="content">
+    <div class="footer-bottom-row">
+      <div class="solid-container footer_content">
         <div class="row">
-          <div class="col-md-4">
-            <h4>About Us</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel
-              nibh eu molestie. Fusce pretium ex quis egestas facilisis.
-              Nulla facilisi. Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor.
-              Suspendisse eget odio auctor mi ultricies ullamcorper nec varius justo.
+          <div class="col-md-3 col-sm-6" style="position: relative;
+          top: 73px;">
+            <h4 style="font-weight:bold;">Contact Address</h4>
+            <p>4601 Creekside Lane
             </p>
+            <p>Los Angeles</p>
+            <p>CA</p>
+            <p>90017</p>
+            <p>Phone: 805-624-1649</p>
+            <p>Email: info@jaango.ng</p>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-2 col-sm-6" style="position: relative;
+          top: 73px;">
+            <h4 style="font-weight:bold;">Quicks Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/property">Properties</a></li>
+              <li><a href="/structure">Structures</a></li>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/materials">Materials</a></li>
+              <li><a href="flats">Flats</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 col-sm-6">
             <h4>Contact Us</h4>
-            <form name="sentMessage" id="contactForm" class="footer-contact-form home-contact-form"
-              id="contact-us-home-form">
+            <form name="sentMessage" id="contactForm"
+              class="footer-contact-form home-contact-form has-validation-callback">
               <div class="form-group">
                 <label for="name" class="sr-only control-label">Your Name</label>
                 <input type="text" id="full-name-home-footer" class="form-control input-lg" placeholder="Your Name"
                   data-validation="required custom" data-validation-required-message="Please enter a valid name"
-                  data-validation-regexp="^([a-zA-Z][a-zA-Z\-'\s]+)$"></p>
+                  data-validation-regexp="^([a-zA-Z][a-zA-Z\-'\s]+)$">
+                <p></p>
                 <span class="help-block text-danger"></span>
               </div>
               <div class="form-group">
                 <label for="" class="sr-only control-label">Your Email</label>
                 <input id="email-home-footer" class="form-control input-lg" placeholder="Your Email"
                   data-validation="required email" data-validation-error-msg="You did not enter a valid e-mail address">
-                </p>
+                <p></p>
                 <span class="help-block text-danger"></span>
               </div>
               <div class="form-group">
                 <label for="message-home-footer" class="sr-only control-label">Message</label>
                 <textarea id="message-home-footer" class="form-control input-lg" rows="5" placeholder="Message"
                   data-validation="required length" data-validation-length="max500"
-                  data-validation-required-message="Please enter a message." aria-invalid="false"></textarea></p>
+                  data-validation-required-message="Please enter a message." aria-invalid="false"></textarea>
+                <p></p>
               </div>
               <div id="btn"></div>
-              <button type="submit" class="btn btn-primary btn-lg">Send</button>
-              <span class="help-block text-danger request-status"></span>
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <button type="submit" class="btn btn-primary btn-lg">Send</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-8">
+                  <span class="help-block text-danger request-status"></span>
+                </div>
+              </div>
             </form>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3 col-sm-6">
             <h4>Follow us</h4>
             <a rel="nofollow">
               <i class="fa fa-facebook footer-social-icons"></i>
@@ -313,18 +355,18 @@
             </a>
           </div>
         </div>
-        <div class="row copyright-row">
-          <h6>Copyright 2016 | Jaango.com All Rights Reserved</h6>
-        </div>
+      </div>
+      <div class="copyright-row">
+        <h6>Copyright 2021 | Jaango.ng All Rights Reserved</h6>
       </div>
     </div>
-
 
     </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/a3c09ddc35.js" crossorigin="anonymous"></script>
 <script>
   /* const button = document.getElementById("tablesModify");
    const modal = document.getElementById("exampleModal");

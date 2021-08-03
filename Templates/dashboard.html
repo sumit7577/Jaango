@@ -1,515 +1,532 @@
 {% extends "base.html" %}
 {% block body %}
-  <!--search filter part-->
-  <div class="container-fluid content">
-    <div class="row main-enquiry no-margin">
+<style>
+  select {
+    border-radius: 6px;
+    height: 46px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc !important;
+  }
 
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#home-filter"
-          aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <i class="fa fa-list fa-2x" aria-hidden="true"></i>
-        </button>
-        <a class="navbar-brand visible-xs">Search</a>
-      </div>
+  input {
+    font-size: 16px !important;
+    padding: 10px !important;
+    border-radius: 6px !important;
+    height: 46px !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    border: 2px solid #ccc !important;
+  }
 
-      <div class="col-xs-12">
-        <div class="row collapse navbar-collapse" id="home-filter">
-          <ul class="nav nav-pills nav-stacked vertical-align main-enquiry-ul" role="tablist">
-            <li role="presentation" class="active strong"><a href="#for-sale" class="for-sale-tab"
-                aria-controls="for-sale" role="tab" data-toggle="tab">FOR SALE</a></li>
-            <li role="presentation" class="strong"><a href="#for-rent" class="for-rent-tab" aria-controls="for-rent"
-                role="tab" data-toggle="tab">FOR RENT</a></li>
-            <li role="presentation" class="strong"><a href="#flat" id="structures-tab" aria-controls="flat" role="tab"
-                data-toggle="tab">FLAT</a></li>
-            <li role="presentation" class="strong"><a href="#building-materials" id="materials-tab"
-                aria-controls="building-materials" role="tab" data-toggle="tab">MATERIALS</a></li>
-            <li role="presentation" class="strong"><a href="#services" id="services-tab" aria-controls="services"
-                role="tab" data-toggle="tab">SERVICES</a></li>
-            <li role="presentation" class="strong"><a href="#equipments" id="equipments-tab" aria-controls="equipments"
-                role="tab" data-toggle="tab">EQUIPMENTS</a></li>
-            <li role="presentation" class="strong"><a href="#structures" id="structures-tab" aria-controls="structures"
-                role="tab" data-toggle="tab">STRUCTURES</a></li>
-          </ul>
+  h6 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    font-size: medium;
+  }
+
+  .btn{
+    color: #ffffff !important;
+    background: #4b5867 !important;
+    font-size: 16px !important;
+    line-height: 17px;
+    letter-spacing: 0.020em;
+    margin-top: 36px;
+    height: 42px;
+    border-radius: 6px;
+    width: 100%!important;
+  }
+
+  .nav-item .active{
+    color: black!important;
+  }
+</style>
+<!--search filter part-->
+<div class="container-fluid content">
+  <div class="row main-enquiry no-margin">
+
+    <div class="navbar-header">
+
+      <a class="navbar-brand visible-xs">Search</a>
+    </div>
+
+    <div class="col-xs-12">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 0px!important; margin-top: 10px; background-color: #34404d !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri!important; font-weight: bold;">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" id="propertyTab">PROPERTIES</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="materialTab">MATERIALS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="serviceTab">SERVICE</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="equipmentTab">EQUIPMENTS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="structureTab">STRUCTURE</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <!-- Tab panes -->
-        <div class="row tab-content main-enquiry-form">
-          <div role="tabpanel" class="tab-pane active" id="for-sale">
-            <div class="for-sale-search">
-              <form name="for-sale-form" id="for-sale-form" method="get" action="/properties/">
-                <input value="sale" type="hidden" name="lst-sale-or-rent" />
-                <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-                <!--<h6>State</h6>-->
-                <!--<select class="selectpicker lst-location" id="lst-location-sale" name="lst-location"data-live-search="true" title="All States">-->
+      </nav>
+      <!-- Tab panes -->
+      <div class="row tab-content main-enquiry-form">
 
-                <!--</select>-->
-                <!--</div>-->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 hidden">
-                  <h6>State</h6>
-                  <input type="text" type="hidden" class="form-control location-input" id="lst-location-sale"
-                    name="lst-location" data-validation="required" />
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Location</h6>
-                  <input type="text" class="form-control location-input" id="lst-city-sale" name="lst-city"
-                    data-validation="required" />
-                </div>
-                <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-                <!--<h6>City</h6>-->
-                <!--<select class="selectpicker lst-city" title="All Cities" id="lst-city-sale" name="lst-city">-->
-                <!--<option value="">All Cities</option>-->
+        <div role="tabpanel" class="tab-pane active" id="for-property">
+          <div class="for-sale-search">
+            <form method="POST" action="/property">{% csrf_token %}
 
-                <!--</select>-->
-                <!--</div>-->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Property Type</h6>
-                  <select class="selectpicker lst-property-type" id="lst-property-type-sale" name="lst-property-type"
-                    title="All Types">
-
-                  </select>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <div class="rent-currency-flat">
-                    <h6>Price</h6>
-                    <select id="lst-currency-sale" class="selectpicker currency-list" name="lst-currency"
-                      title="‎₦ NGN">
-
-                    </select>
-                  </div>
-                  <select class="selectpicker lst-price" title="Any" id="lst-price-sale" name="lst-price">
-
-                  </select>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Floor space</h6>
-                  <select class="selectpicker lst-size" title="Any" id="lst-size-sale" name="lst-size">
-
-                  </select>
-                </div>
-
-
-
-
-
-
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <button id="button-sale-search" class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="for-rent">
-            <div class="for-rent-search">
-              <form name="for-rent-form" id="for-rent-form" method="get" action="/properties/">
-                <input value="rent" type="hidden" name="lst-sale-or-rent" />
-                <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-                <!--<h6>State</h6>-->
-                <!--<select class="selectpicker lst-location" id="lst-location-rent" name="lst-location" data-live-search="true" data-width="120px" title="All States">-->
-
-                <!--</select>-->
-                <!--</div>-->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 hidden">
-                  <h6>State</h6>
-                  <input type="text" type="hidden" class="form-control location-input" id="lst-location-rent"
-                    name="lst-location" data-validation="required" />
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Location</h6>
-                  <input type="text" class="form-control location-input" id="lst-city-rent" name="lst-city"
-                    data-validation="required" />
-                </div>
-                <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-                <!--<h6>City</h6>-->
-                <!--<select class="selectpicker lst-city" title="All Cities" id="lst-city-rent" name="lst-city">-->
-                <!--<option value="">All Cities</option>-->
-
-                <!--</select>-->
-                <!--</div>-->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Property Type</h6>
-                  <select class="selectpicker lst-property-type" id="lst-property-type-rent" name="lst-property-type"
-                    data-width="120px" title="All Types">
-
-                  </select>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <div class="rent-currency-flat">
-                    <h6>Rent</h6>
-                    <select id="lst-currency-rent" class="selectpicker currency-list" name="lst-currency" title="Any">
-
-                    </select>
-                  </div>
-                  <select class="selectpicker lst-price" data-width="120px" title="Any" id="lst-price-rent"
-                    name="lst-price">
-
-                  </select>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Floor space</h6>
-                  <select class="selectpicker lst-size" data-width="120px" title="Any" id="lst-size-rent"
-                    name="lst-size">
-
-                  </select>
-                </div>
-
-
-
-
-
-
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <button id="button-rent-search" type="submit"
-                    class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="building-materials">
-            <div class="materials-search">
-              <form onsubmit="" name="materials-form" id="materials-form" method="get" action="/materials/">
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <h6>Material Category</h6>
-                  <select class="selectpicker" data-live-search="true" id="lst-category-material"
-                    name="lst-category-material" data-width="120px" title="All Categories">
-
-                  </select>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <div class="rent-currency-flat">
-                    <h6>Price</h6>
-                    <select id="lst-currency-materials" class="selectpicker currency-list" name="lst-currency"
-                      title="‎₦ NGN">
-
-                    </select>
-                  </div>
-                  <select class="selectpicker lst-price" data-width="120px" title="Any" id="lst-price-material"
-                    name="lst-price-material">
-
-                  </select>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                  <button id="button-material-search" type="submit"
-                    class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="services">
-            <form onsubmit="" name="services-form" id="services-form" method="get" action="/services/">
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>State</h6>-->
-              <!--<select class="selectpicker lst-location" id="lst-location-services" name="lst-location" data-width="120px" title="All States">-->
-
-              <!--</select>-->
-              <!--</div>-->
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 hidden">
-                <h6>State</h6>
-                <input type="text" type="hidden" class="selectpicker form-control location-input"
-                  id="lst-location-services" name="lst-location" data-validation="required" />
-              </div>
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Location</h6>
-                <input type="text" class="selectpicker form-control location-input" name="lst-city"
-                  id="lst-city-services" data-validation="required" />
+                <h6>Property Type</h6>
+                <select class="selectpicker lst-property-type" id="lst-sale-or-rent" name="lst-sale-or-rent">
+                  <option value="" style="display: none;">Any</option>
+                  <option value="Sale">For Sale</option>
+                  <option value="Rent">For Rent</option>
+                </select>
               </div>
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>City</h6>-->
-              <!--<select class="selectpicker lst-city" id="lst-city-services" name="lst-city" data-width="120px" title="All Cities">-->
-              <!--<option value="">All Cities</option>-->
-              <!--</select>-->
-              <!--</div>-->
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>State</h6>
+                <select class="selectpicker lst-property-type" id="state" name="state"
+                  title="All Types">
+                  {% for i in state %}
+                  <option value="" style="display: none;">Any</option>
+                  <option value="{{i.0}}">{{i.1}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>City</h6>
+                <select class="selectpicker lst-property-type" id="city" name="city"
+                  title="All Types">
+                  <option value="" style="display: none;">Any</option>
+                  <option value="">All Cities</option>
+                </select>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <div class="rent-currency-flat">
+                  <h6>Property Type</h6>
+                  <select id="lst-property-type" class="lst-property-type" name="lst-property-type">
+                    {% for i in ptype %}
+                    <option value="" style="display: none;">Any</option>
+                    <option value="{{i.0}}">{{i.1}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="rent-currency-flat">
+                  <h6>Price</h6>
+                  <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+                    <option value="" style="display: none;">Any</option>
+                    <option value="1000-lt">
+                      <1000 </option>
+                    <option value="1000-10000">1000-10000</option>
+                    <option value="10000-20000">10000-20000</option>
+                    <option value="2000-rt">20000></option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>Floor space</h6>
+                <select class="selectpicker lst-size" title="Any" id="lst-size" name="lst-size">
+                  <option value="" style="display: none;">Any</option>
+                  <option value="500-lt">
+                    <500 </option>
+                  <option value="500-10000">500-10000</option>
+                  <option value="1000-2000">1000-2000</option>
+                  <option value="2000-rt">2000></option>
+                </select>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <button id="button-sale-search" class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="for-materials">
+          <div class="for-rent-search">
+            <form  method="POST" action="/materials">{% csrf_token %}
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>Material Type</h6>
+                <select id="lst-currency-sale" class="selectpicker currency-list" id="lst-property-type" name="lst-property-type">
+                  {% for i in mtype %}
+                  <option value="" style="display: none;">Any</option>
+                  <option value="{{i.0}}">{{i.1}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>Price</h6>
+                <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+                  <option value="" style="display: none;">Any</option>
+                  <option value="1000-lt">
+                    <1000 </option>
+                  <option value="1000-10000">1000-10000</option>
+                  <option value="10000-20000">10000-20000</option>
+                  <option value="2000-rt">20000></option>
+                </select>
+              </div>
+
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <button id="button-rent-search" type="submit"
+                  class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="for-service">
+          <div class="materials-search">
+            <form method="POST" action="/services">{% csrf_token %}
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>State</h6>
+                <select class="selectpicker currency-list" id="state" name="state">
+                  {% for i in state %}
+                  <option value="" style="display: none;">Any</option>
+                  <option value="{{i.0}}">{{i.1}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>City</h6>
+                <select class="selectpicker lst-property-type" id="city" name="city"
+                  title="All Types">
+                  <option value="" style="display: none;">Any</option>
+                  <option value="">All Cities</option>
+                </select>
+              </div>
+
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>Services</h6>
-                <select class="selectpicker" id="lst-type-service" name="lst-type-service" data-width="120px"
-                  title="All Services">
-
+                <select id="lst-property-type" class="selectpicker currency-list" name="lst-property-type">
+                  {% for i in stype %}
+                  <option value="" style="display: none;">Any</option>
+                  <option value="{{i.0}}">{{i.1}}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Currency</h6>
-                <select id="lst-currency-services" class="selectpicker currency-list" name="lst-currency"
-                  title="‎₦ NGN">
-
-                </select>
-
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <button id="button-service-search" type="submit"
+                <button id="button-rent-search" type="submit"
                   class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
               </div>
             </form>
           </div>
-          <div role="tabpanel" class="tab-pane" id="structures">
-            <form onsubmit="" name="structures-form" id="structures-form" method="get"
-              action="/construction/structure-details/">
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Property Type</h6>
-                <select id="lst-property-type-structures" class="selectpicker lst-property-type"
-                  name="lst-property-type" data-width="120px" title="All Types">
-
-                </select>
-              </div>
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>State</h6>-->
-              <!--<select id="lst-location-structures" class="selectpicker lst-location" name="lst-location" data-live-search="true" data-width="120px" title="All States">-->
-
-              <!--</select>-->
-              <!--</div>-->
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 hidden">
-                <h6>State</h6>
-                <input type="text" type="hidden" class="form-control location-input" name="lst-city"
-                  id="lst-location-structures" name="lst-location" data-validation="required" />
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Location</h6>
-                <input type="text" class="form-control location-input" id="lst-city-structure"
-                  data-validation="required" />
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <div class="rent-currency-flat">
-                  <h6>Price</h6>
-                  <select id="lst-currency-structures" class="selectpicker currency-list" name="lst-currency"
-                    title="‎₦ NGN">
-
-                  </select>
-                </div>
-                <select id="lst-price-structures" class="selectpicker lst-price" name="lst-price" data-width="120px"
-                  title="Any">
-
-                </select>
-              </div>
-
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Floor Space</h6>
-                <select id="lst-size-structures" class="selectpicker lst-size" name="lst-size" data-width="120px"
-                  title="Any">
-
-                </select>
-              </div>
-
-
-
-
-
-
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <input type="hidden" name="construction-type" value="structure">
-                <button type="submit" class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
-              </div>
-            </form>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="equipments">
-            <form onsubmit="" name="equipments-form" id="equipments-form" action="/construction/equipment-details/">
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Equipment Type</h6>
-                <select id="lst-equipment-type" class="selectpicker lst-equipment-type" data-live-search="true"
-                  data-width="120px" title="All Types" name="lst-equipment-type">
-
-                </select>
-              </div>
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>State</h6>-->
-              <!--<select id="lst-location-equipment" class="selectpicker lst-location" name="lst-location" data-live-search="true" data-width="120px" title="All States">-->
-
-              <!--</select>-->
-              <!--</div>-->
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 hidden">
-                <h6>State</h6>
-                <input type="text" type="hidden" class="form-control location-input" id="lst-location-equipment"
-                  name="lst-location" data-validation="required" />
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Location</h6>
-                <input type="text" class="form-control location-input" name="lst-city" id="lst-city-equipment"
-                  data-validation="required" />
-              </div>
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>City</h6>-->
-              <!--<select id="lst-city-equipment" class="selectpicker lst-city" name="lst-city" data-live-search="true" data-width="120px" title="All Cities">-->
-              <!--<option value="">All Cities</option>-->
-              <!--</select>-->
-              <!--</div>-->
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <div class="rent-currency-flat">
-                  <h6>Price</h6>
-                  <select id="lst-currency-equipments" class="selectpicker currency-list" name="lst-currency"
-                    title="‎₦ NGN">
-
-                  </select>
-                </div>
-                <select id="lst-price-equipment" class="selectpicker lst-price" data-width="120px" title="Any"
-                  name="lst-price">
-
-                </select>
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Hire/Buy</h6>
-                <select id="lst-hire-buy-equipment" class="selectpicker lst-hire-buy" data-width="120px" title="Any"
-                  name="lst-hire-buy">
-
-                </select>
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <input type="hidden" name="construction-type" value="equipment">
-                <button type="submit" class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
-              </div>
-            </form>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="flat">
-            <form onsubmit="" action="/home/flat-list/" method="get" name="flat-form" id="flat-form">
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Share/Rent</h6>
-                <select id="lst-share-or-rent-flat" class="selectpicker" name="lst-share-or-rent" data-width="120px"
-                  title="Any">
-
-                </select>
-              </div>
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>State</h6>-->
-              <!--<select id="lst-location-flat" class="selectpicker lst-location" name="lst-location" data-live-search="true" data-width="120px" title="All States">-->
-
-              <!--</select>-->
-              <!--</div>-->
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 hidden">
-                <h6>State</h6>
-                <input type="text" type="hidden" class="form-control location-input" id="lst-location-flat"
-                  name="lst-location" data-validation="required" />
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Location</h6>
-                <input type="text" class="form-control location-input" id="lst-city-flat" name="lst-city"
-                  data-validation="required" />
-              </div>
-              <!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">-->
-              <!--<h6>City</h6>-->
-              <!--<select id="lst-city-flat" class="selectpicker lst-city" name="lst-city" data-live-search="true" data-width="120px" title="All Cities">-->
-              <!--<option value="">All Cities</option>-->
-              <!--</select>-->
-              <!--</div>-->
-
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Rooms</h6>
-                <select id="lst-rooms-flat" class="selectpicker" name="lst-rooms" data-width="120px" title="Any">
-
-                </select>
-              </div>
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 ">
-                <div class="rent-currency-flat">
-                  <h6>Rent</h6>
-                  <select id="lst-currency-flat" class="selectpicker currency-list" name="lst-currency" title="‎₦ NGN">
-
-                  </select>
-                </div>
-                <input id="txt-rent-min" name="txt-rent-min" type="number" min="0" class="range-input rent-min-max"
-                  placeholder=" Min">
-                <input id="txt-rent-max" name="txt-rent-max" type="number" min="0" class="range-input"
-                  placeholder=" Max">
-              </div>
-
-
-
-
-
-
-              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <button type="submit" class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
-              </div>
-            </form>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="row subpage-intro-tiles">
-      <div class="col-sm-4">
-        <h4>Properties</h4>
-        <a href="/properties/">
-          <img src="/static/assets/images/home-property-picture.jpg" class="img-responsive center-block">
-        </a>
-        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
-          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
-          lobortis.
-        </p>
-        <a href="/properties/">More Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
-      </div>
-      <div class="col-sm-4">
-        <h4>Constructions</h4>
-        <a href="/construction/equipment-details">
-          <img src="/static/assets/images/home-construction-picture.jpg" class="img-responsive center-block">
-        </a>
-        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
-          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
-          lobortis.
-        </p>
-        <a href="/construction/equipment-details">More Details &nbsp; <i class="fa fa-caret-right"
-            aria-hidden="true"></i></a>
-      </div>
-      <div class="col-sm-4">
-        <h4>Services</h4>
-        <a href="/services/">
-          <img src="/static/assets/images/home-services-picture.jpg" class="img-responsive center-block">
-        </a>
-        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
-          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
-          lobortis.
-        </p>
-        <a href="/services/">More Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
-      </div>
-    </div>
-  </div>
 
-  <div class="container-fluid div-about">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="">
-          ABOUT US
-        </h1>
-        <!--<img src="" class="intro-logo img-responsive" alt="free-template"> &lt;!&ndash; Your company logo in white &ndash;&gt;-->
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
-          eu molestie. Fusce pretium ex quis egestas facilisis. Nulla facilisi.
-          Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor. Suspendisse eget
-          odio auctor mi ultricies ullamcorper nec varius justo.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
-          eu molestie. Fusce pretium ex quis egestas facilisis.
-          Nulla facilisi. Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor.
-          Suspendisse eget odio auctor mi ultricies ullamcorper nec varius justo.</p>
-      </div>
-      <div class="col-md-3">
-        <a href="/properties">
-          <div class="milestone-counter">
-            <div class="milestone-count c-gray" data-from="0" id="no-of-properties" data-to="11100" data-speed="3000"
-              data-refresh-interval="100"></div>
-            <h4 class="milestone-info c-gray">Properties</h4>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="/home/flat-list">
-          <div class="milestone-counter">
-            <div class="milestone-count c-gray" id="no-of-flats" data-from="0" data-to="154" data-speed="5000"
-              data-refresh-interval="50"></div>
-            <h4 class="milestone-info c-gray">Rent Flats</h4>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="/materials">
-          <div class="milestone-counter">
-            <div class="milestone-count c-gray" data-from="0" data-to="430" data-speed="5000" id="no-of-materials"
-              data-refresh-interval="80"></div>
-            <h4 class="milestone-info c-gray">Materials</h4>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="/construction/equipment-details">
-          <div class="milestone-counter">
-            <div class="milestone-count c-gray" data-from="0" data-to="1230" data-speed="5000" id="no-of-equipments"
-              data-refresh-interval="80"></div>
-            <h4 class="milestone-info c-gray">Equipments</h4>
-          </div>
-        </a>
+
+        <div role="tabpanel" class="tab-pane" id="for-equipment">
+          <form method="POST" action="/equipment">{% csrf_token %}
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>Equipment Type</h6>
+              <select id="lst-property-type" class="selectpicker currency-list" name="lst-property-type">
+                {% for i in etype %}
+                <option value="" style="display: none;">Any</option>
+                <option value="{{i.0}}">{{i.1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>State</h6>
+              <select id="state" class="selectpicker currency-list" name="state">
+                {% for i in state %}
+                <option value="" style="display: none;">Any</option>
+                <option value="{{i.0}}">{{i.1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>City</h6>
+              <select class="selectpicker lst-property-type" id="city" name="city"
+                title="All Types">
+                <option value="" style="display: none;">Any</option>
+                <option value="">All Cities</option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>Price</h6>
+              <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+                <option value="" style="display: none;">Any</option>
+                <option value="1000-lt">
+                  <1000 </option>
+                <option value="1000-10000">1000-10000</option>
+                <option value="10000-20000">10000-20000</option>
+                <option value="2000-rt">20000></option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>Hire/Buy</h6>
+              <select class="selectpicker lst-property-type" id="lst-sale-or-rent" name="lst-sale-or-rent"
+                title="All Types">
+                <option value="" style="display: none;">Any</option>
+                <option value="Hire">Hire</option>
+                <option value="Buy">Buy</option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <button id="button-service-search" type="submit"
+                class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
+            </div>
+          </form>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="for-structure">
+          <form method="POST" action="/structure">{% csrf_token %}
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>Property Type</h6>
+              <select id="lst-property-type" class="selectpicker currency-list" name="lst-property-type">
+                {% for i in ptype %}
+                <option value="" style="display: none;">Any</option>
+                <option value="{{i.0}}">{{i.1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>State</h6>
+              <select id="state" class="selectpicker currency-list" name="state">
+                {% for i in state %}
+                <option value="" style="display: none;">Any</option>
+                <option value="{{i.0}}">{{i.1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>City</h6>
+              <select class="selectpicker lst-property-type" id="city" name="city"
+                title="All Types">
+                <option value="" style="display: none;">Any</option>
+                <option value="">All Cities</option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>Price</h6>
+              <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+                <option value="" style="display: none;">Any</option>
+                <option value="1000-lt">
+                  <1000 </option>
+                <option value="1000-10000">1000-10000</option>
+                <option value="10000-20000">10000-20000</option>
+                <option value="2000-rt">20000></option>
+              </select>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <h6>Floor space</h6>
+              <select class="selectpicker lst-size" title="Any" id="lst-size" name="lst-size">
+                <option value="" style="display: none;">Any</option>
+                <option value="500-lt">
+                  <500 </option>
+                <option value="500-10000">500-10000</option>
+                <option value="1000-2000">1000-2000</option>
+                <option value="2000-rt">2000></option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+              <button type="submit" class="btn btn-default main-enquiry-submit">&nbsp;Search</button>
+            </div>
+          </form>
+        </div>
+
+
       </div>
     </div>
   </div>
+  <div class="row subpage-intro-tiles">
+    <div class="col-sm-4">
+      <h4>Properties</h4>
+      <a href="/properties/">
+        <img src="/static/assets/images/home-property-picture.jpg" class="img-responsive center-block">
+      </a>
+      <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+        libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+        lobortis.
+      </p>
+      <a href="/properties/">More Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+    </div>
+    <div class="col-sm-4">
+      <h4>Constructions</h4>
+      <a href="/construction/equipment-details">
+        <img src="/static/assets/images/home-construction-picture.jpg" class="img-responsive center-block">
+      </a>
+      <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+        libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+        lobortis.
+      </p>
+      <a href="/construction/equipment-details">More Details &nbsp; <i class="fa fa-caret-right"
+          aria-hidden="true"></i></a>
+    </div>
+    <div class="col-sm-4">
+      <h4>Services</h4>
+      <a href="/services/">
+        <img src="/static/assets/images/home-services-picture.jpg" class="img-responsive center-block">
+      </a>
+      <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+        libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+        lobortis.
+      </p>
+      <a href="/services/">More Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid div-about">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="">
+        ABOUT US
+      </h1>
+      <!--<img src="" class="intro-logo img-responsive" alt="free-template"> &lt;!&ndash; Your company logo in white &ndash;&gt;-->
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
+        eu molestie. Fusce pretium ex quis egestas facilisis. Nulla facilisi.
+        Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor. Suspendisse eget
+        odio auctor mi ultricies ullamcorper nec varius justo.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
+        eu molestie. Fusce pretium ex quis egestas facilisis.
+        Nulla facilisi. Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor.
+        Suspendisse eget odio auctor mi ultricies ullamcorper nec varius justo.</p>
+    </div>
+    <div class="col-md-3">
+      <a href="/properties">
+        <div class="milestone-counter">
+          <div class="milestone-count c-gray" data-from="0" id="no-of-properties" data-to="11100" data-speed="3000"
+            data-refresh-interval="100"></div>
+          <h4 class="milestone-info c-gray">Properties</h4>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="/home/flat-list">
+        <div class="milestone-counter">
+          <div class="milestone-count c-gray" id="no-of-flats" data-from="0" data-to="154" data-speed="5000"
+            data-refresh-interval="50"></div>
+          <h4 class="milestone-info c-gray">Rent Flats</h4>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="/materials">
+        <div class="milestone-counter">
+          <div class="milestone-count c-gray" data-from="0" data-to="430" data-speed="5000" id="no-of-materials"
+            data-refresh-interval="80"></div>
+          <h4 class="milestone-info c-gray">Materials</h4>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <a href="/construction/equipment-details">
+        <div class="milestone-counter">
+          <div class="milestone-count c-gray" data-from="0" data-to="1230" data-speed="5000" id="no-of-equipments"
+            data-refresh-interval="80"></div>
+          <h4 class="milestone-info c-gray">Equipments</h4>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tab = document.getElementById("propertyTab");
+  const tab1 = document.getElementById("materialTab");
+  const tab2 = document.getElementById("serviceTab");
+  const tab3 = document.getElementById("equipmentTab");
+  const tab4 = document.getElementById("structureTab");
+  const property = document.getElementById("for-property");
+  const material = document.getElementById("for-materials");
+  const service = document.getElementById("for-service");
+  const equipment = document.getElementById("for-equipment");
+  const structure = document.getElementById("for-structure");
+  tab.addEventListener("click", (e) => {
+    property.classList.add("active");
+    material.classList.remove("active");
+    service.classList.remove("active");
+    equipment.classList.remove("active");
+    structure.classList.remove("active");
+    tab.classList.add("active");
+    tab1.classList.remove("active");
+    tab2.classList.remove("active");
+    tab3.classList.remove("active");
+    tab4.classList.remove("active");
+
+  })
+  tab1.addEventListener("click", (e) => {
+    property.classList.remove("active");
+    material.classList.add("active");
+    service.classList.remove("active");
+    equipment.classList.remove("active");
+    structure.classList.remove("active");
+    tab1.classList.add("active");
+    tab.classList.remove("active");
+    tab2.classList.remove("active");
+    tab3.classList.remove("active");
+    tab4.classList.remove("active");
+  })
+  tab2.addEventListener("click", (e) => {
+    property.classList.remove("active");
+    material.classList.remove("active");
+    service.classList.add("active");
+    equipment.classList.remove("active");
+    structure.classList.remove("active");
+    tab2.classList.add("active");
+    tab1.classList.remove("active");
+    tab.classList.remove("active");
+    tab3.classList.remove("active");
+    tab4.classList.remove("active");
+  })
+  tab3.addEventListener("click", (e) => {
+    property.classList.remove("active");
+    material.classList.remove("active");
+    service.classList.remove("active");
+    equipment.classList.add("active");
+    structure.classList.remove("active");
+    tab3.classList.add("active");
+    tab1.classList.remove("active");
+    tab2.classList.remove("active");
+    tab.classList.remove("active");
+    tab4.classList.remove("active");
+  })
+  tab4.addEventListener("click", (e) => {
+    property.classList.remove("active");
+    material.classList.remove("active");
+    service.classList.remove("active");
+    equipment.classList.remove("active");
+    structure.classList.add("active");
+    tab4.classList.add("active");
+    tab1.classList.remove("active");
+    tab2.classList.remove("active");
+    tab3.classList.remove("active");
+    tab.classList.remove("active");
+  })
+
+</script>
 {% endblock %}
-  

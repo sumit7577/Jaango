@@ -13,7 +13,7 @@
   </div>
 </header>
 <div class="formsCustom">
-  <form>
+  <form method="POST" action="/addMaterial" enctype="multipart/form-data">{% csrf_token %}
     <div class="formsFlex">
       <div class="formleft">
         <div class="formsContent">
@@ -58,7 +58,7 @@
         <div class="formsContent">
           <lable>Weight/Size</lable>
           <div class="input">
-           {{ form.weight }}
+            {{ form.weight }}
           </div>
           <div class="text-error">{{ form.weight.errors }}</div>
         </div>
@@ -84,11 +84,11 @@
 
 
 
-  
-      <!-- Upload Area -->
-      <div style="margin-left: 21px; margin-top:35px;">
-        <lable>Images</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported Formats JPG,
-          JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
+
+    <!-- Upload Area -->
+    <div style="margin-left: 21px; margin-top:35px;">
+      <lable>Images</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported Formats JPG,
+        JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
     </div>
     <div class="image">
       <div class="imageView"

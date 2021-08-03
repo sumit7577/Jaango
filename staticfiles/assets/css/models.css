@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap');
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(7px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.4s ease;
+  font-family: 'Barlow', sans-serif;
+}
+
+.modal .modal-container {
+  width: 550px;
+  height: 300px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 5px 10px 15px rgba(0,0,0,0.2);
+  transition: 0.5s ease 0.3s;
+  font-family: 'Barlow', sans-serif;
+}
+
+.modal .modal-container .modal-header {
+  height: 20%;
+  border-bottom: 1px solid #aaaaaa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Barlow', sans-serif;
+}
+
+.modal .modal-container .modal-header h2 {
+  font-size: 2rem;
+  padding-left: 3%;
+  color: #333;
+}
+
+.modal .modal-container .modal-header button {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  margin-right: 15px;
+  background: transparent;
+  border: 2px solid #555;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal .modal-container .modal-header button:hover {
+  border: 2px solid #000;
+  color: #000;
+}
+
+.modal .modal-container .modal-content {
+  height: 80%;
+  padding: 3% 5%;
+}
+
+.modal .modal-container .modal-content p {
+  font-size: 17px;
+  line-height: 1.5;
+  color: #444;
+  margin: 0px 0px 10px;
+}
+
+.modal .modal-container .modal-content button {
+  background-image: linear-gradient(-20deg, #6e45e2 0%, #88d3ce 85%);
+  height: 2.5rem;
+  width: 120px;
+  color: #fff;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal .modal-container.hide {
+  transform: scale(0);
+  transform: translateX(-10%);
+}
+.detail{
+  padding: 15px;
+  font-size: medium;
+  font-weight: 400;
+}

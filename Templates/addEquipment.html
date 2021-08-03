@@ -14,7 +14,7 @@
   </div>
 </header>
 <div class="formsCustom">
-  <form>
+  <form method="POST" action="/addEquipment" enctype="multipart/form-data">{% csrf_token %}
     <div class="formsFlex">
       <div class="formleft">
         <div class="formsContent">

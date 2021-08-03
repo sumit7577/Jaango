@@ -1,0 +1,208 @@
+
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+    
+    body {
+        background-color: #ecedef;
+    }
+
+    .formsCustom {
+        margin-left: 15%;
+        border-radius: 10px;
+        margin-top: 50px;
+        background-color: #fff;
+        padding: 25px;
+        margin-right: 15%;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .formsFlex {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top:35px;
+    }
+
+    .formleft {
+        width: 45%;
+    }
+
+    .formRight {
+        width: 45%;
+
+    }
+
+    .formsContent {
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .input input {
+        width: 100%;
+        height: 46px;
+        padding: 8px;
+        font-weight: bold;
+    }
+
+    textarea {
+        width: 100%;
+        height: auto;
+        padding: 8px;
+        font-weight: bold;
+    }
+
+    .input {
+        border: 2px solid #ccc;
+        font-size: 15px;
+        font-weight: 500;
+        color: #333333;
+        height: auto;
+        border-radius: 4px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .input:hover {
+        border: 2px solid #02acfa;
+    }
+
+    lable {
+        
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+
+    label {
+        font-weight: bold;
+        font-size: 15px;
+        padding: 6px;
+        margin-left: 6px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .check {
+        height: 200px;
+        overflow: auto;
+        width: 200px;
+        width: 100%;
+        border: 1px solid #000;
+        margin-top: 52px;
+
+    }
+
+    .selectcheck .check ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .check ul li {
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid black;
+    }
+
+    .selectcheck {
+        display: flex;
+        margin-top:25px;
+        margin-left: -52px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+        margin: 5px 8px 0;
+        margin-top: 2px;
+        line-height: normal;
+    }
+
+    .selectlabel {
+        display: inline;
+        position: relative;
+        left: 65px;
+        font-size: 15px;
+    }
+
+    .image{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 11px;
+    }
+
+    .selectpicker{
+        height: 45px;
+        width: 100%;
+      }
+    
+      .selectpicker option {
+        font-size: 17px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: 200;
+      }
+
+
+
+
+      .radiocheck ul {
+        display: flex;
+      }
+    
+      .radiocheck ul input {
+        width: 19px;
+      }
+    
+      .radio input[type="radio"],
+      .radio-inline input[type="radio"],
+      .checkbox input[type="checkbox"],
+      .checkbox-inline input[type="checkbox"] {
+        position: relative;
+      }
+    
+      .radiocheck ul label {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+    
+      .image .customImage {
+        width: 193px;
+        height: 150px;
+        border: 1px solid black;
+        border-radius: 10px;
+      }
+    
+      input[type="file"] {
+        opacity: 0;
+      }
+    
+      .drop-zoon img,
+      video {
+        height: inherit;
+        object-fit: contain;
+        width: 186px;
+      }
+    
+      .imageView {
+        margin: 10px;
+      }
+    
+      .input select {
+        height: 46px;
+        width: 100%;
+      }
+    
+      .text-error {
+        color: red;
+        font-weight: bold;
+        margin-left: 7px;
+        position: relative;
+        top:2px;
+      }
+    
+      .imageView{
+        flex-direction: column;
+        margin-bottom: 25px;
+      }

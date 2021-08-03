@@ -319,21 +319,21 @@ class Structure(forms.Form):
             }
         ))
     
-    image4 = forms.ImageField(required=True,
+    image4 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
     
-    image5 = forms.ImageField(required=True,
+    image5 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
     
-    image6 = forms.ImageField(required=True,
+    image6 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"

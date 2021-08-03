@@ -6,6 +6,8 @@ from .models import Files, Flat, UserDetails, Property, Structure, Equipment, Ma
 from .forms2 import propertyForm, Structure, Equipment, Material, Service, Flatform
 from app import models
 
+from app import forms2
+
 # Create your views here.
 currency = Property.currency
 pType = Property.propertyChoices
@@ -39,12 +41,19 @@ def index(request):
 @login_required(login_url="/login")
 def home(request):
     message = None
+    data = {}
+    data["ptype"] = pType
+    data["state"] = models.state
+    data["mtype"] = models.Material.type
+    data["stype"] = models.Service.serviceType
+    data["etype"] = models.Equipment.type
+    data["message"] = message
     if request.method == "POST":
         document = request.FILES.getlist("files")
         for i in document:
             Files.objects.create(userName=request.user, files=i)
             message = "Documents Successfully Published"
-    return render(request, "dashboard.html")
+    return render(request, "dashboard.html",data,)
 
 
 def login_view(request):
@@ -77,6 +86,8 @@ def property(request):
     data["property"] = propertyData
     if request.method == "POST":
         fori = request.POST.get("lst-sale-or-rent")
+        print(fori)
+        print(data["property"])
         location = request.POST.get("lstcity")
         type = request.POST.get("lst-property-type")
         curr = request.POST.get("lst-currency")
@@ -116,7 +127,7 @@ def property(request):
 
 
 def addProperty(request):
-    form = propertyForm(request.POST or None)
+    form = propertyForm(request.POST or None,request.FILES)
     message = None
     success = False
     if request.method == "POST":
@@ -209,7 +220,7 @@ def structure(request):
             structureData = models.Structure.objects.filter(Rooms=room)
 
         for i in structureData:
-            if((location != "" and location.lower() == i.Location.lower()) or (type != "" and type == i.PropertyType) or (curr != "" and curr in i.Currency)):
+            if((type != "" and type == i.PropertyType) or (location != "" and location.lower() == i.Location.lower()) or (curr != "" and curr in i.Currency)):
                 newList.append(i)
         data["structure"] = newList
     return render(request, "structure.html", data)
@@ -218,7 +229,7 @@ def structure(request):
 def addStructure(request):
     message = None
     success = False
-    form = Structure(request.POST or None)
+    form = forms2.Structure(request.POST or None,request.FILES)
     if request.method == "POST":
         if form.is_valid():
             currency = form.cleaned_data.get("currency")
@@ -239,7 +250,7 @@ def addStructure(request):
             image4 = form.cleaned_data.get("image4")
             image5 = form.cleaned_data.get("image5")
             image6 = form.cleaned_data.get("image6")
-            Structure.objects.update_or_create(user=request.user, PropertyType=type, Category=category,
+            models.Structure.objects.update_or_create(user=request.user, PropertyType=type, Category=category,
                                                       Description=desc, Currency=currency, Location=location, Address=address, Size=size, Price=price,
                                                       Rooms=room, FinalCost=final, MiddleCost=middle, InitialCost=initial,image1=image1,image2=image2,image3=image3,image4=image4,image5=image5,image6=image6)
             message = "Property Details Submitted"
@@ -287,7 +298,7 @@ def equipment(request):
 
 
 def addEquipment(request):
-    form = Equipment(request.POST or None)
+    form = forms2.Equipment(request.POST or None,request.FILES)
     message = None
     success = False
     if request.method == "POST":
@@ -306,7 +317,7 @@ def addEquipment(request):
             image4 = form.cleaned_data.get("image4")
             image5 = form.cleaned_data.get("image5")
             image6 = form.cleaned_data.get("image6")
-            Equipment.objects.update_or_create(user=request.user, Description=desc, Location=location,
+            models.Equipment.objects.update_or_create(user=request.user, Description=desc, Location=location,
                                                       Address=address, Price=price, EquipmentType=type, Currency=currency, Hire=hire, Status=status,image1=image1,image2=image2,image3=image3,image4=image4,image5=image5,image6=image6)
             message = "Property Details Submitted"
             success = True
@@ -331,7 +342,7 @@ def services(request):
         curr = request.POST.get("lst-currency")
 
         for i in serviceData:
-            if((location != "" and location.lower() == i.Location.lower()) or (type != "" and type == i.ServiceType) or (curr != "" and curr == i.Currency)):
+            if((type != "" and type == i.ServiceType) or (location != "" and location.lower() == i.Location.lower())or (curr != "" and curr == i.Currency)):
                 newList.append(i)
         data["service"] = newList
 
@@ -341,7 +352,7 @@ def services(request):
 def addService(request):
     message = None
     success = False
-    form = Service(request.POST or None)
+    form = forms2.Service(request.POST or None,request.FILES)
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")
@@ -357,7 +368,7 @@ def addService(request):
             image4 = form.cleaned_data.get("image4")
             image5 = form.cleaned_data.get("image5")
             image6 = form.cleaned_data.get("image6")
-            Service.objects.update_or_create(user=request.user, Title=title, Description=desc,
+            models.Service.objects.update_or_create(user=request.user, Title=title, Description=desc,
                                              Location=location, Address=address, Price=price, Currency=currency, ServiceType=type,image1=image1,image2=image2,image3=image3,image4=image4,image5=image5,image6=image6)
             message = "Property Details Submitted"
             success = True
@@ -403,7 +414,7 @@ def material(request):
 def addMaterial(request):
     message = None
     success = False
-    form = Material(request.POST or None)
+    form = forms2.Material(request.POST or None,request.FILES)
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")
@@ -421,7 +432,7 @@ def addMaterial(request):
             image4 = form.cleaned_data.get("image4")
             image5 = form.cleaned_data.get("image5")
             image6 = form.cleaned_data.get("image6")
-            Material.objects.update_or_create(user=request.user, Item=item, Title=title,
+            models.Material.objects.update_or_create(user=request.user, Item=item, Title=title,
                                                      Description=desc, Address=address, Quantity=quantity, Price=price, Category=category, Currency=currency, Weight=weight,image1=image1,image2=image2,image3=image3,image4=image4,image5=image5,image6=image6)
             message = "Property Details Submitted"
             success = True
@@ -436,7 +447,7 @@ def flats(request):
     data = {}
     newList = []
     data["currency"] = currency
-    flatData = Flat.objects.all()
+    flatData = models.Flat.objects.all()
     data["flat"] = flatData
     data["ptype"] = models.Flat.gender
     data["term"] = models.Flat.termChoice
@@ -479,7 +490,7 @@ def flats(request):
 def addFlat(request):
     message = None
     success = False
-    form = Flatform(request.POST or None)
+    form = Flatform(request.POST or None,request.FILES)
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")

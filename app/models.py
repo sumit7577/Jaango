@@ -6,6 +6,46 @@ from django.utils import timezone
 
 phone_regex = RegexValidator(regex=r'^\+1?\d{9,15}$', message="Phone number must be entered in the format: '+(country Code)99999'. Up to 18 digits allowed.")
 # Create your models here.
+
+state = [
+    ("Abia","Abia"),
+    ("Adamawa","Adamawa"),
+    ("Akwa Ibom","Akwa Ibom"),
+    ("Anambra","Anambra"),
+    ("Bauchi","Bauchi"),
+    ("Bayelsa","Bayelsa"),
+    ("Benue","Benue"),
+    ("Borno","Borno"),
+    ("Cross River","Cross River"),
+    ("Delta","Delta"),
+    ("Ebonyi","Ebonyi"),
+    ("Edo","Edo"),
+    ("Ekiti","Ekiti"),
+    ("Enugu","Enugu"),
+    ("Federal Capital Territory","Federal Capital Territory"),
+    ("Gombe","Gombe"),
+    ("Imo","Imo"),
+    ("Jigawa","Jigawa"),
+    ("kaduna","kaduna"),
+    ("Kano","Kano"),
+    ("Katsina","Katsina"),
+    ("Kebbi","Kebbi"),
+    ("Kogi","Kogi"),
+    ("Kwara","Kwara"),
+    ("Lagos","Lagos"),
+    ("Nasarawa","Nasarawa"),
+    ("Niger","Niger"),
+    ("Ogun","Ogun"),
+    ("Ondo","Ondo"),
+    ("Osun","Osun"),
+    ("Oyo","Oyo"),
+    ("Plateau","Plateau"),
+    ("Rivers","Rivers"),
+    ("Sokoto","Sokoto"),
+    ("Taraba","Taraba"),
+    ("Yobe","Yobe"),
+    ("Zamfara","Zamfara")
+]
 class UserDetails(models.Model):
     UserChoice = [
         ("Company","Company"),
