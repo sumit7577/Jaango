@@ -19,4 +19,10 @@ urlpatterns = [
     path("property",views.property,name="property"),
     path('login', views.login_view, name='login'),
     path("logout/", views.logou, name="logout"),
+    path("property/<str:id>",views.propertyView,name="propertyView"),
+    path("structure/<str:id>",views.structureView,name="structureView"),
+    path("materials/<str:id>",views.materialView,name="materialView"),
+    path("flats/<str:id>",views.flatView,name="flatView"),
+    path("equipment/<str:id>",views.equipmentView,name="equipmentView"),
+    path("services/<str:id>",views.serviceView,name="serviceView"),
 ]

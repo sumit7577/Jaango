@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+{% block title %} Property {% endblock %}
+{% block button %} {% endblock %}
+{% block body %}
+<style>
+    .item-details{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        font-size: 18px;
+    }
+    button{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        font-size: 18px;
+    }
+</style>
+<div class="container-fluid content-default">
+    <div class="detail-page no-margin">
+        <div class="row images-section">
+            <div class="col-md-6 text-center selected-image">
+
+                <img class="img-responsive propImg" id="grid-image-0" src="../Files/{{property.0.image1}}">
+                <div class="item-title">
+                    <h3 id="property-title" class="text-uppercase">{{property.0.Title}}</h3>
+                </div>
+            </div>
+            <div class="col-md-6 image-grid">
+                <div id="property-image-grid-container" class="row image-grid-1">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{property.0.image2}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{property.0.image3}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{property.0.image4}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{property.0.image5}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{property.0.image6}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{property.0.image7}}">
+                </div>
+            </div>
+        </div>
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">PROPERTY DETAILS</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">Name </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{property.0.Title}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Added By </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{property.0.user.username}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Sale or Rent </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="sale_or_rent">{{property.0.Type}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Property type </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{property.0.PropertyType}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Property Subcategory </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_subcategory">{{property.0.SubCategory}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">City </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_location_city">{{property.0.City}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">State </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_location_state">{{property.0.State}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Size </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_location_area">{{property.0.Size}} SQ.FT</span>
+                        </td>
+                    </tr>
+                    {% if property.0.PropertyType != "Land" %}
+                    <tr class="col-md-6" id="bedrooms_row">
+                        <td>
+                            <p class="no-margin">Bedrooms </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="bedrooms">{{property.0.Rooms}}</span>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if property.0.PropertyType != "Land" %}
+                    <tr class="col-md-6" id="bathrooms_row">
+                        <td>
+                            <p class="no-margin">Bathrooms </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="bathrooms">{{ property.0.Bathroom }}</span>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Price </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="price">{{ property.0.Price }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="price_condition_detail_view_r">
+                        <td>
+                            <p class="no-margin">Price Conditions</p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="price_condition_detail_view">{{ property.0.PriceConditions }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="deposit_or_bond_detail_view_r">
+                        <td>
+                            <p class="no-margin">Deposit/Bond</p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="deposit_or_bond_detail_view">{{ property.0.Deposit }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="agent_commission_detail_view_r">
+                        <td>
+                            <p class="no-margin">Agent Commission</p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="agent_commission_detail_view">{{ property.0.AgentCommision }}</span>
+                        </td>
+                    </tr>
+                    {% if property.0.PropertyType != "Land" %}
+                    <tr class="col-md-6" id="garage_row">
+                        <td>
+                            <p class="no-margin">Garage </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="garage">{{ property.0.Garages }}</span>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Description </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="description">{{ property.0.Description }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Address </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="address">{{ property.0.Address }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="agent-contact-details-detail-view-r">
+                        <td>
+                            <p class="no-margin">Agent Contact Details </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="agent-contact-details">{{ property.0.user.username }}</span>
+                            
+                        </td>
+                        <td>
+                            ,<span class="no-margin" id="agent-contact-details">{{ property.0.user.userdetails.mobile }}</span>
+                            
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-build-yr-r">
+                        <td>
+                            <p class="no-margin">Build Year </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-build-year">{{ property.0.BuildYear }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-car-spaces-r">
+                        <td>
+                            <p class="no-margin">Car Spaces </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-car-spaces">{{ property.0.CarSpaces }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-furnishing-r">
+                        <td>
+                            <p class="no-margin">Fully Furnished </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-furnishing-status">{{ property.0.FullyFurnished }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-indoor-features-r">
+                        <td>
+                            <p class="no-margin">Indoor Features </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin">
+                                {{ property.0.IndoorFeaturs }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-outdoor-features-r">
+                        <td>
+                            <p class="no-margin">Outdoor Features </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin">
+                                <ul class="list-unstyled feature-list" id="property-outdoor-features">
+                                    <li class="comma-span">{{ property.0.OutdoorFeatures }}</li>
+                                    
+                                </ul>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-eco-features-r">
+                        <td>
+                            <p class="no-margin">Eco Features </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin">
+                                <ul class="list-unstyled feature-list" id="property-eco-features">
+                                    <li class="comma-span"> {{ property.0.EcoFeatures }}</li>
+                                    
+                                </ul>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-other-features-r">
+                        <td>
+                            <p class="no-margin">Other Features </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin">
+                                <ul class="list-unstyled feature-list" id="property-other-features">
+                                    <li class="comma-span">{{ property.0.OtherFeatures }}</li>
+                                   
+                                </ul>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="property-indoor-features-r">
+                        <td>
+                            <p class="no-margin">Date </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin">
+                                {{ property.0.Date }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" id="property-contact-button"
+            class="btn btn-info btn-sm col-xs-12 col-sm-6 col-md-4 col-lg-3 detail-page-contact-button"
+            data-toggle="modal" data-target=".contact-modal">
+            <h3>Contact Us</h3>
+        </button>
+
+        <div class="location-item">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

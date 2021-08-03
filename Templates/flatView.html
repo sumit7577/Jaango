@@ -1,0 +1,456 @@
+{% extends "base.html" %}
+{% block title %} Property {% endblock %}
+{% block button %} {% endblock %}
+{% block body %}
+<style>
+    .item-details{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        font-size: 18px;
+    }
+    button{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+        font-size: 18px;
+    }
+</style>
+<div class="container-fluid content-default">
+    <div class="detail-page no-margin">
+        <div class="row images-section">
+            <div class="col-md-6 text-center selected-image">
+
+                <img class="img-responsive propImg" id="grid-image-0" src="../Files/{{flat.0.image1}}">
+                <div class="item-title">
+                    <h3 id="property-title" class="text-uppercase">{{flat.0.Title}}</h3>
+                </div>
+            </div>
+            <div class="col-md-6 image-grid">
+                <div id="property-image-grid-container" class="row image-grid-1">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{flat.0.image2}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{flat.0.image3}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{flat.0.image4}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{flat.0.image5}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{flat.0.image6}}">
+                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
+                        src="../Files/{{flat.0.image7}}">
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">BASIC INFO</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">Name </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Title}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Added By </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.user.username}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Sale or Rent </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="sale_or_rent">{{flat.0.Type}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">City </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.City}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">State </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_subcategory">{{flat.0.State}}</span>
+                        </td>
+                    </tr>
+                   
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Address </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_location_area">{{flat.0.Address}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Total No. of Rooms up for Sharing </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="price">{{ flat.0.Rooms }}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6" id="price_condition_detail_view_r">
+                        <td>
+                            <p class="no-margin">Description</p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="price_condition_detail_view">{{ flat.0.Description }}</span>
+                        </td>
+                    </tr>
+
+                    <tr class="col-md-6" id="agent-contact-details-detail-view-r">
+                        <td>
+                            <p class="no-margin">Agent Contact Details </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="agent-contact-details">{{ flat.0.user.username }}</span>
+                            
+                        </td>
+                        <td>
+                            ,<span class="no-margin" id="agent-contact-details">{{ flat.0.user.userdetails.mobile }}</span>
+                            
+                        </td>
+                        <td>
+                            ,<span class="no-margin" id="agent-contact-details">{{ flat.0.user.email }}</span>
+                            
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">Current Household</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">
+                                No. of Housemates </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.RoomMate}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Ages </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.MaxAge}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Gender </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="sale_or_rent">{{flat.0.Gender}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Languages </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Language}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Occupation </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_subcategory">{{flat.0.Occupation}}</span>
+                        </td>
+                    </tr>
+                   
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Smoker Allowed </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property_location_area">{{flat.0.Smoker}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Pets Allowed </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="price">{{ flat.0.Pets }}</span>
+                        </td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">Rent & Other Expenses</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    {% if property.0.type == "Rent" %}
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">
+                                Rent </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Currency}} {{flat.0.Rent}}</span>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Extra Costs </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Currency}} {{flat.0.Extra}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Deposit </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="sale_or_rent">{{flat.0.Currency}} {{flat.0.Deposit}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Bills Included </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Bills}}</span>
+                        </td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">Preference for Housemates</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">
+                                Smoking Allowed </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Smoker}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Pets Allowed </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Pets}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Occupation </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Occupation}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">References </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Reference}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Minimum Age </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.MinAge}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Gender </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Gender}}</span>
+                        </td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">Availability</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">                        
+Available From </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.From}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Minimum Term </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Minimum}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Maximum Term </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Maximum}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Short Lets Considered </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Short}}</span>
+                        </td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="item-details">
+            <div class="details-heading vertical-align">
+                <h3 class="no-margin display-inline">Amenities</h3>
+            </div>
+            <table class="table table-sm item-details-table">
+                <tbody>
+                    
+                    <tr class="col-md-6">
+                        <td>
+                            <p id="propery-name-label" class="no-margin">
+                                
+Ensuite Toilet? </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Toilet}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Furnishings </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-user-name">{{flat.0.Furnishing}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Parking Allowed </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Parking}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Garage Available </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Garage}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Garden Available </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Garden}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Balcony Available </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Balcony}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Living Room </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.LivingRoom}}</span>
+                        </td>
+                    </tr>
+                    <tr class="col-md-6">
+                        <td>
+                            <p class="no-margin">Broadband Included </p>
+                        </td>
+                        <td>
+                            : <span class="no-margin" id="property-type">{{flat.0.Broadband}}</span>
+                        </td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+        <button type="button" id="property-contact-button"
+            class="btn btn-info btn-sm col-xs-12 col-sm-6 col-md-4 col-lg-3 detail-page-contact-button"
+            data-toggle="modal" data-target=".contact-modal">
+            <h3>Contact Us</h3>
+        </button>
+
+        <div class="location-item">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

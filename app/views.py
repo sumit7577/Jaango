@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Files, Flat, UserDetails, Property, Structure, Equipment, Material, Service
 from .forms2 import propertyForm, Structure, Equipment, Material, Service, Flatform
 from app import models
-
 from app import forms2
 
 # Create your views here.
@@ -177,6 +176,13 @@ def addProperty(request):
     return render(request, "addProperty.html", {"form": form, "message": message, "success": success})
 
 
+def propertyView(request,id):
+    data = {}
+    property = Property.objects.filter(id=id)
+    data["property"] = property
+    return render(request,"propertyView.html",data)
+
+
 def structure(request):
     data = {}
     data["currency"] = currency
@@ -262,6 +268,13 @@ def addStructure(request):
     return render(request, "addStructure.html", {"form": form, "message": message, "success": success})
 
 
+def structureView(request,id):
+    data = {}
+    structure = models.Structure.objects.filter(id=id)
+    data["structure"] = structure
+    return render(request,"structureView.html",data)
+
+
 def equipment(request):
     data = {}
     data["currency"] = currency
@@ -328,6 +341,13 @@ def addEquipment(request):
     return render(request, "addEquipment.html", {"form": form, "message": message, "success": success})
 
 
+def equipmentView(request,id):
+    data = {}
+    equipment = models.Equipment.objects.filter(id=id)
+    data["equipment"] = equipment
+    return render(request,"equipmentView.html",data)
+
+
 def services(request):
     data = {}
     newList = []
@@ -377,6 +397,13 @@ def addService(request):
             message = "Please Provide all details that is required Correctly"
 
     return render(request, "addService.html", {"form": form, "message": message, "success": success})
+
+
+def serviceView(request,id):
+    data = {}
+    service = models.Service.objects.filter(id=id)
+    data["service"]= service
+    return render(request,"serviceView.html",data)
 
 
 def material(request):
@@ -441,6 +468,13 @@ def addMaterial(request):
             message = "Please Provide all details that is required Correctly"
 
     return render(request, "addMaterial.html", {"form": form, "message": message, "success": success})
+
+
+def materialView(request,id):
+    data = {}
+    material = models.Material.objects.filter(id=id)
+    data["material"] = material
+    return render(request,"materialView.html",data)
 
 
 def flats(request):
@@ -531,6 +565,13 @@ def addFlat(request):
             message = "Please fill out the form correctly"
             success = False
     return render(request, "addFlat.html", {"form": form})
+
+
+def flatView(request,id):
+    data = {}
+    flat = models.Flat.objects.filter(id=id)
+    data["flat"] = flat
+    return render(request,"flatView.html",data)
 
 
 def logou(request):
