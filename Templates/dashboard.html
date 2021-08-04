@@ -14,16 +14,17 @@
     padding: 10px !important;
     border-radius: 6px !important;
     height: 46px !important;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    font-family: 'Roboto', sans-serif;
     border: 2px solid #ccc !important;
   }
 
   h6 {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    font-family: 'Roboto', sans-serif;
     font-size: medium;
+    font-weight: bold;
   }
 
-  .btn{
+  .btn {
     color: #ffffff !important;
     background: #4b5867 !important;
     font-size: 16px !important;
@@ -32,15 +33,126 @@
     margin-top: 36px;
     height: 42px;
     border-radius: 6px;
-    width: 100%!important;
+    width: 100% !important;
   }
 
-  .nav-item .active{
-    color: black!important;
+  .nav-item .active {
+    color: black !important;
+  }
+
+  .subpage-intro-tiles h4 {
+    padding: 0 !important;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4b5868;
+  }
+
+  .site_box_content p {
+    font-size: 17px;
+    line-height: 1.5;
+    max-height: 140px;
+    overflow: hidden;
+    margin-bottom: 15px !important;
+  }
+
+  .site_box_content {
+    padding: 15px 15px;
+    border: 1px solid #ececec;
+    border-top: 0;
+  }
+
+  .site_box_content a:hover {
+    color: #05acfa !important;
+  }
+
+  .site_box_content a {
+    font-size: 15px;
+    font-weight: bold!important;
+    padding-top: 0px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+
+  * {
+    font-family: 'Roboto', sans-serif !important;
+    letter-spacing: .5px !important;
+  }
+
+  @media (min-width: 1200px) {
+    .tab-pane .col-lg-2 {
+      width: 13.666667%;
+    }
+  }
+
+  .content {
+    padding: 0 4% 0px !important;
+    letter-spacing: .5px !important;
+  }
+
+  .div-about {
+    color: #4b5966;
+    background-color: #edfaff;
+    padding: 60px 0;
+  }
+
+  .solid-container {
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 0px 15px;
+  }
+
+  .row {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .align-center {
+    text-align: center;
+
+  }
+
+  .div-about p {
+    font-size: 19px;
+    line-height: 1.8;
+    margin: 40px 0 10px;
+  }
+
+  .about_part {
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  @media (min-width: 992px) {
+    .col-md-3 {
+      width: 25%;
+    }
+
+    .about_part {
+      flex-direction: row;
+    }
+  }
+
+  .about_part .milestone-counter {
+    margin: 18px;
+  }
+
+  .milestone-counter h4.milestone-info {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4b5868;
+    text-transform: uppercase;
+    padding: 0 !important;
+    margin: 0;
   }
 </style>
 <!--search filter part-->
-<div class="container-fluid content">
+<div class="container-fluid content" style="background-color: white;">
   <div class="row main-enquiry no-margin">
 
     <div class="navbar-header">
@@ -49,7 +161,8 @@
     </div>
 
     <div class="col-xs-12">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 0px!important; margin-top: 10px; background-color: #34404d !important; font-family: 'Gill Sans', 'Gill Sans MT', Calibri!important; font-weight: bold;">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+        style="margin-bottom: 0px!important; margin-top: 30px; background-color: #34404d !important; font-family: 'Roboto', sans-serif!important; font-weight: bold;">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,14 +190,14 @@
         </div>
       </nav>
       <!-- Tab panes -->
-      <div class="row tab-content main-enquiry-form">
+      <div class="row tab-content main-enquiry-form" style="background-color: white;">
 
         <div role="tabpanel" class="tab-pane active" id="for-property">
           <div class="for-sale-search">
             <form method="POST" action="/property">{% csrf_token %}
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <h6>Property Type</h6>
+                <h6>Type</h6>
                 <select class="selectpicker lst-property-type" id="lst-sale-or-rent" name="lst-sale-or-rent">
                   <option value="" style="display: none;">Any</option>
                   <option value="Sale">For Sale</option>
@@ -94,8 +207,7 @@
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>State</h6>
-                <select class="selectpicker lst-property-type" id="state" name="state"
-                  title="All Types">
+                <select class="selectpicker lst-property-type" id="state" name="state" title="All Types">
                   {% for i in state %}
                   <option value="" style="display: none;">Any</option>
                   <option value="{{i.0}}">{{i.1}}</option>
@@ -105,35 +217,33 @@
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>City</h6>
-                <select class="selectpicker lst-property-type" id="city" name="city"
-                  title="All Types">
+                <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
                   <option value="" style="display: none;">Any</option>
                   <option value="">All Cities</option>
                 </select>
               </div>
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
-                <div class="rent-currency-flat">
-                  <h6>Property Type</h6>
-                  <select id="lst-property-type" class="lst-property-type" name="lst-property-type">
-                    {% for i in ptype %}
-                    <option value="" style="display: none;">Any</option>
-                    <option value="{{i.0}}">{{i.1}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
 
-                <div class="rent-currency-flat">
-                  <h6>Price</h6>
-                  <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
-                    <option value="" style="display: none;">Any</option>
-                    <option value="1000-lt">
-                      <1000 </option>
-                    <option value="1000-10000">1000-10000</option>
-                    <option value="10000-20000">10000-20000</option>
-                    <option value="2000-rt">20000></option>
-                  </select>
-                </div>
+                <h6>Property Type</h6>
+                <select id="lst-property-type" class="lst-property-type" name="lst-property-type">
+                  {% for i in ptype %}
+                  <option value="" style="display: none;">Any</option>
+                  <option value="{{i.0}}">{{i.1}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                <h6>Price</h6>
+                <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+                  <option value="" style="display: none;">Any</option>
+                  <option value="1000-lt">
+                    <1000 </option>
+                  <option value="1000-10000">1000-10000</option>
+                  <option value="10000-20000">10000-20000</option>
+                  <option value="2000-rt">20000></option>
+                </select>
               </div>
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
@@ -158,11 +268,12 @@
 
         <div role="tabpanel" class="tab-pane" id="for-materials">
           <div class="for-rent-search">
-            <form  method="POST" action="/materials">{% csrf_token %}
+            <form method="POST" action="/materials">{% csrf_token %}
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>Material Type</h6>
-                <select id="lst-currency-sale" class="selectpicker currency-list" id="lst-property-type" name="lst-property-type">
+                <select id="lst-currency-sale" class="selectpicker currency-list" id="lst-property-type"
+                  name="lst-property-type">
                   {% for i in mtype %}
                   <option value="" style="display: none;">Any</option>
                   <option value="{{i.0}}">{{i.1}}</option>
@@ -208,8 +319,7 @@
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>City</h6>
-                <select class="selectpicker lst-property-type" id="city" name="city"
-                  title="All Types">
+                <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
                   <option value="" style="display: none;">Any</option>
                   <option value="">All Cities</option>
                 </select>
@@ -258,8 +368,7 @@
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
               <h6>City</h6>
-              <select class="selectpicker lst-property-type" id="city" name="city"
-                title="All Types">
+              <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
                 <option value="" style="display: none;">Any</option>
                 <option value="">All Cities</option>
               </select>
@@ -320,8 +429,7 @@
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
               <h6>City</h6>
-              <select class="selectpicker lst-property-type" id="city" name="city"
-                title="All Types">
+              <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
                 <option value="" style="display: none;">Any</option>
                 <option value="">All Cities</option>
               </select>
@@ -363,94 +471,133 @@
     </div>
   </div>
   <div class="row subpage-intro-tiles">
-    <div class="col-sm-4">
+    <div class="col-sm-6 col-md-3">
       <h4>Properties</h4>
-      <a href="/properties/">
-        <img src="/static/assets/images/home-property-picture.jpg" class="img-responsive center-block">
+      <a href="/property">
+        <img class="img-responsive center-block" src="/static/assets/images/home-property-picture.jpg"></img>
       </a>
-      <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
-        libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
-        lobortis.
-      </p>
-      <a href="/properties/">More Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+      <div class="site_box_content">
+        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+          lobortis.
+        </p>
+        <a href="/property">View Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+      </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6 col-md-3">
       <h4>Constructions</h4>
-      <a href="/construction/equipment-details">
-        <img src="/static/assets/images/home-construction-picture.jpg" class="img-responsive center-block">
+      <a href="/structure">
+        <img class="img-responsive center-block" src="/static/assets/images/home-construction-picture.jpg"></img>
       </a>
-      <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
-        libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
-        lobortis.
-      </p>
-      <a href="/construction/equipment-details">More Details &nbsp; <i class="fa fa-caret-right"
-          aria-hidden="true"></i></a>
+      <div class="site_box_content">
+        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+          lobortis.
+        </p>
+        <a href="/structure">View Details &nbsp; <i class="fa fa-caret-right"
+            aria-hidden="true"></i></a>
+      </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6 col-md-3">
       <h4>Services</h4>
-      <a href="/services/">
-        <img src="/static/assets/images/home-services-picture.jpg" class="img-responsive center-block">
+      <a href="/services">
+        <img class="img-responsive center-block" src="/static/assets/images/home-services-picture.jpg"></img>
       </a>
-      <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
-        libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
-        lobortis.
-      </p>
-      <a href="/services/">More Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+      <div class="site_box_content">
+        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+          lobortis.
+        </p>
+        <a href="/services">View Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <h4>Materials</h4>
+      <a href="/materials">
+        <img class="img-responsive center-block" src="/static/assets/images/home-property-picture.jpg"></img>
+      </a>
+      <div class="site_box_content">
+        <p class="no-padding">Quisque turpis quam, ornare sed hendrerit vitae, feugiat eget nisl. Fusce sollicitudin
+          libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
+          lobortis.
+        </p>
+        <a href="/materials">View Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="container-fluid div-about">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="">
-        ABOUT US
-      </h1>
-      <!--<img src="" class="intro-logo img-responsive" alt="free-template"> &lt;!&ndash; Your company logo in white &ndash;&gt;-->
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
-        eu molestie. Fusce pretium ex quis egestas facilisis. Nulla facilisi.
-        Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor. Suspendisse eget
-        odio auctor mi ultricies ullamcorper nec varius justo.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
-        eu molestie. Fusce pretium ex quis egestas facilisis.
-        Nulla facilisi. Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor.
-        Suspendisse eget odio auctor mi ultricies ullamcorper nec varius justo.</p>
-    </div>
-    <div class="col-md-3">
-      <a href="/properties">
-        <div class="milestone-counter">
-          <div class="milestone-count c-gray" data-from="0" id="no-of-properties" data-to="11100" data-speed="3000"
-            data-refresh-interval="100"></div>
-          <h4 class="milestone-info c-gray">Properties</h4>
+
+
+<div class="container-fluids div-about">
+  <div class="solid-container">
+    <div class="row">
+      <div class="col-md-12 align-center">
+        <h1 style="font-weight: bold;">
+          About Us
+        </h1>
+        <!--<img src="" class="intro-logo img-responsive" alt="free-template"> &lt;!&ndash; Your company logo in white &ndash;&gt;-->
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
+          eu molestie. Fusce pretium ex quis egestas facilisis. Nulla facilisi.
+          Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor. Suspendisse eget
+          odio auctor mi ultricies ullamcorper nec varius justo.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget neque nulla. Nullam interdum vel nibh
+          eu molestie. Fusce pretium ex quis egestas facilisis.
+          Nulla facilisi. Proin non euismod magna, vitae ultricies arcu. Suspendisse tempus purus in aliquam tempor.
+          Suspendisse eget odio auctor mi ultricies ullamcorper nec varius justo.</p>
+      </div>
+      <div class="col-sm-12 about_part">
+        <div class="col-md-3">
+          <a href="/property">
+            <div class="milestone-counter">
+              <!--                                <figure class="icon-abt"><img src="/static/assets/icons/property.svg" alt="Properties - Jaango"></figure>-->
+              <div class="milestone-count c-gray" data-from="0" id="no-of-properties" data-to="11100" data-speed="3000"
+                data-refresh-interval="100">39</div>
+              <h4 class="milestone-info c-gray">Properties</h4>
+            </div>
+          </a>
         </div>
-      </a>
-    </div>
-    <div class="col-md-3">
-      <a href="/home/flat-list">
-        <div class="milestone-counter">
-          <div class="milestone-count c-gray" id="no-of-flats" data-from="0" data-to="154" data-speed="5000"
-            data-refresh-interval="50"></div>
-          <h4 class="milestone-info c-gray">Rent Flats</h4>
+        <div class="col-md-3">
+          <a href="/flats">
+            <div class="milestone-counter">
+              <!--                                <figure class="icon-abt"><img src="/static/assets/icons/rent-flat.svg" alt="Rent Flats - Jaango"></figure>-->
+              <div class="milestone-count c-gray" id="no-of-flats" data-from="0" data-to="154" data-speed="5000"
+                data-refresh-interval="50">8</div>
+              <h4 class="milestone-info c-gray">Rent Flats</h4>
+            </div>
+          </a>
         </div>
-      </a>
-    </div>
-    <div class="col-md-3">
-      <a href="/materials">
-        <div class="milestone-counter">
-          <div class="milestone-count c-gray" data-from="0" data-to="430" data-speed="5000" id="no-of-materials"
-            data-refresh-interval="80"></div>
-          <h4 class="milestone-info c-gray">Materials</h4>
+        <div class="col-md-3">
+          <a href="/flats">
+            <div class="milestone-counter">
+              <!--                                <figure class="icon-abt"><img src="/static/assets/icons/property.svg" alt="Properties - Jaango"></figure>-->
+              <div class="milestone-count c-gray" data-from="0" id="no-of-share-flats" data-to="11100" data-speed="3000"
+                data-refresh-interval="100">15</div>
+              <h4 class="milestone-info c-gray">Shared Flats</h4>
+            </div>
+          </a>
         </div>
-      </a>
-    </div>
-    <div class="col-md-3">
-      <a href="/construction/equipment-details">
-        <div class="milestone-counter">
-          <div class="milestone-count c-gray" data-from="0" data-to="1230" data-speed="5000" id="no-of-equipments"
-            data-refresh-interval="80"></div>
-          <h4 class="milestone-info c-gray">Equipments</h4>
+        <div class="col-md-3">
+          <a href="/materials">
+            <div class="milestone-counter">
+              <!--                                <figure class="icon-abt"><img src="/static/assets/icons/service.svg" alt="Materials - Jaango"></figure>-->
+              <div class="milestone-count c-gray" data-from="0" data-to="430" data-speed="5000" id="no-of-materials"
+                data-refresh-interval="80">23</div>
+              <h4 class="milestone-info c-gray">Materials</h4>
+            </div>
+          </a>
         </div>
-      </a>
+        <div class="col-md-3">
+          <a href="/equipment">
+            <div class="milestone-counter">
+              <!--                                <figure class="icon-abt"><img src="/static/assets/icons/property.svg" alt="Properties - Jaango"></figure>-->
+              <div class="milestone-count c-gray" data-from="0" data-to="1230" data-speed="5000" id="no-of-equipments"
+                data-refresh-interval="80">23</div>
+              <h4 class="milestone-info c-gray">Equipments</h4>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
