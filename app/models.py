@@ -1,4 +1,3 @@
-from datetime import time
 from django.db import  models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
@@ -126,22 +125,19 @@ class Property(models.Model):
     OtherFeatures = models.CharField(max_length=500)
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
-    image2 = models.FileField(upload_to="Images",null=True,blank=True)
-    image3 = models.FileField(upload_to="Images",null=True,blank=True)
-    image4 = models.FileField(upload_to="Images",null=True,blank=True)
-    image5 = models.FileField(upload_to="Images",null=True,blank=True)
-    image6 = models.FileField(upload_to="Images",null=True,blank=True)
-    image7 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
-    image2Verify = models.BooleanField(blank=True,null=True)
-    image3Verify = models.BooleanField(blank=True,null=True)
-    image4Verify = models.BooleanField(blank=True,null=True)
-    image5Verify = models.BooleanField(blank=True,null=True)
-    image6Verify = models.BooleanField(blank=True,null=True)
-    image7Verify = models.BooleanField(blank=True,null=True)
 
     def __str__(self) -> str:
         return self.Title
+
+class PropertyIMage(models.Model):
+    projectName = models.ForeignKey(Property,on_delete=models.CASCADE)
+    image = models.FileField(upload_to="Images",null=True,blank=True)
+    Verified = models.BooleanField(null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return self.projectName.Title
 
 
 class Equipment(models.Model):
@@ -159,24 +155,21 @@ class Equipment(models.Model):
     Status = models.CharField(choices=status,max_length=30)
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
-    image2 = models.FileField(upload_to="Images",null=True,blank=True)
-    image3 = models.FileField(upload_to="Images",null=True,blank=True)
-    image4 = models.FileField(upload_to="Images",null=True,blank=True)
-    image5 = models.FileField(upload_to="Images",null=True,blank=True)
-    image6 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
-    image2Verify = models.BooleanField(blank=True,null=True)
-    image3Verify = models.BooleanField(blank=True,null=True)
-    image4Verify = models.BooleanField(blank=True,null=True)
-    image5Verify = models.BooleanField(blank=True,null=True)
-    image6Verify = models.BooleanField(blank=True,null=True)
 
     def __str__(self) -> str:
         return self.user.username
 
-    
 
-    
+class EquipmentImage(models.Model):
+    projectName = models.ForeignKey(Equipment,on_delete=models.CASCADE)
+    image = models.FileField(upload_to="Images",null=True,blank=True)
+    Verified = models.BooleanField(null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return self.projectName.EquipmentType
+
 
 class Structure(models.Model):
     category = [("Commercial","Commercial"),("Residential","Residential")]
@@ -195,20 +188,22 @@ class Structure(models.Model):
     InitialCost = models.IntegerField()
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
-    image2 = models.FileField(upload_to="Images",null=True,blank=True)
-    image3 = models.FileField(upload_to="Images",null=True,blank=True)
-    image4 = models.FileField(upload_to="Images",null=True,blank=True)
-    image5 = models.FileField(upload_to="Images",null=True,blank=True)
-    image6 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
-    image2Verify = models.BooleanField(blank=True,null=True)
-    image3Verify = models.BooleanField(blank=True,null=True)
-    image4Verify = models.BooleanField(blank=True,null=True)
-    image5Verify = models.BooleanField(blank=True,null=True)
-    image6Verify = models.BooleanField(blank=True,null=True)
+    
 
     def __str__(self) -> str:
         return self.user.username
+
+
+class StructureImage(models.Model):
+    projectName = models.ForeignKey(Structure,on_delete=models.CASCADE)
+    image = models.FileField(upload_to="Images",null=True,blank=True)
+    Verified = models.BooleanField(null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return self.projectName.PropertyType
+
     
 
 class Service(models.Model):
@@ -231,21 +226,22 @@ class Service(models.Model):
     ServiceType = models.CharField(choices=serviceType,max_length=80)
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
-    image2 = models.FileField(upload_to="Images",null=True,blank=True)
-    image3 = models.FileField(upload_to="Images",null=True,blank=True)
-    image4 = models.FileField(upload_to="Images",null=True,blank=True)
-    image5 = models.FileField(upload_to="Images",null=True,blank=True)
-    image6 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
-    image2Verify = models.BooleanField(blank=True,null=True)
-    image3Verify = models.BooleanField(blank=True,null=True)
-    image4Verify = models.BooleanField(blank=True,null=True)
-    image5Verify = models.BooleanField(blank=True,null=True)
-    image6Verify = models.BooleanField(blank=True,null=True)
+    
 
 
     def __str__(self) -> str:
         return self.Title
+
+class ServiceImage(models.Model):
+    projectName = models.ForeignKey(Service,on_delete=models.CASCADE)
+    image = models.FileField(upload_to="Images",null=True,blank=True)
+    Verified = models.BooleanField(null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return self.projectName.Title
+
 
 class Material(models.Model):
     type = [
@@ -281,20 +277,21 @@ class Material(models.Model):
     Weight = models.CharField(choices=weight,max_length=80)
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
-    image2 = models.FileField(upload_to="Images",null=True,blank=True)
-    image3 = models.FileField(upload_to="Images",null=True,blank=True)
-    image4 = models.FileField(upload_to="Images",null=True,blank=True)
-    image5 = models.FileField(upload_to="Images",null=True,blank=True)
-    image6 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
-    image2Verify = models.BooleanField(blank=True,null=True)
-    image3Verify = models.BooleanField(blank=True,null=True)
-    image4Verify = models.BooleanField(blank=True,null=True)
-    image5Verify = models.BooleanField(blank=True,null=True)
-    image6Verify = models.BooleanField(blank=True,null=True)
+    
 
     def __str__(self) -> str:
         return self.Title
+
+
+class MaterialImage(models.Model):
+    projectName = models.ForeignKey(Material,on_delete=models.CASCADE)
+    image = models.FileField(upload_to="Images",null=True,blank=True)
+    Verified = models.BooleanField(null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return self.projectName.Title
 
 
 class Flat(models.Model):
@@ -352,23 +349,18 @@ class Flat(models.Model):
     Pets = models.BooleanField()
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
-    image2 = models.FileField(upload_to="Images",null=True,blank=True)
-    image3 = models.FileField(upload_to="Images",null=True,blank=True)
-    image4 = models.FileField(upload_to="Images",null=True,blank=True)
-    image5 = models.FileField(upload_to="Images",null=True,blank=True)
-    image6 = models.FileField(upload_to="Images",null=True,blank=True)
-    image7 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
-    image2Verify = models.BooleanField(blank=True,null=True)
-    image3Verify = models.BooleanField(blank=True,null=True)
-    image4Verify = models.BooleanField(blank=True,null=True)
-    image5Verify = models.BooleanField(blank=True,null=True)
-    image6Verify = models.BooleanField(blank=True,null=True)
-    image7Verify = models.BooleanField(blank=True,null=True)
+    
 
     def __str__(self):
         return self.Title
-    
 
 
-    
+class FlatImage(models.Model):
+    projectName = models.ForeignKey(Flat,on_delete=models.CASCADE)
+    image = models.FileField(upload_to="Images",null=True,blank=True)
+    Verified = models.BooleanField(null=True,blank=True)
+
+
+    def __str__(self) -> str:
+        return self.projectName.Title

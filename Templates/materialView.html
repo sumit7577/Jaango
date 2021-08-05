@@ -24,16 +24,10 @@
             </div>
             <div class="col-md-6 image-grid">
                 <div id="property-image-grid-container" class="row image-grid-1">
+                    {% for k in images %}
                     <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
-                        src="../Files/{{material.0.image2}}">
-                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
-                        src="../Files/{{material.0.image3}}">
-                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
-                        src="../Files/{{material.0.image4}}">
-                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
-                        src="../Files/{{material.0.image5}}">
-                    <img class="img-responsive col-xs-6 grid-image" id="grid-image-1"
-                        src="../Files/{{material.0.image6}}">
+                        src="../Files/{{k.image}}">
+                    {% endfor %}
                 </div>
             </div>
         </div>

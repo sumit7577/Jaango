@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.fields import Field
 from .models import Property,Equipment,Structure,Service,Material,Flat
 
 Outdoor = [
@@ -200,43 +201,8 @@ class propertyForm(forms.Form):
                 "class":"validation"
             }
         ))
-    
-    image1 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
 
-    image2 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image3 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image4 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image5 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image6 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -298,42 +264,14 @@ class Structure(forms.Form):
             }
         ))
 
-    image1 = forms.ImageField(required=True,
+    image = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image2 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image3 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image4 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image5 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image6 = forms.ImageField(required=False,
+    image1 = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -409,42 +347,14 @@ class Structure(forms.Form):
 
 
 class Equipment(forms.Form):
-    image1 = forms.ImageField(required=True,
+    image = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image2 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image3 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image4 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image5 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image6 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -514,42 +424,14 @@ class Equipment(forms.Form):
 
 
 class Service(forms.Form):
-    image1 = forms.ImageField(required=True,
+    image = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image2 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image3 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image4 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image5 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image6 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -613,47 +495,20 @@ class Service(forms.Form):
 
 
 class Material(forms.Form):
-    image1 = forms.ImageField(required=True,
+    image = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image2 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=True,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
     
-    image3 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image4 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image5 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image6 = forms.ImageField(required=True,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
 
     item = forms.CharField(required=True,min_length=5,max_length=20,
         widget=forms.TextInput(
@@ -734,41 +589,6 @@ class Flatform(forms.Form):
         ))
 
     image1 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-
-    image2 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image3 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image4 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image5 = forms.ImageField(required=False,
-        widget=forms.FileInput(
-            attrs={
-                "class":"validation"
-            }
-        ))
-    
-    image6 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"

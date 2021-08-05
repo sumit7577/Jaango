@@ -12,10 +12,7 @@ UserChoice = [
 
 def customMobileValidator(mobile):
     data = False
-    try:
-        data = User.objects.filter(client__mobile=mobile).exists()
-    except:
-        data = User.objects.filter(developer__mobile= mobile).exists()
+    data = User.objects.filter(userdetails__mobile=mobile).exists()
     
     if(data == True):
         raise forms.ValidationError("Mobile Number already Exists")

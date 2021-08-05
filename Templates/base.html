@@ -108,6 +108,27 @@
     border-radius: 6px;
     margin-top: 0px;
   }
+  #scroller{
+    animation: sumit 15s ease-in infinite;
+
+  }
+  @keyframes sumit{
+    0%{
+      left:600px;
+    }
+    25%{
+      left:200px;
+    }
+    50%{
+      left:-200px;
+    }
+    75%{
+      left:-600px;
+    }
+    100%{
+      left:-1000px;
+    }
+  }
 </style>
 
 <body>
@@ -291,7 +312,7 @@
       </div>
       <div id="home-material-footer-content-container-1" class="row materials-bottom-row">
         <div id="scrollerWrapper">
-          <ul id="scroller" style="">
+          <ul id="scroller" style="left:1000px">
             <li class="li-featured-material">
               <h5 class="category-name">CEMENT</h5>
               <ul class="ul-featured-materials">

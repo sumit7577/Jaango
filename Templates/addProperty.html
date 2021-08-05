@@ -4,6 +4,22 @@
 {% block corousal %} {% endblock %}
 
 {% block body %}
+<style>
+  .imageView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 193px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  .imageView img,video{
+    height: inherit;
+    object-fit: contain;
+    width: 186px;
+  }
+</style>
 <link rel="stylesheet" href="/static/assets/css/image.css" />
 <header class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -21,14 +37,14 @@
           <div class="radiocheck">
             <ul id="id_sale" class="validation">
               <li><label for="id_sale_0"><input type="radio" name="sale" value="Sale" class="validation" id="id_sale_0">
-           For Sale</label>
-          
-          </li>
+                  For Sale</label>
+
+              </li>
               <li><label for="id_sale_1"><input type="radio" name="sale" value="Rent" class="validation" id="id_sale_1">
-           For Rent</label>
-          
-          </li>
-          </ul>
+                  For Rent</label>
+
+              </li>
+            </ul>
           </div>
           <div class="text-error">{{ form.sale.errors }}</div>
         </div>
@@ -169,10 +185,10 @@
       <div class="check">
 
         {{ form.indoor }}
-        
+
       </div>
       <div class="text-error">{{ form.indoor.errors }}</div>
-      
+
 
 
       <lable class="selectlabel">Outdoor Features</lable>
@@ -232,7 +248,7 @@
       <lable>Images</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported Formats JPG,
         JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
     </div>
-    <div class="image">
+    <div class="image" id="image">
       <div class="imageView"
         style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
         <div id="dropZoon1" class="upload-area__drop-zoon drop-zoon">
@@ -242,96 +258,14 @@
           <p class="drop-zoon__paragraph" id="para1">Drop your file here or Click to browse</p>
           <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
           <img src="" alt="Preview Image" id="previewImage1" draggable="false">
-          {{ form.image1 }}
+          <input type="file" name="image1" multiple class="validation" accept="image/*" id="id_image1">
 
         </div>
         <div class="text-error">{{ form.image1.errors }}</div>
-
       </div>
       
-
-      <div class="imageView"
-        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
-        <div id="dropZoon2" class="upload-area__drop-zoon drop-zoon">
-          <span class="drop-zoon__icon">
-            <i class='bx bxs-file-image'></i>
-          </span>
-          <p class="drop-zoon__paragraph" id="para2">Drop your file here or Click to browse</p>
-          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-          <img src="" alt="Preview Image" id="previewImage2" draggable="false">
-          {{ form.image2 }}
-
-        </div>
-        <div class="text-error">{{ form.image2.errors }}</div>
-
-      </div>
-
-      <div class="imageView"
-        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
-        <div id="dropZoon3" class="upload-area__drop-zoon drop-zoon">
-          <span class="drop-zoon__icon">
-            <i class='bx bxs-file-image'></i>
-          </span>
-          <p class="drop-zoon__paragraph" id="para3">Drop your file here or Click to browse</p>
-          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-          <img src="" alt="Preview Image" id="previewImage3" draggable="false">
-          {{ form.image3 }}
-
-        </div>
-        <div class="text-error">{{ form.image3.errors }}</div>
-
-      </div>
-
-      <div class="imageView"
-        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
-        <div id="dropZoon4" class="upload-area__drop-zoon drop-zoon">
-          <span class="drop-zoon__icon">
-            <i class='bx bxs-file-image'></i>
-          </span>
-          <p class="drop-zoon__paragraph" id="para4">Drop your file here or Click to browse</p>
-          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-          <img src="" alt="Preview Image" id="previewImage4" draggable="false">
-          {{ form.image4 }}
-
-        </div>
-        <div class="text-error">{{ form.image4.errors }}</div>
-
-      </div>
-
-      <div class="imageView"
-        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
-        <div id="dropZoon5" class="upload-area__drop-zoon drop-zoon">
-          <span class="drop-zoon__icon">
-            <i class='bx bxs-file-image'></i>
-          </span>
-          <p class="drop-zoon__paragraph" id="para5">Drop your file here or Click to browse</p>
-          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-          <img src="" alt="Preview Image" id="previewImage5" draggable="false">
-          {{ form.image5 }}
-
-        </div>
-        <div class="text-error">{{ form.image5.errors }}</div>
-
-      </div>
-
-      <div class="imageView"
-        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
-        <div id="dropZoon6" class="upload-area__drop-zoon drop-zoon">
-          <span class="drop-zoon__icon">
-            <i class='bx bxs-file-image'></i>
-          </span>
-          <p class="drop-zoon__paragraph" id="para6">Drop your file here or Click to browse</p>
-          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-          <img src="" alt="Preview Image" id="previewImage6" draggable="false">
-          {{ form.image6 }}
-
-        </div>
-        <div class="text-error">{{ form.image6.errors }}</div>
-
-      </div>
-
     </div>
-    
+
     <button class="btn btn-primary" style="margin-top: 15px; margin-left: 12px; height:4rem ;" type="submit">Add
       Property</button>
   </form>

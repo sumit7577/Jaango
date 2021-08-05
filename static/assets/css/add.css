@@ -206,3 +206,18 @@
         flex-direction: column;
         margin-bottom: 25px;
       }
+
+      .imageView {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 193px;
+        height: 150px;
+        border: 1px solid black;
+        border-radius: 5px;
+      }
+      .imageView img,video{
+        height: inherit;
+        object-fit: contain;
+        width: 186px;
+      }
