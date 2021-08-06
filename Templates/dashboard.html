@@ -67,7 +67,7 @@
 
   .site_box_content a {
     font-size: 15px;
-    font-weight: bold!important;
+    font-weight: bold !important;
     padding-top: 0px;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
@@ -208,10 +208,7 @@
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>State</h6>
                 <select class="selectpicker lst-property-type" id="state" name="state" title="All Types">
-                  {% for i in state %}
                   <option value="" style="display: none;">Any</option>
-                  <option value="{{i.0}}">{{i.1}}</option>
-                  {% endfor %}
                 </select>
               </div>
 
@@ -219,7 +216,6 @@
                 <h6>City</h6>
                 <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
                   <option value="" style="display: none;">Any</option>
-                  <option value="">All Cities</option>
                 </select>
               </div>
 
@@ -310,10 +306,10 @@
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>State</h6>
                 <select class="selectpicker currency-list" id="state" name="state">
-                  {% for i in state %}
+
                   <option value="" style="display: none;">Any</option>
-                  <option value="{{i.0}}">{{i.1}}</option>
-                  {% endfor %}
+                  <option>{{state}}</option>
+
                 </select>
               </div>
 
@@ -494,8 +490,7 @@
           libero enim, vel ornare quam maximus eu. Fusce at turpis id orci vestibulum convallis. Morbi commodo vehicula
           lobortis.
         </p>
-        <a href="/structure">View Details &nbsp; <i class="fa fa-caret-right"
-            aria-hidden="true"></i></a>
+        <a href="/structure">View Details &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i></a>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
@@ -603,6 +598,68 @@
 </div>
 
 <script>
+  const url = "https://www.universal-tutorial.com/api/getaccesstoken";
+  const params = {
+    method: "get",
+    headers: {
+      "api-token": "RA3CXl_mGCOaXWKU0ZckhiOrJnvm0gwB5Xz0wVJRrNoUuxCn0jR2a2xajMl4hOQuGEc",
+      "user-email": "don@gmail.com"
+    }
+  }
+
+  let request = fetch(url, params).then(response => response.json()).then(data => { return data });
+  request.then(function (result) {
+    const url2 = "https://www.universal-tutorial.com/api/states/Nigeria";
+    let params2 = {
+      method: "get",
+      headers: {
+        "Authorization": "Bearer " + result.auth_token,
+      }
+    }
+    fetch(url2, params2).then(response => response.json()).then((data) => {
+      const div = document.getElementById("state");
+      for (let k = 0; k < data.length; k++) {
+        const opt = document.createElement("option");
+        opt.innerHTML = data[k].state_name;
+        opt.classList.add("statesClass");
+        div.appendChild(opt);
+      }
+    })
+  });
+
+  const statesOption = document.getElementById("state");
+  statesOption.addEventListener("change", (e) => {
+
+    request.then(function (result) {
+      const url3 = `https://www.universal-tutorial.com/api/cities/${e.target.value}`;
+      console.log(url3);
+      let params2 = {
+        method: "get",
+        headers: {
+          "Authorization": "Bearer " + result.auth_token,
+        }
+      }
+      fetch(url3, params2).then(response => response.json()).then(data => {
+        console.log(data);
+        const city = document.getElementById("city");
+        const elements = city.getElementsByTagName("option");
+        console.log(elements);
+        if (elements.length > 1) {
+          for(let j=1; j<elements.length; j++){
+            city.removeChild(city.childNodes[j]);
+          }
+        }
+        for (let j = 1; j < data.length+1; j++) {
+          const opt = document.createElement("option");
+          opt.innerHTML = data[j].city_name;
+          opt.value = data[j].city_name;
+          city.appendChild(opt);
+        }
+
+      });
+    })
+
+  })
   const tab = document.getElementById("propertyTab");
   const tab1 = document.getElementById("materialTab");
   const tab2 = document.getElementById("serviceTab");
