@@ -40,7 +40,7 @@ def index(request):
     return render(request, "sign-up.html", {"form": form, "message": msg})
 
 
-@login_required(login_url="/login")
+
 def home(request):
     message = None
     data = {}
@@ -77,6 +77,10 @@ def login_view(request):
 
     return render(request, "sign-in.html", {"form": form, "msg": msg})
 
+def profile(request):
+    return render(request,"profile.html")
+
+
 
 def property(request):
     newList = []
@@ -88,8 +92,6 @@ def property(request):
     data["property"] = propertyData
     if request.method == "POST":
         fori = request.POST.get("lst-sale-or-rent")
-        print(fori)
-        print(data["property"])
         location = request.POST.get("lstcity")
         type = request.POST.get("lst-property-type")
         curr = request.POST.get("lst-currency")

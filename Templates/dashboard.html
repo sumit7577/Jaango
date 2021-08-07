@@ -305,19 +305,15 @@
             <form method="POST" action="/services">{% csrf_token %}
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>State</h6>
-                <select class="selectpicker currency-list" id="state" name="state">
-
+                <select class="selectpicker currency-list" id="state1" name="state1">
                   <option value="" style="display: none;">Any</option>
-                  <option>{{state}}</option>
-
                 </select>
               </div>
 
               <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                 <h6>City</h6>
-                <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
+                <select class="selectpicker lst-property-type" id="city1" name="city1" title="All Types">
                   <option value="" style="display: none;">Any</option>
-                  <option value="">All Cities</option>
                 </select>
               </div>
 
@@ -354,19 +350,15 @@
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
               <h6>State</h6>
-              <select id="state" class="selectpicker currency-list" name="state">
-                {% for i in state %}
+              <select id="state2" class="selectpicker currency-list" name="state2">
                 <option value="" style="display: none;">Any</option>
-                <option value="{{i.0}}">{{i.1}}</option>
-                {% endfor %}
               </select>
             </div>
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
               <h6>City</h6>
-              <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
+              <select class="selectpicker lst-property-type" id="city2" name="city2" title="All Types">
                 <option value="" style="display: none;">Any</option>
-                <option value="">All Cities</option>
               </select>
             </div>
 
@@ -415,19 +407,15 @@
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
               <h6>State</h6>
-              <select id="state" class="selectpicker currency-list" name="state">
-                {% for i in state %}
+              <select id="state3" class="selectpicker currency-list" name="state3">
                 <option value="" style="display: none;">Any</option>
-                <option value="{{i.0}}">{{i.1}}</option>
-                {% endfor %}
               </select>
             </div>
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
               <h6>City</h6>
-              <select class="selectpicker lst-property-type" id="city" name="city" title="All Types">
+              <select class="selectpicker lst-property-type" id="city3" name="city3" title="All Types">
                 <option value="" style="display: none;">Any</option>
-                <option value="">All Cities</option>
               </select>
             </div>
 
@@ -627,12 +615,68 @@
     })
   });
 
+  request.then(function (result) {
+    const url2 = "https://www.universal-tutorial.com/api/states/Nigeria";
+    let params2 = {
+      method: "get",
+      headers: {
+        "Authorization": "Bearer " + result.auth_token,
+      }
+    }
+    fetch(url2, params2).then(response => response.json()).then((data) => {
+      const div1 = document.getElementById("state1");
+      for (let k = 0; k < data.length; k++) {
+        const opt = document.createElement("option");
+        opt.innerHTML = data[k].state_name;
+        opt.classList.add("statesClass");
+        div1.appendChild(opt);
+      }
+    })
+  });
+
+  request.then(function (result) {
+    const url2 = "https://www.universal-tutorial.com/api/states/Nigeria";
+    let params2 = {
+      method: "get",
+      headers: {
+        "Authorization": "Bearer " + result.auth_token,
+      }
+    }
+    fetch(url2, params2).then(response => response.json()).then((data) => {
+      const div2 = document.getElementById("state2");
+      for (let k = 0; k < data.length; k++) {
+        const opt = document.createElement("option");
+        opt.innerHTML = data[k].state_name;
+        opt.classList.add("statesClass");
+        div2.appendChild(opt);
+      }
+    })
+  });
+
+  request.then(function (result) {
+    const url2 = "https://www.universal-tutorial.com/api/states/Nigeria";
+    let params2 = {
+      method: "get",
+      headers: {
+        "Authorization": "Bearer " + result.auth_token,
+      }
+    }
+    fetch(url2, params2).then(response => response.json()).then((data) => {
+      const div3 = document.getElementById("state3");
+      for (let k = 0; k < data.length; k++) {
+        const opt = document.createElement("option");
+        opt.innerHTML = data[k].state_name;
+        opt.classList.add("statesClass");
+        div3.appendChild(opt);
+      }
+    })
+  });
+
   const statesOption = document.getElementById("state");
   statesOption.addEventListener("change", (e) => {
 
     request.then(function (result) {
       const url3 = `https://www.universal-tutorial.com/api/cities/${e.target.value}`;
-      console.log(url3);
       let params2 = {
         method: "get",
         headers: {
@@ -640,16 +684,14 @@
         }
       }
       fetch(url3, params2).then(response => response.json()).then(data => {
-        console.log(data);
         const city = document.getElementById("city");
         const elements = city.getElementsByTagName("option");
-        console.log(elements);
         if (elements.length > 1) {
-          for(let j=1; j<elements.length; j++){
+          for (let j = 1; j < elements.length; j++) {
             city.removeChild(city.childNodes[j]);
           }
         }
-        for (let j = 1; j < data.length+1; j++) {
+        for (let j = 0; j < data.length; j++) {
           const opt = document.createElement("option");
           opt.innerHTML = data[j].city_name;
           opt.value = data[j].city_name;
@@ -660,6 +702,100 @@
     })
 
   })
+
+  const statesOption1 = document.getElementById("state1");
+  statesOption1.addEventListener("change", (e) => {
+
+    request.then(function (result) {
+      const url3 = `https://www.universal-tutorial.com/api/cities/${e.target.value}`;
+      let params2 = {
+        method: "get",
+        headers: {
+          "Authorization": "Bearer " + result.auth_token,
+        }
+      }
+      fetch(url3, params2).then(response => response.json()).then(data => {
+        const city1 = document.getElementById("city1");
+        const elements = city1.getElementsByTagName("option");
+        if (elements.length > 1) {
+          for (let j = 1; j < elements.length; j++) {
+            city1.removeChild(city1.childNodes[j]);
+          }
+        }
+        for (let j = 0; j < data.length; j++) {
+          const opt = document.createElement("option");
+          opt.innerHTML = data[j].city_name;
+          opt.value = data[j].city_name;
+          city1.appendChild(opt);
+        }
+
+      });
+    })
+
+  })
+
+  const statesOption2 = document.getElementById("state2");
+  statesOption2.addEventListener("change", (e) => {
+
+    request.then(function (result) {
+      const url3 = `https://www.universal-tutorial.com/api/cities/${e.target.value}`;
+      let params2 = {
+        method: "get",
+        headers: {
+          "Authorization": "Bearer " + result.auth_token,
+        }
+      }
+      fetch(url3, params2).then(response => response.json()).then(data => {
+        const city2 = document.getElementById("city2");
+        const elements = city2.getElementsByTagName("option");
+        if (elements.length > 1) {
+          for (let j = 1; j < elements.length; j++) {
+            city2.removeChild(city2.childNodes[j]);
+          }
+        }
+        for (let j = 0; j < data.length; j++) {
+          const opt = document.createElement("option");
+          opt.innerHTML = data[j].city_name;
+          opt.value = data[j].city_name;
+          city2.appendChild(opt);
+        }
+
+      });
+    })
+
+  })
+
+  const statesOption3 = document.getElementById("state3");
+  statesOption3.addEventListener("change", (e) => {
+
+    request.then(function (result) {
+      const url3 = `https://www.universal-tutorial.com/api/cities/${e.target.value}`;
+      let params2 = {
+        method: "get",
+        headers: {
+          "Authorization": "Bearer " + result.auth_token,
+        }
+      }
+      fetch(url3, params2).then(response => response.json()).then(data => {
+        const city3 = document.getElementById("city3");
+        const elements = city3.getElementsByTagName("option");
+        if (elements.length > 1) {
+          for (let j = 1; j < elements.length; j++) {
+            city3.removeChild(city3.childNodes[j]);
+          }
+        }
+        for (let j = 0; j < data.length; j++) {
+          const opt = document.createElement("option");
+          opt.innerHTML = data[j].city_name;
+          opt.value = data[j].city_name;
+          city3.appendChild(opt);
+        }
+
+      });
+    })
+
+  })
+  
   const tab = document.getElementById("propertyTab");
   const tab1 = document.getElementById("materialTab");
   const tab2 = document.getElementById("serviceTab");

@@ -25,4 +25,5 @@ urlpatterns = [
     path("flats/<str:id>",views.flatView,name="flatView"),
     path("equipment/<str:id>",views.equipmentView,name="equipmentView"),
     path("services/<str:id>",views.serviceView,name="serviceView"),
+    path("profile",views.profile,name="profile")
 ]
