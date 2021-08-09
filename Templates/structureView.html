@@ -12,6 +12,18 @@
         font-size: 18px;
     }
 </style>
+
+{% if message %}
+{% if success %}
+<div class="alert alert-primary" role="alert" id="popup">
+  {{ message }}
+</div>
+{% else %}
+<div class="alert alert-danger" role="alert" id="popup">
+  {{ message}}
+</div>
+{% endif %}
+{% endif %}
 <div class="container-fluid content-default">
     <div class="detail-page no-margin">
         <div class="row images-section">
@@ -175,15 +187,70 @@
                 </tbody>
             </table>
         </div>
-        <button type="button" id="property-contact-button"
-            class="btn btn-info btn-sm col-xs-12 col-sm-6 col-md-4 col-lg-3 detail-page-contact-button"
-            data-toggle="modal" data-target=".contact-modal">
+        {% if request.user.username != "" %}
+        <button type="button" id="send"
+            class="btn btn-info btn-sm col-xs-12 col-sm-6 col-md-4 col-lg-3 detail-page-contact-button">
             <h3>Contact Us</h3>
         </button>
+        {% else %}
+        <a href="/login"><button type="button"
+            class="btn btn-info btn-sm col-xs-12 col-sm-6 col-md-4 col-lg-3 detail-page-contact-button">
+            <h3>Contact Us</h3>
+        </button>
+    </a>
+    {% endif %}
 
         <div class="location-item">
             <div id="map"></div>
         </div>
     </div>
 </div>
+
+<div id="customModal" style="display: none;">
+    <form class="form" method="POST" action="/structure/{{id}}">{% csrf_token %}
+        <h2>CONTACT US</h2>
+        <p type="Name:">{{ form.name }}</p>
+        <span class="text-error">{{ form.name.errors }}</span>
+        <p type="Email:">{{ form.email }}</p>
+        <span class="text-error">{{ form.email.errors }}</span>
+        <p type="Phone Number:">{{ form.phone }}</p>
+        <span class="text-error">{{ form.phone.errors }}</span>
+        <p type="Message:">{{ form.message }}</p>
+        <span class="text-error">{{ form.message.errors }}</span>
+        <button type="submit" style="margin-bottom: 5px;">Send Message</button>
+        <button id="close" type="button" style="margin-right: 8px; margin-bottom: 5px;">Close</button>
+    </form>
+    </div>
+    
+    
+    <script>
+        const button = document.getElementById("send");
+        const button1 = document.getElementById("close");
+        var modal;
+        button.addEventListener("click", (e) => {
+            modal = new Custombox.modal({
+                content: {
+                    effect: 'slide',
+                    target: '#customModal',
+                    close:true
+    
+                }
+        });
+            modal.open();
+    
+        })
+        button1.addEventListener("click",(e)=>{
+            Custombox.modal.close();
+        })
+
+
+    let ab = document.getElementById("popup");
+    if (ab) {
+      setTimeout(() => {
+        ab.remove();
+      }, 2000);
+    }
+    
+        
+    </script>
 {% endblock %}

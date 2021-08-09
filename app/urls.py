@@ -1,3 +1,4 @@
+from app.forms2 import contact
 from django.urls import path
 from app import views
 
@@ -25,5 +26,5 @@ urlpatterns = [
     path("flats/<str:id>",views.flatView,name="flatView"),
     path("equipment/<str:id>",views.equipmentView,name="equipmentView"),
     path("services/<str:id>",views.serviceView,name="serviceView"),
-    path("profile",views.profile,name="profile")
+    path("profile",views.profile,name="profile"),
 ]

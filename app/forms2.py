@@ -1,7 +1,9 @@
 from django import forms
 from django.forms.fields import Field
 from .models import Property,Equipment,Structure,Service,Material,Flat
+from django.core.validators import RegexValidator
 
+phone_regex = RegexValidator(regex=r'^\+1?\d{9,15}$', message="Phone number must be entered in the format: '(+12)99999'. Up to 18 digits allowed.")
 Outdoor = [
     ("Carport","Carport"),
     ("Garage","Garage"),
@@ -64,6 +66,42 @@ Other = [
     ("ERCAAN Association","ERCAAN Association"),
 ]
 
+
+class contact(forms.Form):
+    name = forms.CharField(required=True,min_length=4,max_length=20,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Write your name here",
+                "class":"validation"
+            }
+        ))
+
+    email = forms.EmailField(required=True,min_length=4,max_length=20,
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder": "Let us know how to contact you back",
+                "class":"validation"
+            }
+        ))
+
+    phone = forms.CharField(required=True,validators=[phone_regex],
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Let us know how to contact you back",
+                "class":"validation"
+            }
+        ))
+
+    message = forms.CharField(required=True,min_length=10,max_length=250,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "What would you like to tell us",
+                "class":"validation"
+            }
+        ))
+
+
+
 class propertyForm(forms.Form):
     sale = forms.ChoiceField(required=True,choices=[("Sale","For Sale"),("Rent","For Rent")],
     widget=forms.RadioSelect(
@@ -72,14 +110,14 @@ class propertyForm(forms.Form):
             }
     ))
 
-    furnished = forms.ChoiceField(required=True,choices=[("True","Yes"),("False","No")],
+    furnished = forms.ChoiceField(required=False,choices=[("True","Yes"),("False","No")],
     widget=forms.Select(
          attrs={
                 "class":"validation"
             }
     ))
 
-    title = forms.CharField(required=True,min_length=5,max_length=20,
+    title = forms.CharField(required=True,min_length=4,max_length=20,
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Title",
@@ -87,7 +125,7 @@ class propertyForm(forms.Form):
             }
         ))
     
-    description = forms.CharField(required=True,min_length=20,max_length=250,
+    description = forms.CharField(required=True,min_length=5,max_length=250,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -95,14 +133,14 @@ class propertyForm(forms.Form):
             }
         ))
 
-    location = forms.CharField(required=True,min_length=10,max_length=150,
+    location = forms.CharField(required=True,min_length=5,max_length=150,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    address = forms.CharField(required=True,min_length=20,max_length=200,
+    address = forms.CharField(required=True,min_length=5,max_length=200,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -139,56 +177,56 @@ class propertyForm(forms.Form):
             }
         ))
 
-    priceCondition = forms.CharField(min_length=8,max_length=150,
+    priceCondition = forms.CharField(required=False,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    deposit = forms.IntegerField(
+    deposit = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    agent = forms.IntegerField(
+    agent = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
             }
         ))
     
-    build = forms.IntegerField(required=True,
+    build = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    room = forms.IntegerField(required=True,
+    room = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    garage = forms.IntegerField(required=True,
+    garage = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    bathroom = forms.IntegerField(required=True,
+    bathroom = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    carspace = forms.IntegerField(required=True,
+    carspace = forms.IntegerField(required=False,
         widget=forms.NumberInput(
             attrs={
                 "class":"validation"
@@ -208,38 +246,41 @@ class propertyForm(forms.Form):
                 "class":"validation"
             }
         ))
+
+    subcategory1 = forms.ChoiceField(required=False,choices=Property.subCategory1,
+        widget=forms.Select(
+            attrs={
+                "class":"block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full",
+            }
+        ))
     
-    indoor = forms.ChoiceField(choices=Outdoor,required=True,
-        widget = forms.CheckboxSelectMultiple(
+    subcategory2 = forms.ChoiceField(required=False,choices=Property.subCategory2,
+        widget=forms.Select(
             attrs={
-                "class":"validation"
+                "class":"block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full",
             }
-        )
-    )
+        ))
 
-    outdoor = forms.ChoiceField(choices=Indoor,required=True,
-        widget = forms.CheckboxSelectMultiple(
+    subcategory3 = forms.ChoiceField(required=False,choices=Property.subCategory3,
+        widget=forms.Select(
             attrs={
-                "class":"validation"
+                "class":"block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full",
             }
-        )
-    )
+        ))
 
-    echo = forms.ChoiceField(choices=Echo,required=True,
-        widget = forms.CheckboxSelectMultiple(
+    subcategory4 = forms.ChoiceField(required=False,choices=Property.subCategory4,
+        widget=forms.Select(
             attrs={
-                "class":"validation"
+                "class":"block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full",
             }
-        )
-    )
-
-    other = forms.ChoiceField(choices=Other,required=True,
-        widget = forms.CheckboxSelectMultiple(
+        ))
+    
+    subcategory5 = forms.ChoiceField(required=False,choices=Property.subCategory5,
+        widget=forms.Select(
             attrs={
-                "class":"validation"
+                "class":"block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full",
             }
-        )
-    )
+        ))
 
     
 class Structure(forms.Form):
@@ -279,7 +320,7 @@ class Structure(forms.Form):
         ))
 
 
-    description = forms.CharField(required=True,min_length=20,
+    description = forms.CharField(required=True,min_length=8,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -287,14 +328,14 @@ class Structure(forms.Form):
             }
         ))
 
-    location = forms.CharField(required=True,min_length=10,
+    location = forms.CharField(required=True,min_length=8,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    address = forms.CharField(required=True,min_length=20,
+    address = forms.CharField(required=True,min_length=8,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -362,7 +403,7 @@ class Equipment(forms.Form):
         ))
 
 
-    description = forms.CharField(required=True,min_length=20,max_length=250,
+    description = forms.CharField(required=True,min_length=8,max_length=250,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -370,14 +411,14 @@ class Equipment(forms.Form):
             }
         ))
 
-    location = forms.CharField(required=True,min_length=10,max_length=150,
+    location = forms.CharField(required=True,min_length=8,max_length=150,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    address = forms.CharField(required=True,min_length=20,max_length=200,
+    address = forms.CharField(required=True,min_length=8,max_length=200,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -447,7 +488,7 @@ class Service(forms.Form):
             }
         ))
     
-    description = forms.CharField(required=True,min_length=20,max_length=250,
+    description = forms.CharField(required=True,min_length=8,max_length=250,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -455,14 +496,14 @@ class Service(forms.Form):
             }
         ))
 
-    location = forms.CharField(required=True,min_length=10,max_length=150,
+    location = forms.CharField(required=True,min_length=8,max_length=150,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    address = forms.CharField(required=True,min_length=20,max_length=200,
+    address = forms.CharField(required=True,min_length=8,max_length=200,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -527,7 +568,7 @@ class Material(forms.Form):
             }
         ))
     
-    description = forms.CharField(required=True,min_length=20,max_length=250,
+    description = forms.CharField(required=True,min_length=8,max_length=250,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -535,7 +576,7 @@ class Material(forms.Form):
             }
         ))
 
-    address = forms.CharField(required=True,min_length=20,max_length=200,
+    address = forms.CharField(required=True,min_length=8,max_length=200,
         widget=forms.Textarea(
             attrs={
                 "rows":4,

@@ -1,6 +1,7 @@
 from django.db import  models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
+from django.db.models import base
 from django.utils import timezone
 
 phone_regex = RegexValidator(regex=r'^\+1?\d{9,15}$', message="Phone number must be entered in the format: '+(country Code)99999'. Up to 18 digits allowed.")
@@ -88,6 +89,32 @@ class Property(models.Model):
         ("Fully Furnished","Fully Furnished"),
 
     ]
+
+    subCategory1 = [
+        ("Flat/House/Apartment","Flat/House/Apartment")
+    ]
+
+    subCategory2 = [
+        ("Trees Work","Trees Work"),
+        ("Gardening","Gardening"),
+    ]
+
+    subCategory3 = [
+        ("Public","Public"),
+        ("Private","Private"),
+    ]
+
+    subCategory4 = [
+       ("In Dispute","In Dispute"),
+        ("Farm Land","Farm Land"),
+        ("Non-Cultivated","Non-Cultivated"),
+        ("Cultivated","Cultivated"),
+    ]
+
+    subCategory5 = [
+       ("Partially Furnished","Partially Furnished"),
+        ("Fully Furnished","Fully Furnished"),
+    ]
     currency = [
         ("₦ NGN","₦ NGN"),
         ("$ USD","$ USD"),
@@ -110,19 +137,19 @@ class Property(models.Model):
     Size = models.IntegerField(default=0)
     Currency= models.CharField(default="",choices=currency,max_length=20)
     Price = models.IntegerField()
-    PriceConditions = models.CharField(default="",max_length=150)
+    PriceConditions = models.CharField(default="",max_length=150,null=True,blank=True)
     Deposit = models.IntegerField(null=True,blank=True)
     AgentCommision = models.IntegerField(null=True,blank=True)
-    BuildYear = models.IntegerField()
-    Rooms = models.IntegerField()
-    Garages = models.IntegerField()
-    Bathroom = models.IntegerField()
-    CarSpaces = models.IntegerField()
+    BuildYear = models.IntegerField(null=True,blank=True)
+    Rooms = models.IntegerField(null=True,blank=True)
+    Garages = models.IntegerField(null=True,blank=True)
+    Bathroom = models.IntegerField(null=True,blank=True)
+    CarSpaces = models.IntegerField(null=True,blank=True)
     FullyFurnished = models.BooleanField(blank=True,null=True)
-    IndoorFeaturs = models.CharField(max_length=500)
-    OutdoorFeatures = models.CharField(max_length=500)
-    EcoFeatures = models.CharField(max_length=500)
-    OtherFeatures = models.CharField(max_length=500)
+    IndoorFeaturs = models.CharField(max_length=500,null=True,blank=True)
+    OutdoorFeatures = models.CharField(max_length=500,null=True,blank=True)
+    EcoFeatures = models.CharField(max_length=500,null=True,blank=True)
+    OtherFeatures = models.CharField(max_length=500,null=True,blank=True)
     Date = models.DateField(default=timezone.now)
     image1 = models.FileField(upload_to="Images",null=True,blank=True)
     image1Verify = models.BooleanField(blank=True,null=True)
@@ -364,3 +391,20 @@ class FlatImage(models.Model):
 
     def __str__(self) -> str:
         return self.projectName.Title
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.CharField(max_length=80)
+    phone = models.CharField(max_length=25,null=True,blank=True)
+    message = models.CharField(max_length=250)
+
+    def __str__(self) -> str:
+        return self.name
+
+class SMTP(models.Model):
+    email = models.CharField(max_length=100,null=True,blank=True)
+    password = models.CharField(max_length=100,null=True,blank=True)
+
+    def __str__(self) -> str:
+        return self.email

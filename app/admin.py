@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserDetails,Files,Property,Structure,Equipment,Material,Service,Flat,PropertyIMage,StructureImage,EquipmentImage,MaterialImage,ServiceImage,FlatImage
+from .models import UserDetails,Files,Property,Structure,Equipment,Material,Service,Flat,PropertyIMage,StructureImage,EquipmentImage,MaterialImage,ServiceImage,FlatImage,Contact,SMTP
 # Register your models here.
 admin.site.register(UserDetails)
 admin.site.register(Files)
@@ -15,3 +15,5 @@ admin.site.register(EquipmentImage)
 admin.site.register(MaterialImage)
 admin.site.register(ServiceImage)
 admin.site.register(FlatImage)
+admin.site.register(Contact)
+admin.site.register(SMTP)

@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 {% block title %} Flats {% endblock %}
-{% block button %} <a href="/addFlat"><button id="tablesModify"
+{% block button %} 
+{% if request.user.userdetails.verified %}
+<a href="/addFlat"><button id="tablesModify"
         class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Add Flat
-    </button></a>{% endblock %}
+    </button></a>
+{% else %}
+<button id="popupButton"
+      class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      Add Flat
+</button>
+{% endif %}
+{% endblock %}
     {% block corousal %}
     <div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
       <div class="carousel-indicators">
@@ -146,6 +155,11 @@
     h6{
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
     }
+
+    .search-filters{
+        max-height: 900px;
+        background-color: #fff!important;
+      }
 </style>
 
 
@@ -595,6 +609,7 @@
     const def = document.getElementById("default");
     const advance = document.getElementById("advance");
     const button1 = document.getElementById("advanceButton");
+    const button3 = document.getElementById("popupButton");
     const button2 = document.getElementById("defaultButton");
     button1.addEventListener("click", (e) => {
         advance.style.display = "block";
@@ -618,5 +633,17 @@
             }
         };
     }
+
+    button3.addEventListener("click",(e)=>{
+    modal = new Custombox.modal({
+      content: {
+              effect: 'slide',
+              target: '#notifer',
+              close:true
+
+          }
+    })
+    modal.open();
+  })
 </script>
 {% endblock %}

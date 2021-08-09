@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="/static/assets/css/half-slider.css" />
   <link rel="stylesheet" href="/static/assets/css/models.css" />
   <link rel="stylesheet" href="/static/assets/css/add.css" />
+  <link rel="stylesheet" href="/static/assets/css/custombox.min.css" />
   <script src="https://apis.google.com/js/api:client.js"></script>
   {% endblock %}
 
@@ -176,16 +177,23 @@
           </div>
           <div class="col-xs-10 contact-top" style="background-color: white;">
             <div class="wrap-div">
-              
+
               <div class="wrap-dynamic-div">
-                {% block button %}<button class="open-modal"
-                  style="width: fit-content!important; height: 35px!important; padding: 5px; font-size: medium; border-radius: 5px; color: white;">Upload
-                  Files</button>{% endblock %}
+                {% if request.user.username != "" %}
+                {% block button %}
+                {% if request.user.username != "" and not request.user.userdetails.verified %}
+                <button id="modalUpload"
+                style="width: fit-content!important; height: 35px!important; padding: 5px; font-size: medium; border-radius: 5px; color: white;">Upload
+                Files</button>
+                {% endif %}
+                {% endblock %}
+                {% endif %}
               </div>
               {% if request.user.username != "" %}
               <div>
-                <img src="static/assets/images/default-profile-picture.jpg">
+                <img src="/static/assets/images/default-profile-picture.jpg">
               </div>
+              
 
               <div class="btn-group">
 
@@ -200,11 +208,20 @@
                 </div>
 
               </div>
+              {% else %}
+              <div class="wrap-dynamic-div">
+                <a href="/login"><button
+                    style="width: 100px!important; height: 35px!important; padding: 5px; font-size: medium; border-radius: 5px; color: white;">Login</button>
+              </div></a>
               {% endif %}
 
             </div>
           </div>
         </div>
+
+        
+
+
 
         <!--modals for file upload-->
         <!-- Modal -->
@@ -228,6 +245,21 @@
             </div>
           </div>
         </div>
+
+        <div id="customModal" style="display: none;">
+          <form class="form" style="height: 500px!important" method="POST" action="/" enctype="multipart/form-data">{% csrf_token %}
+              <h2>Upload Documents</h2>
+              <p type="Name:">{{request.user.username }}</p>
+             
+              <p type="Email:">{{ request.user.email }}</p>
+              <p type="Verified User:">{{ request.user.userdetails.verified }}</p>
+              
+              <p type="Select Files:"></p>
+              <input style="opacity: 100%;"  type="file" multiple id="files" name="files">
+              <button type="submit" style="margin-bottom: 5px;">Upload Files</button>
+              <button id="close" type="button" style="margin-right: 8px; margin-bottom: 5px;">Close</button>
+          </form>
+          </div>
 
 
 
@@ -273,6 +305,17 @@
           </div>
         </nav>
     </header>
+    {% if message %}
+    {% if success %}
+    <div class="alert alert-primary" role="alert" id="popup">
+      {{ message }}
+    </div>
+    {% else %}
+    <div class="alert alert-danger" role="alert" id="popup">
+      {{ message}}
+    </div>
+    {% endif %}
+{% endif %}
     {% block corousal %}
     <div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
       <div class="carousel-indicators">
@@ -417,7 +460,7 @@
               <li><a href="/structure">Structures</a></li>
               <li><a href="/services">Services</a></li>
               <li><a href="/materials">Materials</a></li>
-              <li><a href="flats">Flats</a></li>
+              <li><a href="/flats">Flats</a></li>
             </ul>
           </div>
           <div class="col-md-4 col-sm-6" style="position: relative;
@@ -430,6 +473,7 @@
                 <input type="text" id="full-name-home-footer" class="form-control input-lg" placeholder="Your Name"
                   data-validation="required custom" data-validation-required-message="Please enter a valid name"
                   data-validation-regexp="^([a-zA-Z][a-zA-Z\-'\s]+)$">
+                  
                 <p></p>
                 <span class="help-block text-danger"></span>
               </div>
@@ -487,6 +531,19 @@
     </div>
 
     </div>
+
+
+    <div class="mainNotify" id="notifer" style="display: none;">
+      <div class="notification">
+        <div><img src="/static/assets/images/warning.png"></div>
+        <div class="notHeader">
+          <h2>Verification Error...</h2>
+        </div>
+        <div class="notBody">
+          <p> You are not verified user. Please upload your documents to get verified by admins</p>
+        </div>
+      </div>
+      </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -498,44 +555,50 @@
   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/static/assets/js/custombox.min.js"></script>
 <script>
-  /* const button = document.getElementById("tablesModify");
-   const modal = document.getElementById("exampleModal");
-   button.addEventListener("click",(e)=>{
-     if(modal.style.display == "block"){
-     modal.style.display = "none";
-     }
-     else{
-       modal.style.display= "block";
-     }
-   })*/
+ 
+  const button = document.getElementById("modalUpload");
+  const button3 = document.getElementById("popupButton");
+  const button1 = document.getElementById("close");
+  var modal;
+  if(button){
+  button.addEventListener("click", (e) => {
+      modal = new Custombox.modal({
+          content: {
+              effect: 'slide',
+              target: '#customModal',
+              close:true
 
-  const openModalBtn = document.querySelectorAll(".open-modal");
-  const closeModal = document.querySelector(".close-modal");
-  const modal = document.querySelector(".modal");
-  const modalContainer = document.querySelector(".modal-container");
-
-  openModalBtn.forEach((openModal) => {
-    openModal.addEventListener("click", () => {
-      modal.classList.remove("hide");
-      modalContainer.classList.remove("hide");
-    });
+          }
   });
+      modal.open();
 
-  closeModal.addEventListener("click", () => {
-    setTimeout(() => {
-      modal.classList.add("hide");
-    }, 800);
-    modalContainer.classList.add("hide");
-  });
+  })
+}
+  button1.addEventListener("click",(e)=>{
+      Custombox.modal.close();
+  })
 
-  modal.addEventListener("click", () => {
-    setTimeout(() => {
-      modal.classList.add("hide");
-    }, 800);
-    modalContainer.classList.add("hide");
-  });
+  button3.addEventListener("click",(e)=>{
+    modal = new Custombox.modal({
+      content: {
+              effect: 'slide',
+              target: '#notifer',
+              close:true
 
+          }
+    })
+    modal.open();
+  })
+  
+  let ab = document.getElementById("popup");
+    if (ab) {
+      setTimeout(() => {
+        ab.remove();
+      }, 2000);
+    }
+  
+  
 </script>
-
 </html>

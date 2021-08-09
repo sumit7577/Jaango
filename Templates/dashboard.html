@@ -151,6 +151,8 @@
     margin: 0;
   }
 </style>
+
+
 <!--search filter part-->
 <div class="container-fluid content" style="background-color: white;">
   <div class="row main-enquiry no-margin">
@@ -535,7 +537,7 @@
             <div class="milestone-counter">
               <!--                                <figure class="icon-abt"><img src="/static/assets/icons/property.svg" alt="Properties - Jaango"></figure>-->
               <div class="milestone-count c-gray" data-from="0" id="no-of-properties" data-to="11100" data-speed="3000"
-                data-refresh-interval="100">39</div>
+                data-refresh-interval="100">{{ property }}</div>
               <h4 class="milestone-info c-gray">Properties</h4>
             </div>
           </a>
@@ -545,7 +547,7 @@
             <div class="milestone-counter">
               <!--                                <figure class="icon-abt"><img src="/static/assets/icons/rent-flat.svg" alt="Rent Flats - Jaango"></figure>-->
               <div class="milestone-count c-gray" id="no-of-flats" data-from="0" data-to="154" data-speed="5000"
-                data-refresh-interval="50">8</div>
+                data-refresh-interval="50">{{ rentFlat }}</div>
               <h4 class="milestone-info c-gray">Rent Flats</h4>
             </div>
           </a>
@@ -555,7 +557,7 @@
             <div class="milestone-counter">
               <!--                                <figure class="icon-abt"><img src="/static/assets/icons/property.svg" alt="Properties - Jaango"></figure>-->
               <div class="milestone-count c-gray" data-from="0" id="no-of-share-flats" data-to="11100" data-speed="3000"
-                data-refresh-interval="100">15</div>
+                data-refresh-interval="100">{{ sharedFlat }}</div>
               <h4 class="milestone-info c-gray">Shared Flats</h4>
             </div>
           </a>
@@ -565,7 +567,7 @@
             <div class="milestone-counter">
               <!--                                <figure class="icon-abt"><img src="/static/assets/icons/service.svg" alt="Materials - Jaango"></figure>-->
               <div class="milestone-count c-gray" data-from="0" data-to="430" data-speed="5000" id="no-of-materials"
-                data-refresh-interval="80">23</div>
+                data-refresh-interval="80">{{ material }}</div>
               <h4 class="milestone-info c-gray">Materials</h4>
             </div>
           </a>
@@ -575,7 +577,7 @@
             <div class="milestone-counter">
               <!--                                <figure class="icon-abt"><img src="/static/assets/icons/property.svg" alt="Properties - Jaango"></figure>-->
               <div class="milestone-count c-gray" data-from="0" data-to="1230" data-speed="5000" id="no-of-equipments"
-                data-refresh-interval="80">23</div>
+                data-refresh-interval="80">{{ equipment }}</div>
               <h4 class="milestone-info c-gray">Equipments</h4>
             </div>
           </a>

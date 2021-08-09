@@ -1,63 +1,77 @@
 {% extends "base.html" %}
 {% block title %} Structure {% endblock %}
-{% block button %} <a href="/addStructure"><button id="tablesModify" class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+{% block button %}
+{% if request.user.userdetails.verified %} 
+<a href="/addStructure"><button id="tablesModify"
+    class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    Add Structure
+  </button></a>
+  {% else %}
+<button id="popupButton"
+  class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
   Add Structure
-</button></a>{% endblock %}
+</button>
+{% endif %}
+{% endblock %}
 {% block corousal %}
-    <div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/static/assets/images/structure1.jpg" class="d-block w-100" alt="image">
-        </div>
-        <div class="carousel-item">
-          <img src="/static/assets/images/structure2.jpg" class="d-block w-100" alt="image">
-        </div>
-        <div class="carousel-item">
-          <img src="/static/assets/images/structure4.jpg" class="d-block w-100" alt="image">
-        </div>
-        
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+<div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+      aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+      aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+      aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/static/assets/images/structure1.jpg" class="d-block w-100" alt="image">
     </div>
-    {% endblock %}
+    <div class="carousel-item">
+      <img src="/static/assets/images/structure2.jpg" class="d-block w-100" alt="image">
+    </div>
+    <div class="carousel-item">
+      <img src="/static/assets/images/structure4.jpg" class="d-block w-100" alt="image">
+    </div>
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock %}
 {% block body %}
 <style>
   select {
-        border-radius: 6px;
-        height: 46px;
-        padding: 10px;
-        font-size: 16px;
-        border: 2px solid #ccc!important;
-    }
+    border-radius: 6px;
+    height: 46px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc !important;
+  }
 
-    input {
-        font-size: 16px!important;
-        padding: 10px!important;
-        border-radius: 6px!important;
-        height: 46px!important;
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
-        border: 2px solid #ccc!important;
-    }
-    h6{
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
-    }
+  input {
+    font-size: 16px !important;
+    padding: 10px !important;
+    border-radius: 6px !important;
+    height: 46px !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    border: 2px solid #ccc !important;
+  }
+
+  h6 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+  }
+
+  .search-filters {
+    max-height: 800px;
+    background-color: #fff !important;
+  }
 </style>
 <div class="container-fluid content">
   <div class="row search-filter-row">
@@ -98,7 +112,8 @@
             <h6>PRICE</h6>
             <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
               <option value="" style="display: none;">Any</option>
-              <option value="1000-lt"> <1000 </option>
+              <option value="1000-lt">
+                <1000 </option>
               <option value="1000-10000">1000-10000</option>
               <option value="10000-20000">10000-20000</option>
               <option value="2000-rt">20000></option>
@@ -111,7 +126,8 @@
             <h6>FLOOR SPACE</h6>
             <select class="selectpicker" title="Any" id="lst-size" name="lst-size">
               <option value="" style="display: none;">Any</option>
-              <option value="500-lt"> <500 </option>
+              <option value="500-lt">
+                <500 </option>
               <option value="500-10000">500-10000</option>
               <option value="1000-2000">1000-2000</option>
               <option value="2000-rt">2000></option>
@@ -138,8 +154,9 @@
         </ul>
         <button type="submit" class="btn btn-default search-filters-submit"
           id="property-filters-submit">&nbsp;SEARCH</button>
-        <a href="/structure"><button type="button" class="btn btn-default search-filters-submit" id="property-filters-clear">&nbsp;CLEAR
-          SEARCH</button></a>
+        <a href="/structure"><button type="button" class="btn btn-default search-filters-submit"
+            id="property-filters-clear">&nbsp;CLEAR
+            SEARCH</button></a>
       </form>
     </div>
 
@@ -152,8 +169,7 @@
         <div class="col-sm-6 search-list-element">
           <a href="structure/{{i.id}}">
             <div class="search-list-img">
-              <img src="Files/{{i.image1}}"
-                class="img-responsive">
+              <img src="Files/{{i.image1}}" class="img-responsive">
               <div class="opaque-heading-field">
                 <div class="element-heading">
                   <h4>{{ i.Title }}</h4>
@@ -178,7 +194,7 @@
                   <h6>{{ i.Size }} SQ FT</h6>
                 </li>
                 <li><i class="fa fa-building-o" aria-hidden="true"></i>
-                  <h6>{% if i.PropertyType == "Land" %} Land {% endif %} {{ i.Rooms }} Rooms  </h6>
+                  <h6>{% if i.PropertyType == "Land" %} Land {% endif %} {{ i.Rooms }} Rooms </h6>
                 </li>
                 <li><i class="fa " aria-hidden="true"></i>
                   <h6></h6>

@@ -1,19 +1,28 @@
 from django.contrib.auth import authenticate, logout, login
+from django.core.checks import messages
 from django.shortcuts import redirect, render
 from django.utils.regex_helper import ESCAPE_MAPPINGS
 from .forms import SignUpForm, LoginForm
 from django.contrib.auth.decorators import login_required
-from .models import Files, Flat, UserDetails, Property, Structure, Equipment, Material, Service, PropertyIMage, FlatImage, ServiceImage, EquipmentImage, StructureImage, MaterialImage
-from .forms2 import propertyForm, Structure, Equipment, Material, Service, Flatform
+from .models import Files, Flat, UserDetails, Property, Structure, Equipment, Material, Service, PropertyIMage, FlatImage, ServiceImage, EquipmentImage, StructureImage, MaterialImage,Contact,SMTP
+from .forms2 import contact, propertyForm, Structure, Equipment, Material, Service, Flatform
 from app import models
 from app import forms2
+from django.core.mail import send_mail
 
-
+message = None
+host_email =None
+host_password = None
+try:
+    data = SMTP.objects.get(id=1)
+    host_email = data.email
+    host_password = data.password
+except:
+    message = "No smtp gmail added"
 # Create your views here.
 currency = Property.currency
 pType = Property.propertyChoices
 sale = Property.type
-
 
 def index(request):
     form = SignUpForm(request.POST or None)
@@ -43,18 +52,31 @@ def index(request):
 
 def home(request):
     message = None
+    success = False
     data = {}
     data["ptype"] = pType
-   
     data["mtype"] = models.Material.type
     data["stype"] = models.Service.serviceType
     data["etype"] = models.Equipment.type
-    data["message"] = message
+    property =Property.objects.all().count()
+    sharedFlat = Flat.objects.filter(Type="Sale").count()
+    rentFlat = Flat.objects.filter(Type="Rent").count()
+    material = models.Material.objects.all().count()
+    equipment = models.Equipment.objects.all().count()
+    data["property"] = property
+    data["rentFlat"] = sharedFlat
+    data["sharedFlat"]= rentFlat
+    data["material"]= material
+    data["equipment"]=equipment
+   
     if request.method == "POST":
         document = request.FILES.getlist("files")
         for i in document:
             Files.objects.create(userName=request.user, files=i)
-            message = "Documents Successfully Published"
+        message = "Documents Successfully Published"
+        success = True
+    data["message"] = message
+    data["success"] = success
     return render(request, "dashboard.html", data)
 
 
@@ -129,13 +151,15 @@ def property(request):
 
     return render(request, "property.html", data)
 
-
+@login_required(login_url="/login")
 def addProperty(request):
-    form = propertyForm(request.POST, request.FILES or None)
+    if(not request.user.userdetails.verified):
+        return redirect("/property")
+    form = propertyForm(request.POST or None, request.FILES or None)
     message = None
     success = False
     if request.method == "POST":
-        if not form.is_valid():
+        if form.is_valid():
             sale = form.cleaned_data.get("sale")
             furnished = form.cleaned_data.get("furnished")
             title = form.cleaned_data.get("title")
@@ -160,18 +184,41 @@ def addProperty(request):
             other = request.POST.getlist("other")
             image = form.cleaned_data.get("image")
             image1 = request.FILES.getlist("image1")
-            data = Property.objects.update_or_create(user=request.user, Type=sale, Title=title, Description=desc, PropertyType=type,
+            subcat = form.cleaned_data.get("subcategory1")
+            subcat1 = form.cleaned_data.get("subcategory2")
+            subcat2 = form.cleaned_data.get("subcategory3")
+            subcat3 = form.cleaned_data.get("subcategory4")
+            subcat4 = form.cleaned_data.get("subcategpry5")
+            try:
+                data = Property.objects.update_or_create(user=request.user, Type=sale, Title=title, Description=desc, PropertyType=type,
                                                      Location=location, Address=address,
                                                      Size=size, Currency=currency, Price=price,
                                                      PriceConditions=condition, Deposit=deposit, AgentCommision=agent, BuildYear=build,
                                                      Rooms=room, Garages=garage, Bathroom=bathroom, CarSpaces=carspace,
                                                      FullyFurnished=furnished, IndoorFeaturs=indoor, OutdoorFeatures=outdoor,
                                                      EcoFeatures=echo, OtherFeatures=other, image1=image)
-            for i in image1:
-                PropertyIMage.objects.update_or_create(
+                if subcat != "":
+                    Property.objects.update(id=data[0],SubCategory=subcat)
+                elif(subcat1 != ""):
+                    Property.objects.update(id=data[0],SubCategory=subcat1)
+                elif(subcat2 != ""):
+                    Property.objects.update(id=data[0],SubCategory=subcat2)
+                elif(subcat3 != ""):
+                    Property.objects.update(id=data[0],SubCategory=subcat3)
+                elif(subcat4 != ""):
+                    Property.objects.update(id=data[0],SubCategory=subcat4)
+
+                for i in image1:
+                    PropertyIMage.objects.update_or_create(
                     projectName=data[0], image=i)
                 message = "Property Details Submitted"
                 success = True
+                return redirect("/property")
+
+            except:
+                message = "Something error happened"
+                success =False
+            
         else:
             success = False
             message = "Please Provide all details that is required Correctly"
@@ -180,11 +227,38 @@ def addProperty(request):
 
 
 def propertyView(request, id):
+    message = None
+    success = False
+    form = contact(request.POST or None)
     data = {}
     property = Property.objects.filter(id=id)
     imageData = PropertyIMage.objects.filter(projectName=property[0])
     data["property"] = property
     data["images"] = imageData
+    data["id"] = id
+    data["form"] = form
+   
+    if request.method == "POST" and request.user.username !="":
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            phone = form.cleaned_data.get("phone")
+            messages = form.cleaned_data.get("message")
+            Contact.objects.update_or_create(name=name,email=email,phone=phone,message=messages)
+            subject = f"New Message by {request.user}"
+            messageBody = "Message Body "+"\n"+"Name: "+name+"\n"+"Email: "+email+"\n"+"Phone: "+ phone+ "\n" +"Message "+ "\n"+messages
+            try:
+                send_mail(subject,messageBody,host_email,[host_email],fail_silently=False,auth_user=host_email,auth_password=host_password)
+                message = "Messages Sended Successfully"
+                success = True
+                return redirect("/property")
+            except:
+                message = "Smtp server not setup properly"
+                success =False
+        else:
+            message = "Please fill up the form correctly"
+    data["message"] = message
+    data["success"] = success
     return render(request, "propertyView.html", data)
 
 
@@ -236,11 +310,13 @@ def structure(request):
         data["structure"] = newList
     return render(request, "structure.html", data)
 
-
+@login_required(login_url="/login")
 def addStructure(request):
+    if(not request.user.userdetails.verified):
+        return redirect("/structure")
     message = None
     success = False
-    form = forms2.Structure(request.POST, request.FILES or None)
+    form = forms2.Structure(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             currency = form.cleaned_data.get("currency")
@@ -257,15 +333,20 @@ def addStructure(request):
             initial = form.cleaned_data.get("initial")
             image1 = form.cleaned_data.get("image")
             image2 = request.FILES.getlist("image1")
-            data = models.Structure.objects.update_or_create(user=request.user, PropertyType=type, Category=category,
+            try:
+                data = models.Structure.objects.update_or_create(user=request.user, PropertyType=type, Category=category,
                                                              Description=desc, Currency=currency, Location=location, Address=address, Size=size, Price=price,
                                                              Rooms=room, FinalCost=final, MiddleCost=middle, InitialCost=initial, image1=image1)
-
-            for i in image2:
-                StructureImage.objects.update_or_create(
+                for i in image2:
+                    StructureImage.objects.update_or_create(
                     projectName=data[0], image=i)
                 message = "Property Details Submitted"
                 success = True
+                return redirect("/structure")
+            except:
+                message = "Something error happened"
+                success =False
+                
         else:
             success = False
             message = "Please Provide all details that is required Correctly"
@@ -274,11 +355,38 @@ def addStructure(request):
 
 
 def structureView(request, id):
+    message = None
+    success= False
+    form = contact(request.POST or None)
     data = {}
     structure = models.Structure.objects.filter(id=id)
     imageData = StructureImage.objects.filter(projectName=structure[0])
     data["structure"] = structure
     data["images"] = imageData
+    data["id"] = id
+    data["form"] = form
+    if request.method == "POST" and request.user.username != "":
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            phone = form.cleaned_data.get("phone")
+            messages = form.cleaned_data.get("message")
+            Contact.objects.update_or_create(name=name,email=email,phone=phone,message=messages)
+            subject = f"New Message by {request.user}"
+            messageBody = "Message Body "+"\n"+"Name: "+name+"\n"+"Email: "+email+"\n"+"Phone: "+ phone+ "\n" +"Message "+ "\n"+messages
+            try:
+                send_mail(subject,messageBody,host_email,[host_email],fail_silently=False,auth_user=host_email,auth_password=host_password)
+                message = "Messages Sended Successfully"
+                success = True
+                return redirect("/structure")
+            except:
+                message = "Smtp server not setup properly"
+                success =False
+        else:
+            message = "Please fill up the form correctly"
+
+    data["message"] = message
+    data["success"] = success
     return render(request, "structureView.html", data)
 
 
@@ -317,8 +425,11 @@ def equipment(request):
     return render(request, "equipments.html", data)
 
 
+@login_required(login_url="/login")
 def addEquipment(request):
-    form = forms2.Equipment(request.POST, request.FILES or None)
+    if(not request.user.userdetails.verified):
+        return redirect("/equipment")
+    form = forms2.Equipment(request.POST or None, request.FILES or None)
     message = None
     success = False
     if request.method == "POST":
@@ -333,13 +444,20 @@ def addEquipment(request):
             status = form.cleaned_data.get("status")
             image1 = form.cleaned_data.get("image")
             image2 = request.FILES.getlist("image1")
-            data = models.Equipment.objects.update_or_create(user=request.user, Description=desc, Location=location,
+            try:
+
+                data = models.Equipment.objects.update_or_create(user=request.user, Description=desc, Location=location,
                                                              Address=address, Price=price, EquipmentType=type, Currency=currency, Hire=hire, Status=status, image1=image1)
-            for i in image2:
-                EquipmentImage.objects.update_or_create(
+                for i in image2:
+                    EquipmentImage.objects.update_or_create(
                     projectName=data[0], image=i)
                 message = "Property Details Submitted"
                 success = True
+                return redirect("/equipment")
+            except:
+                message = "Something error happened"
+                success =False
+           
         else:
             success = False
             message = "Please Provide all details that is required Correctly"
@@ -348,11 +466,37 @@ def addEquipment(request):
 
 
 def equipmentView(request, id):
+    message = None
+    success = False
+    form = contact(request.POST or None)
     data = {}
     equipment = models.Equipment.objects.filter(id=id)
     imageData = EquipmentImage.objects.filter(projectName=equipment[0])
     data["equipment"] = equipment
     data["images"] = imageData
+    data["id"] = id
+    data["form"] = form
+    if request.method == "POST" and request.user.username != "":
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            phone = form.cleaned_data.get("phone")
+            messages = form.cleaned_data.get("message")
+            Contact.objects.update_or_create(name=name,email=email,phone=phone,message=messages)
+            subject = f"New Message by {request.user}"
+            messageBody = "Message Body "+"\n"+"Name: "+name+"\n"+"Email: "+email+"\n"+"Phone: "+ phone+ "\n" +"Message "+ "\n"+messages
+            try:
+                send_mail(subject,messageBody,host_email,[host_email],fail_silently=False,auth_user=host_email,auth_password=host_password)
+                message = "Messages Sended Successfully"
+                success = True
+                return redirect("/equipment")
+            except:
+                message = "Smtp server not setup properly"
+                success =False
+        else:
+            message = "Please fill up the form correctly"
+    data["message"] = message
+    data["success"] = success
     return render(request, "equipmentView.html", data)
 
 
@@ -376,11 +520,13 @@ def services(request):
 
     return render(request, "services.html", data)
 
-
+@login_required(login_url="/login")
 def addService(request):
+    if(not request.user.userdetails.verified):
+        return redirect("/services")
     message = None
     success = False
-    form = forms2.Service(request.POST, request.FILES or None)
+    form = forms2.Service(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")
@@ -392,13 +538,19 @@ def addService(request):
             type = form.cleaned_data.get("type")
             image1 = form.cleaned_data.get("image")
             image2 = request.FILES.getlist("image1")
-            data = models.Service.objects.update_or_create(user=request.user, Title=title, Description=desc,
+            try:
+                data = models.Service.objects.update_or_create(user=request.user, Title=title, Description=desc,
                                                            Location=location, Address=address, Price=price, Currency=currency, ServiceType=type, image1=image1)
-            for i in image2:
-                ServiceImage.objects.update_or_create(
+                for i in image2:
+                    ServiceImage.objects.update_or_create(
                     projectName=data[0], image=i)
                 message = "Property Details Submitted"
                 success = True
+                return redirect("/services")
+            except:
+                message = "Something error happened"
+                success =False
+            
         else:
             success = False
             message = "Please Provide all details that is required Correctly"
@@ -407,11 +559,38 @@ def addService(request):
 
 
 def serviceView(request, id):
+    message = None
+    success = False
+    form = contact(request.POST or None)
     data = {}
     service = models.Service.objects.filter(id=id)
     imageData = ServiceImage.objects.filter(projectName=service[0])
     data["service"] = service
     data["images"] = imageData
+    data["id"] = id
+    data["form"] = form
+    if request.method == "POST" and request.user.username != "":
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            phone = form.cleaned_data.get("phone")
+            messages = form.cleaned_data.get("message")
+            Contact.objects.update_or_create(name=name,email=email,phone=phone,message=messages)
+            subject = f"New Message by {request.user}"
+            messageBody = "Message Body "+"\n"+"Name: "+name+"\n"+"Email: "+email+"\n"+"Phone: "+ phone+ "\n" +"Message "+ "\n"+messages
+            try:
+                send_mail(subject,messageBody,host_email,[host_email],fail_silently=False,auth_user=host_email,auth_password=host_password)
+                message = "Messages Sended Successfully"
+                success = True
+                return redirect("/services")
+            except:
+                message = "Smtp server not setup properly"
+                success =False
+        else:
+            message = "Please fill up the form correctly"
+
+    data["message"] = message
+    data["success"] = success
     return render(request, "serviceView.html", data)
 
 
@@ -447,10 +626,13 @@ def material(request):
     return render(request, "materials.html", data)
 
 
+@login_required(login_url="/login")
 def addMaterial(request):
+    if(not request.user.userdetails.verified):
+        return redirect("/materials")
     message = None
     success = False
-    form = forms2.Material(request.POST, request.FILES or None)
+    form = forms2.Material(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")
@@ -464,13 +646,19 @@ def addMaterial(request):
             weight = form.cleaned_data.get("weight")
             image1 = form.cleaned_data.get("image")
             image2 = form.cleaned_data.get("image1")
-            data = models.Material.objects.update_or_create(user=request.user, Item=item, Title=title,
+            try:
+                data = models.Material.objects.update_or_create(user=request.user, Item=item, Title=title,
                                                             Description=desc, Address=address, Quantity=quantity, Price=price, Category=category, Currency=currency, Weight=weight, image1=image1)
-            for i in image2:
-                MaterialImage.objects.update_or_create(
-                    projectName=data[0], image=i)
+                for i in image2:
+                    MaterialImage.objects.update_or_create(
+                        projectName=data[0], image=i)
                 message = "Property Details Submitted"
                 success = True
+                return redirect("/materials")
+            except:
+                message = "Something error happened"
+                success =False
+            
         else:
             success = False
             message = "Please Provide all details that is required Correctly"
@@ -479,11 +667,39 @@ def addMaterial(request):
 
 
 def materialView(request, id):
+    message = None
+    success  = False
+    form = contact(request.POST or None)
     data = {}
     material = models.Material.objects.filter(id=id)
     imageData = MaterialImage.objects.filter(projectName=material[0])
     data["material"] = material
     data["images"] = imageData
+    data["id"] = id
+    data["form"] = form
+    
+    if request.method == "POST" and request.user.username != "":
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            phone = form.cleaned_data.get("phone")
+            messages = form.cleaned_data.get("message")
+            Contact.objects.update_or_create(name=name,email=email,phone=phone,message=messages)
+            subject = f"New Message by {request.user}"
+            messageBody = "Message Body "+"\n"+"Name: "+name+"\n"+"Email: "+email+"\n"+"Phone: "+ phone+ "\n" +"Message "+ "\n"+messages
+            try:
+                send_mail(subject,messageBody,host_email,[host_email],fail_silently=False,auth_user=host_email,auth_password=host_password)
+                message = "Messages Sended Successfully"
+                success = True
+                return redirect("/materials")
+            except:
+                message = "Smtp server not setup properly"
+                success =False
+        else:
+            message = "Please fill up the form correctly"
+
+    data["message"] = message
+    data["success"] = success
     return render(request, "materialView.html", data)
 
 
@@ -530,11 +746,13 @@ def flats(request):
         data["flat"] = newList
     return render(request, "flats.html", data)
 
-
+@login_required(login_url="/login")
 def addFlat(request):
+    if(not request.user.userdetails.verified):
+        return redirect("/flats")
     message = None
     success = False
-    form = Flatform(request.POST, request.FILES or None)
+    form = Flatform(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")
@@ -563,15 +781,21 @@ def addFlat(request):
             currency = form.cleaned_data.get("currency")
             image = form.cleaned_data.get("image")
             image1 = form.cleaned_data.get("image1")
-            data = Flat.objects.update_or_create(user=request.user, Type=sale, Title=title, Description=description, Address=address, Rooms=room,
+            try:
+                data = Flat.objects.update_or_create(user=request.user, Type=sale, Title=title, Description=description, Address=address, Rooms=room,
                                                  Price=price, Bills=bills, Term=term, Short=short, Toilet=toilet, Furnishing=furnish, Parking=park, Garage=garage, Balcony=balcony, LivingRoom=living,
                                                  Broadband=broadband, MaxAge=age, Gender=gender, Occupation=occupation, Smoker=smoker, Pets=pets, Garden=garden, Location=location, Currency=currency, image1=image)
+                return redirect("/flats")
+            except:
+                message = "Something error happened"
+                success =False
 
             for i in image1:
                 FlatImage.objects.update_or_create(
                     projectName=data[0], image=i)
-                message = "Property Details Submitted"
-                success = True
+            message = "Property Details Submitted"
+            success = True
+            return redirect("/flats")
         else:
             message = "Please fill out the form correctly"
             success = False
@@ -579,14 +803,41 @@ def addFlat(request):
 
 
 def flatView(request, id):
+    message = None
+    success = False
+    form = contact(request.POST or None)
     data = {}
     flat = models.Flat.objects.filter(id=id)
     imageData = FlatImage.objects.filter(projectName=flat[0])
     data["flat"] = flat
     data["images"] = imageData
+    data["id"] = id
+    data["form"] = form
+    
+    if request.method == "POST" and request.user.username !="":
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            email = form.cleaned_data.get("email")
+            phone = form.cleaned_data.get("phone")
+            messages = form.cleaned_data.get("message")
+            Contact.objects.update_or_create(name=name,email=email,phone=phone,message=messages)
+            subject = f"New Message by {request.user}"
+            messageBody = "Message Body "+"\n"+"Name: "+name+"\n"+"Email: "+email+"\n"+"Phone: "+ phone+ "\n" +"Message "+ "\n"+messages
+            try:
+                send_mail(subject,messageBody,host_email,[host_email],fail_silently=False,auth_user=host_email,auth_password=host_password)
+                message = "Messages Sended Successfully"
+                success = True
+                return redirect("/flats")
+            except:
+                message = "Smtp server not setup properly"
+                success =False
+        else:
+            message = "Please fill up the form correctly"
+    data["message"] = message
+    data["success"] = success
     return render(request, "flatView.html", data)
 
-
+@login_required(login_url="/login")
 def logou(request):
     logout(request)
     return redirect("/login")

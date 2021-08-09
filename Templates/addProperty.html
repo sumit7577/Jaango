@@ -14,13 +14,26 @@
     border: 1px solid black;
     border-radius: 5px;
   }
-  .imageView img,video{
+
+  .imageView img,
+  video {
     height: inherit;
     object-fit: contain;
     width: 186px;
   }
 </style>
 <link rel="stylesheet" href="/static/assets/css/image.css" />
+{% if message %}
+{% if success %}
+<div class="alert alert-primary" role="alert" id="popup">
+  {{ message }}
+</div>
+{% else %}
+<div class="alert alert-danger" role="alert" id="popup">
+  {{ message}}
+</div>
+{% endif %}
+{% endif %}
 <header class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <h1 class="text-4xl font-bold text-gray-900">
@@ -70,6 +83,47 @@
           </div>
           <div class="text-error">{{ form.propertyType.errors }}</div>
         </div>
+
+        <div class="formsContent" id="sub1">
+          <lable>Subcategory</lable>
+          <div class="input">
+            {{ form.subcategory1 }}
+          </div>
+          <div class="text-error">{{ form.subcategory1.errors }}</div>
+        </div>
+
+        <div class="formsContent" id="sub2">
+          <lable>Subcategory</lable>
+          <div class="input">
+            {{ form.subcategory2 }}
+          </div>
+          <div class="text-error">{{ form.subcategory2.errors }}</div>
+        </div>
+
+        <div class="formsContent" id="sub3">
+          <lable>Subcategory</lable>
+          <div class="input">
+            {{ form.subcategory3 }}
+          </div>
+          <div class="text-error">{{ form.subcategory3.errors }}</div>
+        </div>
+
+        <div class="formsContent" id="sub4">
+          <lable>Subcategory</lable>
+          <div class="input">
+            {{ form.subcategory4 }}
+          </div>
+          <div class="text-error">{{ form.subcategory4.errors }}</div>
+        </div>
+
+        <div class="formsContent" id="sub5">
+          <lable>Subcategory</lable>
+          <div class="input">
+            {{ form.subcategory5 }}
+          </div>
+          <div class="text-error">{{ form.subcategory5.errors }}</div>
+        </div>
+
         <div class="formsContent">
           <lable>Location</lable>
           <div class="input">
@@ -132,42 +186,42 @@
           </div>
           <div class="text-error">{{ form.agent.errors }}</div>
         </div>
-        <div class="formsContent">
+        <div class="formsContent" id="buildYear">
           <lable>Build Year</lable>
           <div class="input">
             {{ form.build }}
           </div>
           <div class="text-error">{{ form.build.errors }}</div>
         </div>
-        <div class="formsContent">
+        <div class="formsContent" id="roomsFor">
           <lable>Rooms</lable>
           <div class="input">
             {{ form.room }}
           </div>
           <div class="text-error">{{ form.room.errors }}</div>
         </div>
-        <div class="formsContent">
+        <div class="formsContent" id="garage">
           <lable>Garages</lable>
           <div class="input">
             {{ form.garage }}
           </div>
           <div class="text-error">{{ form.garage.errors }}</div>
         </div>
-        <div class="formsContent">
+        <div class="formsContent" id="bath">
           <lable>Bathroom</lable>
           <div class="input">
             {{ form.bathroom }}
           </div>
           <div class="text-error">{{ form.bathroom.errors }}</div>
         </div>
-        <div class="formsContent">
+        <div class="formsContent" id="car">
           <lable>Car Spaces</lable>
           <div class="input">
             {{ form.carspace }}
           </div>
           <div class="text-error">{{ form.carspace.errors }}</div>
         </div>
-        <div class="formsContent">
+        <div class="formsContent" id="furnish">
           <lable>Fully Furnished</lable>
           <div class="input">
             {{ form.furnished }}
@@ -184,7 +238,73 @@
 
       <div class="check">
 
-        {{ form.indoor }}
+        <ul id="id_indoor" class="validation">
+          <li><label for="id_indoor_0"><input type="checkbox" name="indoor" value="Carport" class="validation"
+                id="id_indoor_0">
+              Carport</label>
+
+          </li>
+          <li><label for="id_indoor_1"><input type="checkbox" name="indoor" value="Garage" class="validation"
+                id="id_indoor_1">
+              Garage</label>
+
+          </li>
+          <li><label for="id_indoor_2"><input type="checkbox" name="indoor" value="Open Car Spaces" class="validation"
+                id="id_indoor_2">
+              Open Car Spaces</label>
+
+          </li>
+          <li><label for="id_indoor_3"><input type="checkbox" name="indoor" value="Remote Garage" class="validation"
+                id="id_indoor_3">
+              Remote Garage</label>
+
+          </li>
+          <li><label for="id_indoor_4"><input type="checkbox" name="indoor" value="Secure Parking" class="validation"
+                id="id_indoor_4">
+              Secure Parking</label>
+
+          </li>
+          <li><label for="id_indoor_5"><input type="checkbox" name="indoor" value="Swimming Pool" class="validation"
+                id="id_indoor_5">
+              Swimming Pool</label>
+
+          </li>
+          <li><label for="id_indoor_6"><input type="checkbox" name="indoor" value="Tennis Court" class="validation"
+                id="id_indoor_6">
+              Tennis Court</label>
+
+          </li>
+          <li><label for="id_indoor_7"><input type="checkbox" name="indoor" value="Balcony" class="validation"
+                id="id_indoor_7">
+              Balcony</label>
+
+          </li>
+          <li><label for="id_indoor_8"><input type="checkbox" name="indoor" value="Deck" class="validation"
+                id="id_indoor_8">
+              Deck</label>
+
+          </li>
+          <li><label for="id_indoor_9"><input type="checkbox" name="indoor" value="Courtyard" class="validation"
+                id="id_indoor_9">
+              Courtyard</label>
+
+          </li>
+          <li><label for="id_indoor_10"><input type="checkbox" name="indoor" value="Outdoor Entertaining Area"
+                class="validation" id="id_indoor_10">
+              Outdoor Entertaining Area</label>
+
+          </li>
+          <li><label for="id_indoor_11"><input type="checkbox" name="indoor" value="Fully Fenced" class="validation"
+                id="id_indoor_11">
+              Fully Fenced</label>
+
+          </li>
+          <li><label for="id_indoor_12"><input type="checkbox" name="indoor" value="24Hr Security" class="validation"
+                id="id_indoor_12">
+              24Hr Security</label>
+
+          </li>
+        </ul>
 
       </div>
       <div class="text-error">{{ form.indoor.errors }}</div>
@@ -196,7 +316,113 @@
 
       <div class="check">
 
-        {{ form.outdoor }}
+        <ul id="id_outdoor" class="validation">
+          <li><label for="id_outdoor_0"><input type="checkbox" name="outdoor" value="Alarm System" class="validation"
+                id="id_outdoor_0">
+              Alarm System</label>
+
+          </li>
+          <li><label for="id_outdoor_1"><input type="checkbox" name="outdoor" value="Intercom" class="validation"
+                id="id_outdoor_1">
+              Intercom</label>
+
+          </li>
+          <li><label for="id_outdoor_2"><input type="checkbox" name="outdoor" value="Ensuite" class="validation"
+                id="id_outdoor_2">
+              Ensuite</label>
+
+          </li>
+          <li><label for="id_outdoor_3"><input type="checkbox" name="outdoor" value="Dishwasher" class="validation"
+                id="id_outdoor_3">
+              Dishwasher</label>
+
+          </li>
+          <li><label for="id_outdoor_4"><input type="checkbox" name="outdoor" value="Built-in wardrobes"
+                class="validation" id="id_outdoor_4">
+              Built-in wardrobes</label>
+
+          </li>
+          <li><label for="id_outdoor_5"><input type="checkbox" name="outdoor" value="Ducted Vacuum System"
+                class="validation" id="id_outdoor_5">
+              Ducted Vacuum System</label>
+
+          </li>
+          <li><label for="id_outdoor_6"><input type="checkbox" name="outdoor" value="Gym" class="validation"
+                id="id_outdoor_6">
+              Gym</label>
+
+          </li>
+          <li><label for="id_outdoor_7"><input type="checkbox" name="outdoor" value="Indoor Spa" class="validation"
+                id="id_outdoor_7">
+              Indoor Spa</label>
+
+          </li>
+          <li><label for="id_outdoor_8"><input type="checkbox" name="outdoor" value="Floorboards" class="validation"
+                id="id_outdoor_8">
+              Floorboards</label>
+
+          </li>
+          <li><label for="id_outdoor_9"><input type="checkbox" name="outdoor" value="Broadband Internet"
+                class="validation" id="id_outdoor_9">
+              Broadband Internet</label>
+
+          </li>
+          <li><label for="id_outdoor_10"><input type="checkbox" name="outdoor" value="PayTV Access" class="validation"
+                id="id_outdoor_10">
+              PayTV Access</label>
+
+          </li>
+          <li><label for="id_outdoor_11"><input type="checkbox" name="outdoor" value="Fireplace" class="validation"
+                id="id_outdoor_11">
+              Fireplace</label>
+
+          </li>
+          <li><label for="id_outdoor_12"><input type="checkbox" name="outdoor" value="Ducted Heating" class="validation"
+                id="id_outdoor_12">
+              Ducted Heating</label>
+
+          </li>
+          <li><label for="id_outdoor_13"><input type="checkbox" name="outdoor" value="Split-system Heating"
+                class="validation" id="id_outdoor_13">
+              Split-system Heating</label>
+
+          </li>
+          <li><label for="id_outdoor_14"><input type="checkbox" name="outdoor" value="Hydronic Heating"
+                class="validation" id="id_outdoor_14">
+              Hydronic Heating</label>
+
+          </li>
+          <li><label for="id_outdoor_15"><input type="checkbox" name="outdoor" value="Gas Heating" class="validation"
+                id="id_outdoor_15">
+              Gas Heating</label>
+
+          </li>
+          <li><label for="id_outdoor_16"><input type="checkbox" name="outdoor" value="Ducted Cooling" class="validation"
+                id="id_outdoor_16">
+              Ducted Cooling</label>
+
+          </li>
+          <li><label for="id_outdoor_17"><input type="checkbox" name="outdoor" value="Air Conditioning"
+                class="validation" id="id_outdoor_17">
+              Air Conditioning</label>
+
+          </li>
+          <li><label for="id_outdoor_18"><input type="checkbox" name="outdoor" value="Lift" class="validation"
+                id="id_outdoor_18">
+              Lift</label>
+
+          </li>
+          <li><label for="id_outdoor_19"><input type="checkbox" name="outdoor" value="Running Water" class="validation"
+                id="id_outdoor_19">
+              Running Water</label>
+
+          </li>
+          <li><label for="id_outdoor_20"><input type="checkbox" name="outdoor" value="Washing Machine"
+                class="validation" id="id_outdoor_20">
+              Washing Machine</label>
+
+          </li>
+        </ul>
 
       </div>
       <div class="text-error">{{ form.outdoor.errors }}</div>
@@ -207,7 +433,43 @@
 
       <div class="check">
 
-        {{ form.echo }}
+        <ul id="id_echo" class="validation">
+          <li><label for="id_echo_0"><input type="checkbox" name="echo" value="Solar Panels" class="validation"
+                id="id_echo_0">
+              Solar Panels</label>
+
+          </li>
+          <li><label for="id_echo_1"><input type="checkbox" name="echo" value="Solar Hot Water" class="validation"
+                id="id_echo_1">
+              Solar Hot Water</label>
+
+          </li>
+          <li><label for="id_echo_2"><input type="checkbox" name="echo" value="Water Tank" class="validation"
+                id="id_echo_2">
+              Water Tank</label>
+
+          </li>
+          <li><label for="id_echo_3"><input type="checkbox" name="echo" value="Grey Water System" class="validation"
+                id="id_echo_3">
+              Grey Water System</label>
+
+          </li>
+          <li><label for="id_echo_4"><input type="checkbox" name="echo" value="Energy efficiency rating -High"
+                class="validation" id="id_echo_4">
+              Energy efficiency rating -High</label>
+
+          </li>
+          <li><label for="id_echo_5"><input type="checkbox" name="echo" value="Energy efficiency rating -Medium"
+                class="validation" id="id_echo_5">
+              Energy efficiency rating -Medium</label>
+
+          </li>
+          <li><label for="id_echo_6"><input type="checkbox" name="echo" value="Energy efficiency rating -Low"
+                class="validation" id="id_echo_6">
+              Energy efficiency rating -Low</label>
+
+          </li>
+        </ul>
       </div>
       <div class="text-error">{{ form.echo.errors }}</div>
 
@@ -216,7 +478,53 @@
 
       <div class="check">
 
-        {{ form.other }}
+        <ul id="id_other" class="validation">
+          <li><label for="id_other_0"><input type="checkbox" name="other" value="Pets Allowed" class="validation"
+                id="id_other_0">
+              Pets Allowed</label>
+
+          </li>
+          <li><label for="id_other_1"><input type="checkbox" name="other" value="Disability Features" class="validation"
+                id="id_other_1">
+              Disability Features</label>
+
+          </li>
+          <li><label for="id_other_2"><input type="checkbox" name="other" value="Waterfront" class="validation"
+                id="id_other_2">
+              Waterfront</label>
+
+          </li>
+          <li><label for="id_other_3"><input type="checkbox" name="other" value="Water View" class="validation"
+                id="id_other_3">
+              Water View</label>
+
+          </li>
+          <li><label for="id_other_4"><input type="checkbox" name="other" value="Ocean View" class="validation"
+                id="id_other_4">
+              Ocean View</label>
+
+          </li>
+          <li><label for="id_other_5"><input type="checkbox" name="other" value="River View" class="validation"
+                id="id_other_5">
+              River View</label>
+
+          </li>
+          <li><label for="id_other_6"><input type="checkbox" name="other" value="Hill/Mountain View" class="validation"
+                id="id_other_6">
+              Hill/Mountain View</label>
+
+          </li>
+          <li><label for="id_other_7"><input type="checkbox" name="other" value="Development Projects"
+                class="validation" id="id_other_7">
+              Development Projects</label>
+
+          </li>
+          <li><label for="id_other_8"><input type="checkbox" name="other" value="ERCAAN Association" class="validation"
+                id="id_other_8">
+              ERCAAN Association</label>
+
+          </li>
+        </ul>
       </div>
       <div class="text-error">{{ form.other.errors }}</div>
     </div>
@@ -263,7 +571,7 @@
         </div>
         <div class="text-error">{{ form.image1.errors }}</div>
       </div>
-      
+
     </div>
 
     <button class="btn btn-primary" style="margin-top: 15px; margin-left: 12px; height:4rem ;" type="submit">Add
@@ -274,4 +582,82 @@
 {% block footer %} {% endblock %}
 
 <script src="/static/assets/js/image.js" type="text/javascript"></script>
+<script>
+  const subCat1 = document.getElementById("sub1");
+  const subCat2 = document.getElementById("sub2");
+  const subCat3 = document.getElementById("sub3");
+  const subCat4 = document.getElementById("sub4");
+  const subCat5 = document.getElementById("sub5");
+  const rooms = document.getElementById("roomsFor");
+  const garage = document.getElementById("garage");
+  const bathroom = document.getElementById("bath");
+  const car = document.getElementById("car");
+  const furnish = document.getElementById("furnish");
+  const build = document.getElementById("buildYear");
+  subCat1.style.display = "block";
+  subCat2.style.display = "none";
+  subCat3.style.display = "none";
+  subCat4.style.display = "none";
+  subCat5.style.display = "none";
+  const propertyType = document.getElementById("id_propertyType");
+  propertyType.addEventListener("change",(e)=>{
+    console.log(e.target.value);
+    if(e.target.value == "Steel Structure"){
+      subCat1.style.display = "none";
+      subCat2.style.display= "block";
+      subCat3.style.display = "none";
+      subCat4.style.display = "none";
+      subCat5.style.display = "none";
+    }
+    else if(e.target.value == "Concrete Structure"){
+      subCat1.style.display = "block";
+      subCat2.style.display= "none";
+      subCat3.style.display = "none";
+      subCat4.style.display = "none";
+      subCat5.style.display = "none";
+    }
+    else if(e.target.value == "Home Stay"){
+      subCat1.style.display = "none";
+      subCat2.style.display= "none";
+      subCat3.style.display = "block";
+      subCat4.style.display = "none";
+      subCat5.style.display = "none";
+    }
+    else if(e.target.value == "Land"){
+      subCat1.style.display = "none";
+      subCat2.style.display= "none";
+      subCat3.style.display = "none";
+      subCat4.style.display = "block";
+      subCat5.style.display = "none";
+      rooms.style.display = "none";
+      garage.style.display = "none";
+      bathroom.style.display = "none";
+      car.style.display = "none";
+      furnish.style.display = "none";
+      build.style.display = "none";
+    }
+    else if(e.target.value == "Flat"){
+      subCat1.style.display = "none";
+      subCat2.style.display= "none";
+      subCat3.style.display = "none";
+      subCat4.style.display = "none";
+      subCat5.style.display = "block";
+    }
+    else if(e.target.value == "House"){
+      subCat1.style.display = "none";
+      subCat2.style.display= "none";
+      subCat3.style.display = "none";
+      subCat4.style.display = "none";
+      subCat5.style.display = "block";
+    }
+  })
+
+let ab = document.getElementById("popup");
+if (ab) {
+  setTimeout(() => {
+    ab.remove();
+  }, 2000);
+}
+
+</script>
 {% endblock %}

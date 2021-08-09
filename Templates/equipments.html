@@ -1,186 +1,203 @@
 {% extends "base.html" %}
 {% block title %} Equipments {% endblock %}
-{% block button %} <a href="/addEquipment"><button id="tablesModify" class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-  Add Equipments
-</button></a>{% endblock %}
+{% block button %}
+{% if request.user.userdetails.verified %}
+ <a href="/addEquipment"><button id="tablesModify"
+    class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    Add Equipments
+  </button></a>
+  {% else %}
+  <button id="popupButton"
+    class="buttom inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    Add Equipments
+  </button>
+  {% endif %}
+  {% endblock %}
 {% block corousal %}
-    <div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/static/assets/images/equipment1.jpg" class="d-block w-100" alt="image">
-        </div>
-        <div class="carousel-item">
-          <img src="/static/assets/images/equipment2.jpg" class="d-block w-100" alt="image">
-        </div>
-        <div class="carousel-item">
-          <img src="/static/assets/images/equipment4.jpg" class="d-block w-100" alt="image">
-
-        
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+<div id="carouselExampleIndicators" class="carousel slide coros" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+      aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+      aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+      aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/static/assets/images/equipment1.jpg" class="d-block w-100" alt="image">
     </div>
-    {% endblock %}
-{% block body %}
-<style>
-  select {
-        border-radius: 6px;
-        height: 46px;
-        padding: 10px;
-        font-size: 16px;
-        border: 2px solid #ccc!important;
+    <div class="carousel-item">
+      <img src="/static/assets/images/equipment2.jpg" class="d-block w-100" alt="image">
+    </div>
+    <div class="carousel-item">
+      <img src="/static/assets/images/equipment4.jpg" class="d-block w-100" alt="image">
+
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  {% endblock %}
+  {% block body %}
+  <style>
+    select {
+      border-radius: 6px;
+      height: 46px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc !important;
     }
 
     input {
-        font-size: 16px!important;
-        padding: 10px!important;
-        border-radius: 6px!important;
-        height: 46px!important;
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
-        border: 2px solid #ccc!important;
+      font-size: 16px !important;
+      padding: 10px !important;
+      border-radius: 6px !important;
+      height: 46px !important;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+      border: 2px solid #ccc !important;
     }
-    h6{
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+
+    h6 {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
     }
-</style>
-<div class="container-fluid content">
-  <div class="row search-filter-row">
 
-    <div class="col-md-4 col-lg-3 search-filters" style="background-color:rgb(243, 229, 229);">
-      <form method="POST" action="/equipment">{% csrf_token %}
-        <ul class="list-unstyled">
-          <li>
-            <h6>Hire/Buy</h6>
-            <select class="selectpicker" title="Any" id="lst-sale-or-rent" name="lst-sale-or-rent">
-              {% for i in fori %}
-              <option value="{{ i.0 }}">{{ i.1 }}</option>
-              {% endfor %}
-            </select>
-          </li>
+    .search-filters {
+      max-height: 800px;
+      background-color: #fff !important;
+    }
+  </style>
+  <div class="container-fluid content">
+    <div class="row search-filter-row">
 
-          <li>
-            <h6>LOCATION</h6>
-            <input type="text" class="selectpicker form-control location-input" id="lst-city" name="lstcity"
-              data-validation="required" />
-          </li>
+      <div class="col-md-4 col-lg-3 search-filters" style="background-color:rgb(243, 229, 229);">
+        <form method="POST" action="/equipment">{% csrf_token %}
+          <ul class="list-unstyled">
+            <li>
+              <h6>Hire/Buy</h6>
+              <select class="selectpicker" title="Any" id="lst-sale-or-rent" name="lst-sale-or-rent">
+                {% for i in fori %}
+                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                {% endfor %}
+              </select>
+            </li>
 
-
-          <li>
-            <h6>EQUIPMENT TYPE</h6>
-            <select class="selectpicker" id="lst-property-type" name="lst-property-type" title="All Types">
-              {% for i in ptype %}
-              <option value="{{ i.0 }}">{{ i.1 }}</option>
-              {% endfor %}
-            </select>
-          </li>
-
-          <li>
-            <h6>CURRENCY</h6>
-            <select class="selectpicker lst-currency" title="₦ NGN" id="lst-currency" name="lst-currency">
-              {% for i in currency %}
-              <option value="{{ i.0 }}">{{ i.1 }}</option>
-              {% endfor %}
-            </select>
-          </li>
-
-          <li>
-            <h6>PRICE</h6>
-            <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
-              <option value="" style="display: none;">Any</option>
-              <option value="1000-lt"> <1000 </option>
-              <option value="1000-10000">1000-10000</option>
-              <option value="10000-20000">10000-20000</option>
-              <option value="2000-rt">20000></option>
+            <li>
+              <h6>LOCATION</h6>
+              <input type="text" class="selectpicker form-control location-input" id="lst-city" name="lstcity"
+                data-validation="required" />
+            </li>
 
 
-            </select>
-          </li>
+            <li>
+              <h6>EQUIPMENT TYPE</h6>
+              <select class="selectpicker" id="lst-property-type" name="lst-property-type" title="All Types">
+                {% for i in ptype %}
+                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                {% endfor %}
+              </select>
+            </li>
 
-        </ul>
-        <button type="submit" class="btn btn-default search-filters-submit"
-          id="property-filters-submit">&nbsp;SEARCH</button>
-        <a href="/equipment"><button type="button" class="btn btn-default search-filters-submit" id="property-filters-clear">&nbsp;CLEAR
-          SEARCH</button></a>
-      </form>
-    </div>
+            <li>
+              <h6>CURRENCY</h6>
+              <select class="selectpicker lst-currency" title="₦ NGN" id="lst-currency" name="lst-currency">
+                {% for i in currency %}
+                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                {% endfor %}
+              </select>
+            </li>
 
-    <div class="col-md-8 col-lg-9 search-list">
-      <div>
-        <h3 class="no-padding">EQUIPMENTS</h3>
+            <li>
+              <h6>PRICE</h6>
+              <select class="selectpicker lst-price" title="Any" id="lst-price" name="lst-price">
+                <option value="" style="display: none;">Any</option>
+                <option value="1000-lt">
+                  <1000 </option>
+                <option value="1000-10000">1000-10000</option>
+                <option value="10000-20000">10000-20000</option>
+                <option value="2000-rt">20000></option>
+
+
+              </select>
+            </li>
+
+          </ul>
+          <button type="submit" class="btn btn-default search-filters-submit"
+            id="property-filters-submit">&nbsp;SEARCH</button>
+          <a href="/equipment"><button type="button" class="btn btn-default search-filters-submit"
+              id="property-filters-clear">&nbsp;CLEAR
+              SEARCH</button></a>
+        </form>
       </div>
-      <div class="row" id="properties-list-container">
-        {% for i in equipment %}
-        <div class="col-sm-6 search-list-element">
-          <a href="equipment/{{i.id}}">
-            <div class="search-list-img">
-              <img src="Files/{{i.image1}}"
-                class="img-responsive">
-              <div class="opaque-heading-field">
-                <div class="element-heading">
-                  <h4>{{ i.EquipmentType }}</h4>
+
+      <div class="col-md-8 col-lg-9 search-list">
+        <div>
+          <h3 class="no-padding">EQUIPMENTS</h3>
+        </div>
+        <div class="row" id="properties-list-container">
+          {% for i in equipment %}
+          <div class="col-sm-6 search-list-element">
+            <a href="equipment/{{i.id}}">
+              <div class="search-list-img">
+                <img src="Files/{{i.image1}}" class="img-responsive">
+                <div class="opaque-heading-field">
+                  <div class="element-heading">
+                    <h4>{{ i.EquipmentType }}</h4>
+                  </div>
+                </div>
+                <div class="hover-div hidden">
+                </div>
+
+                <div class="element-left-feature">
+                  <h6 class="no-margin">{{ i.Hire }}</h6>
+                </div>
+                <div class="element-right-feature">
+
+                  <h6 class="no-margin">{{ i.Currency }} {{ i.Price }}</h6>
                 </div>
               </div>
-              <div class="hover-div hidden">
+            </a>
+            <div class="info-panel">
+              <div class="row no-margin features">
+                <a class="modal-location-link" prop-location="Abuja">
+                  <div class="location-tile">
+                    <i class="fa fa-map-marker fa-2x display-inline" aria-hidden="true"></i>
+                    <h5 class="no-margin display-inline">{{ i.Location }}</h5>
+                  </div>
+                </a>
               </div>
-
-              <div class="element-left-feature">
-                <h6 class="no-margin">{{ i.Hire }}</h6>
-              </div>
-              <div class="element-right-feature">
-
-                <h6 class="no-margin">{{ i.Currency }} {{ i.Price }}</h6>
-              </div>
-            </div>
-          </a>
-          <div class="info-panel">
-            <div class="row no-margin features">
-              <a class="modal-location-link" prop-location="Abuja">
-                <div class="location-tile">
-                  <i class="fa fa-map-marker fa-2x display-inline" aria-hidden="true"></i>
-                  <h5 class="no-margin display-inline">{{ i.Location }}</h5>
+              <div class="list-element-bottom-row user vertical-align">
+                <div class="user-name-holder">
+                  <i class="fa fa-user fa-2x display-inline" aria-hidden="true"></i>
+                  <h5 class="no-margin display-inline">{{ i.user.username }}</h5>
                 </div>
-              </a>
-            </div>
-            <div class="list-element-bottom-row user vertical-align">
-              <div class="user-name-holder">
-                <i class="fa fa-user fa-2x display-inline" aria-hidden="true"></i>
-                <h5 class="no-margin display-inline">{{ i.user.username }}</h5>
-              </div>
-              <div class="date-holder">
-                <h4>Date Added</h4>
-                <span>
-                  <i class="fa fa-calendar-o fa-2x display-inline" aria-hidden="true"></i>
-                  <h5 class="no-margin display-inline">{{ i.Date }}</h5>
-                </span>
+                <div class="date-holder">
+                  <h4>Date Added</h4>
+                  <span>
+                    <i class="fa fa-calendar-o fa-2x display-inline" aria-hidden="true"></i>
+                    <h5 class="no-margin display-inline">{{ i.Date }}</h5>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+          {% endfor %}
+
+
         </div>
-        {% endfor %}
-
-
+        <div id="no-property-data-found-message" class="hidden text-center"></div>
+        <nav class="text-center">
+          <div id="property-pagination"></div>
+        </nav>
       </div>
-      <div id="no-property-data-found-message" class="hidden text-center"></div>
-      <nav class="text-center">
-        <div id="property-pagination"></div>
-      </nav>
     </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
