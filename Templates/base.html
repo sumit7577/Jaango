@@ -558,12 +558,12 @@
 <script src="/static/assets/js/custombox.min.js"></script>
 <script>
  
-  const button = document.getElementById("modalUpload");
+  const buttonse = document.getElementById("modalUpload");
   const button3 = document.getElementById("popupButton");
-  const button1 = document.getElementById("close");
+  const button1se = document.getElementById("close");
   var modal;
-  if(button){
-  button.addEventListener("click", (e) => {
+  if(buttonse){
+  buttonse.addEventListener("click", (e) => {
       modal = new Custombox.modal({
           content: {
               effect: 'slide',
@@ -576,10 +576,10 @@
 
   })
 }
-  button1.addEventListener("click",(e)=>{
+  button1se.addEventListener("click",(e)=>{
       Custombox.modal.close();
   })
-
+if(button3){
   button3.addEventListener("click",(e)=>{
     modal = new Custombox.modal({
       content: {
@@ -591,9 +591,10 @@
     })
     modal.open();
   })
+}
   
-  let ab = document.getElementById("popup");
-    if (ab) {
+  let abcd= document.getElementById("popup");
+    if (abcd) {
       setTimeout(() => {
         ab.remove();
       }, 2000);

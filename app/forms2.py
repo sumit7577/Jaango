@@ -233,14 +233,14 @@ class propertyForm(forms.Form):
             }
         ))
 
-    image = forms.ImageField(required=True,
+    image = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image1 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -305,14 +305,14 @@ class Structure(forms.Form):
             }
         ))
 
-    image = forms.ImageField(required=True,
+    image = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image1 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -328,14 +328,14 @@ class Structure(forms.Form):
             }
         ))
 
-    location = forms.CharField(required=True,min_length=8,
+    location = forms.CharField(required=True,min_length=5,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    address = forms.CharField(required=True,min_length=8,
+    address = forms.CharField(required=True,min_length=5,
         widget=forms.Textarea(
             attrs={
                 "rows":4,
@@ -465,14 +465,14 @@ class Equipment(forms.Form):
 
 
 class Service(forms.Form):
-    image = forms.ImageField(required=True,
+    image = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image1 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
@@ -496,7 +496,7 @@ class Service(forms.Form):
             }
         ))
 
-    location = forms.CharField(required=True,min_length=8,max_length=150,
+    location = forms.CharField(required=True,min_length=5,max_length=150,
         widget=forms.TextInput(
             attrs={
                 "class":"validation"
@@ -536,14 +536,14 @@ class Service(forms.Form):
 
 
 class Material(forms.Form):
-    image = forms.ImageField(required=True,
+    image = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"
             }
         ))
 
-    image1 = forms.ImageField(required=True,
+    image1 = forms.ImageField(required=False,
         widget=forms.FileInput(
             attrs={
                 "class":"validation"

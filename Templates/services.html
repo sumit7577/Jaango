@@ -133,6 +133,7 @@
                 </div>
               </div>
               <div class="hover-div hidden">
+                
               </div>
 
 
@@ -148,6 +149,9 @@
                   <h4
                     style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: large;"
                     class="no-margin display-inline">{{ i.user.username }}</h4>
+                    {% if request.user == i.user %}
+                    <a href="editService/{{i.id}}"><span style="float:right;">Edit</span></a>
+                    {% endif %}
                 </div>
               </a>
 
@@ -202,6 +206,7 @@
                     class="no-margin display-inline">{{ i.Date }}</h4>
                 </div>
               </a>
+              
             </div>
           </div>
         </div>

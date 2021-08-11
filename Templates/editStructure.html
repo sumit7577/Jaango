@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% block title %} Edit Structure {% endblock %}
+{% block button %} {% endblock %}
+{% block corousal %} {% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="/static/assets/css/image.css" />
+
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-bold text-gray-900">
+      Edit Structure
+    </h1>
+  </div>
+</header>
+
+<form method="POST" action="/editStructure/{{data.0.id}}" enctype="multipart/form-data">{% csrf_token %}
+  <div class="formsCustom">
+
+    <div class="formsFlex">
+      <div class="formleft">
+        <div class="formsContent">
+          <lable>Structure Category</lable>
+          <div class="input">
+            {{ form.category }}
+          </div>
+          <div class="text-error">{{ form.category.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Property Type</lable>
+          <div class="input">
+            {{ form.propertyType }}
+          </div>
+          <div class="text-error">{{ form.propertyType.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Description</lable>
+          <div class="input">
+            {{ form.description }}
+          </div>
+          <div class="text-error">{{ form.description.errors }}</div>
+        </div>
+
+        <div class="formsContent">
+          <lable>Address</lable>
+          <div class="input">
+            {{ form.address }}
+          </div>
+          <div class="text-error">{{ form.address.errors }}</div>
+        </div>
+
+        <div class="formsContent">
+          <lable>Currency</lable>
+          <div class="input">
+            {{ form.currency }}
+          </div>
+          <div class="text-error">{{ form.currency.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Price</lable>
+          <div class="input">
+            {{ form.price }}
+          </div>
+          <div class="text-error">{{ form.price.errors }}</div>
+        </div>
+
+      </div>
+
+      <div class="formRight">
+        <div class="formsContent">
+          <lable>Space</lable>
+          <div class="input">
+            {{ form.size }}
+          </div>
+          <div class="text-error">{{ form.size.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Rooms</lable>
+          <div class="input">
+            {{ form.room }}
+          </div>
+          <div class="text-error">{{ form.room.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Initial Stage Cost</lable>
+          <div class="input">
+            {{ form.initial }}
+          </div>
+          <div class="text-error">{{ form.initial.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Middle Stage Cost</lable>
+          <div class="input">
+            {{ form.middle }}
+          </div>
+          <div class="text-error">{{ form.middle.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>Final Stage Cost</lable>
+          <div class="input">
+            {{ form.final }}
+          </div>
+          <div class="text-error">{{ form.final.errors }}</div>
+        </div>
+        <div class="formsContent">
+          <lable>LOCATION</lable>
+          <div class="input">
+            {{ form.location }}
+          </div>
+          <div class="text-error">{{ form.location.errors }}</div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+
+    <div style="margin-left: 21px; margin-top:35px;">
+      <lable>Featured Image</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported Formats
+        JPG, JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
+    </div>
+    <div class="image" id="image1">
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon0" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para0">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage0" draggable="false">
+          <input type="file" name="image" class="validation" accept="image/*" id="id_image">
+
+        </div>
+
+      </div>
+      <div class="text-error">{{ form.image.errors }}</div>
+    </div>
+
+
+    <div style="margin-left: 21px; margin-top:35px;">
+      <lable>Images</lable><span class="dim-size" style="font-size: 12px; margin-left: 8px;">Supported Formats JPG,
+        JPEG, PNG 600 X 400 PX (Max 10 MB)</span>
+    </div>
+    <div class="image" id="image">
+      <div class="imageView"
+        style="display:flex; justify-content:center; align-items: center; width: 193px; height:150px; border: 1px solid black; border-radius: 5px;">
+        <div id="dropZoon1" class="upload-area__drop-zoon drop-zoon">
+          <span class="drop-zoon__icon">
+            <i class='bx bxs-file-image'></i>
+          </span>
+          <p class="drop-zoon__paragraph" id="para1">Drop your file here or Click to browse</p>
+          <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
+          <img src="" alt="Preview Image" id="previewImage1" draggable="false">
+          <input type="file" name="image1" multiple class="validation" accept="image/*" id="id_image1">
+
+        </div>
+        <div class="text-error">{{ form.image1.errors }}</div>
+
+      </div>
+      
+    </div>
+    <button class="btn btn-primary" style="margin-top: 15px; margin-left: 12px; height:4rem ;" type="submit">Update
+      Structure</button>
+
+  </div>
+</form>
+
+
+</div>
+
+{% block footer %} {% endblock %}
+
+<script src="/static/assets/js/image.js" type="text/javascript"></script>
+<script>
+let ab = document.getElementById("popup");
+    if (ab) {
+      setTimeout(() => {
+        ab.remove();
+      }, 2000);
+    }
+
+//custom implementation for updating structure
+const categorys= document.getElementById("id_category");
+const propertys = document.getElementById("id_propertyType");
+const currecys = document.getElementById("id_currency");
+const desc = document.getElementById("id_description");
+desc.value = "{{data.0.Description }}";
+const addresses = document.getElementById("id_address");
+addresses.value = "{{ data.0.Address }}"
+const prices = document.getElementById("id_price");
+prices.value = "{{ data.0.Price }}";
+const sizes = document.getElementById("id_size");
+sizes.value = "{{ data.0.Size }}";
+const roomes = document.getElementById("id_room");
+roomes.value = "{{ data.0.Rooms}}";
+const initials = document.getElementById("id_initial");
+initials.value = "{{ data.0.InitialCost }}";
+const middles = document.getElementById("id_middle");
+middles.value = "{{ data.0.MiddleCost }}";
+const finals = document.getElementById("id_final");
+finals.value = "{{ data.0.FinalCost }}";
+const locations = document.getElementById("id_location");
+locations.value = "{{ data.0.Location }}";
+
+const div = document.getElementById("image1");
+
+let parentElement = document.createElement("div");
+parentElement.classList.add("imageView");
+let element = document.createElement("img");
+element.setAttribute("src", "/Files/"+"{{ data.0.image1}}");
+parentElement.appendChild(element);
+div.appendChild(parentElement);
+
+const div1 = document.getElementById("image");
+const imageData = "{{imageData}}"
+const mainData4 = imageData.split(",");
+
+mainData4.forEach(function(elements){
+    const replaced = elements.replace(/\[?&#x27;\]?/g,"");
+    const final = replaced.trim();
+    let parentElement1 = document.createElement("div");
+    parentElement1.classList.add("imageView");
+    let element1 = document.createElement("img");
+    element1.setAttribute("src", "/Files/"+final);
+    parentElement1.appendChild(element1);
+    div1.appendChild(parentElement1);
+})
+</script>
+{% endblock %}

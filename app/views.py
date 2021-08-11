@@ -151,6 +151,7 @@ def property(request):
 
     return render(request, "property.html", data)
 
+
 @login_required(login_url="/login")
 def addProperty(request):
     if(not request.user.userdetails.verified):
@@ -262,6 +263,108 @@ def propertyView(request, id):
     return render(request, "propertyView.html", data)
 
 
+def editProperty(request,id):
+    imageList = []
+    data = {}
+    message = None
+    success = False
+    propertyData = Property.objects.filter(id=id)
+    imageData = PropertyIMage.objects.filter(projectName=propertyData[0])
+    imageLength = imageData.count()
+    data["length"] = imageLength
+    if(propertyData[0].user != request.user):
+        return redirect("/property")
+
+    data["data"] = propertyData
+    for i in imageData:
+        name = str(i.image)
+        imageList.append(name)
+    data["imageData"] = imageList
+    form = propertyForm(request.POST or None, request.FILES or None)
+    data["form"]  = form
+
+    if request.method == "POST":
+        if form.is_valid():
+            sale = form.cleaned_data.get("sale")
+            furnished = form.cleaned_data.get("furnished")
+            title = form.cleaned_data.get("title")
+            desc = form.cleaned_data.get("description")
+            location = form.cleaned_data.get("location")
+            address = form.cleaned_data.get("address")
+            type = form.cleaned_data.get("propertyType")
+            currency = form.cleaned_data.get("currency")
+            size = form.cleaned_data.get("size")
+            price = form.cleaned_data.get("price")
+            condition = form.cleaned_data.get("priceCondition")
+            deposit = form.cleaned_data.get("deposit")
+            agent = form.cleaned_data.get("agent")
+            build = form.cleaned_data.get("build")
+            room = form.cleaned_data.get("room")
+            garage = form.cleaned_data.get("garage")
+            bathroom = form.cleaned_data.get("bathroom")
+            carspace = form.cleaned_data.get("carspace")
+            indoor = request.POST.getlist("indoor")
+            outdoor = request.POST.getlist("outdoor")
+            echo = request.POST.getlist("echo")
+            other = request.POST.getlist("other")
+            image = form.cleaned_data.get("image")
+            image1 = request.FILES.getlist("image1")
+            subcat = form.cleaned_data.get("subcategory1")
+            subcat1 = form.cleaned_data.get("subcategory2")
+            subcat2 = form.cleaned_data.get("subcategory3")
+            subcat3 = form.cleaned_data.get("subcategory4")
+            subcat4 = form.cleaned_data.get("subcategpry5")
+            try:
+                propertyData.update(Type=sale, Title=title, Description=desc, PropertyType=type,
+                                                     Location=location, Address=address,
+                                                     Size=size, Currency=currency, Price=price,
+                                                     PriceConditions=condition, Deposit=deposit, AgentCommision=agent, BuildYear=build,
+                                                     Rooms=room, Garages=garage, Bathroom=bathroom, CarSpaces=carspace,
+                                                     FullyFurnished=furnished, IndoorFeaturs=indoor, OutdoorFeatures=outdoor,
+                                                     EcoFeatures=echo, OtherFeatures=other)
+                
+
+                if(image):
+                    test = Property(user=request.user,id=id, Type=sale, Title=title, Description=desc, PropertyType=type,
+                                                     Location=location, Address=address,
+                                                     Size=size, Currency=currency, Price=price,
+                                                     PriceConditions=condition, Deposit=deposit, AgentCommision=agent, BuildYear=build,
+                                                     Rooms=room, Garages=garage, Bathroom=bathroom, CarSpaces=carspace,
+                                                     FullyFurnished=furnished, IndoorFeaturs=indoor, OutdoorFeatures=outdoor,
+                                                     EcoFeatures=echo, OtherFeatures=other,image1=image)
+                    test.save()
+                
+                if subcat != "":
+                    propertyData.update(SubCategory=subcat)
+                elif(subcat1 != ""):
+                    propertyData.update(SubCategory=subcat1)
+                elif(subcat2 != ""):
+                    propertyData.update(SubCategory=subcat2)
+                elif(subcat3 != ""):
+                    propertyData.update(SubCategory=subcat3)
+                elif(subcat4 != ""):
+                    propertyData.update(SubCategory=subcat4)
+
+                if(image1):
+                    imageData.delete()
+                    for i in image1:
+                        PropertyIMage.objects.update_or_create(projectName=propertyData[0],image=i)
+                        
+                message = "Property Details Updated"
+                success = True
+
+            except Exception as e:
+                message = "Something error happened"
+                success =False
+        else:
+            success = False
+            message = "Please Provide all details that is required Correctly"
+
+    data["message"] = message
+    data["success"] = success
+    return render(request,"editProperty.html",data)
+
+
 def structure(request):
     data = {}
     data["currency"] = currency
@@ -309,6 +412,7 @@ def structure(request):
                 newList.append(i)
         data["structure"] = newList
     return render(request, "structure.html", data)
+
 
 @login_required(login_url="/login")
 def addStructure(request):
@@ -388,6 +492,72 @@ def structureView(request, id):
     data["message"] = message
     data["success"] = success
     return render(request, "structureView.html", data)
+
+
+def editStructure(request,id):
+    imageList = []
+    data = {}
+    message = None
+    success = False
+    propertyData = models.Structure.objects.filter(id=id)
+    imageData = StructureImage.objects.filter(projectName=propertyData[0])
+    imageLength = imageData.count()
+    data["length"] = imageLength
+    if(propertyData[0].user != request.user):
+        return redirect("/structure")
+
+    data["data"] = propertyData
+    for i in imageData:
+        name = str(i.image)
+        imageList.append(name)
+    data["imageData"] = imageList
+    form = forms2.Structure(request.POST or None, request.FILES or None)
+    data["form"]  = form
+
+    if request.method == "POST":
+        if form.is_valid():
+            currency = form.cleaned_data.get("currency")
+            type = form.cleaned_data.get("propertyType")
+            category = form.cleaned_data.get("category")
+            desc = form.cleaned_data.get("description")
+            location = form.cleaned_data.get("location")
+            address = form.cleaned_data.get("address")
+            size = form.cleaned_data.get("size")
+            price = form.cleaned_data.get("price")
+            room = form.cleaned_data.get("room")
+            final = form.cleaned_data.get("final")
+            middle = form.cleaned_data.get("middle")
+            initial = form.cleaned_data.get("initial")
+            image1 = form.cleaned_data.get("image")
+            image2 = request.FILES.getlist("image1")
+            try:
+                propertyData.update(PropertyType=type, Category=category,
+                                                             Description=desc, Currency=currency, Location=location, Address=address, Size=size, Price=price,
+                                                             Rooms=room, FinalCost=final, MiddleCost=middle, InitialCost=initial)
+                if(image1):
+                    test = models.Structure(user=request.user,id=id, PropertyType=type, Category=category,
+                                                             Description=desc, Currency=currency, Location=location, Address=address, Size=size, Price=price,
+                                                             Rooms=room, FinalCost=final, MiddleCost=middle, InitialCost=initial,image1=image1)
+                    test.save()
+                
+                if(image2):
+                    imageData.delete()
+                    for i in image2:
+                        StructureImage.objects.update_or_create(projectName=propertyData[0],image=i)
+
+                message = "Structure Details Updated"
+                success = True
+            except:
+                message = "Something error happened"
+                success =False
+                
+        else:
+            success = False
+            message = "Please Provide all details that is required Correctly"
+
+    data["message"] = message
+    data["success"] = success
+    return render(request,"editStructure.html",data)
 
 
 def equipment(request):
@@ -530,7 +700,7 @@ def addService(request):
     if request.method == "POST":
         if form.is_valid():
             title = form.cleaned_data.get("title")
-            desc = form.cleaned_data.gete("description")
+            desc = form.cleaned_data.get("description")
             location = form.cleaned_data.get("location")
             address = form.cleaned_data.get("address")
             price = form.cleaned_data.get("price")
@@ -594,6 +764,68 @@ def serviceView(request, id):
     return render(request, "serviceView.html", data)
 
 
+
+def editService(request,id):
+    imageList = []
+    data = {}
+    message = None
+    success = False
+    propertyData = models.Service.objects.filter(id=id)
+    imageData = ServiceImage.objects.filter(projectName=propertyData[0])
+    imageLength = imageData.count()
+    data["length"] = imageLength
+    if(propertyData[0].user != request.user):
+        return redirect("/services")
+
+    data["data"] = propertyData
+    for i in imageData:
+        name = str(i.image)
+        imageList.append(name)
+    data["imageData"] = imageList
+    form = forms2.Service(request.POST or None, request.FILES or None)
+    data["form"]  = form
+
+    if request.method == "POST":
+        if form.is_valid():
+            title = form.cleaned_data.get("title")
+            desc = form.cleaned_data.get("description")
+            location = form.cleaned_data.get("location")
+            address = form.cleaned_data.get("address")
+            price = form.cleaned_data.get("price")
+            currency = form.cleaned_data.get("currency")
+            type = form.cleaned_data.get("type")
+            image1 = form.cleaned_data.get("image")
+            image2 = request.FILES.getlist("image1")
+            try:
+                propertyData.update(Title=title, Description=desc,
+                                                           Location=location, Address=address, Price=price, Currency=currency, ServiceType=type)
+                
+                if(image1):
+                    test = models.Service(id=id,image1=image1,Price=price,user=request.user,Title=title,Description=desc,Location=location,Address=address,Currency=currency,ServiceType=type)
+                    test.save()
+                
+                if(image2):
+                    imageData.delete()
+                    for i in image2:
+                        ServiceImage.objects.update_or_create(projectName=propertyData[0],image=i)
+
+                
+                message = "Service Details Updated"
+                success = True
+            except:
+                message = "Something error happened"
+                success =False
+            
+        else:
+            success = False
+            message = "Please Provide all details that is required Correctly"
+
+    data["message"] = message
+    data["success"] = success
+
+    return render(request,"editService.html",data)
+
+
 def material(request):
     data = {}
     newList = []
@@ -645,7 +877,7 @@ def addMaterial(request):
             currency = form.cleaned_data.get("currency")
             weight = form.cleaned_data.get("weight")
             image1 = form.cleaned_data.get("image")
-            image2 = form.cleaned_data.get("image1")
+            image2 = request.FILES.getlist("image1")
             try:
                 data = models.Material.objects.update_or_create(user=request.user, Item=item, Title=title,
                                                             Description=desc, Address=address, Quantity=quantity, Price=price, Category=category, Currency=currency, Weight=weight, image1=image1)
@@ -703,6 +935,68 @@ def materialView(request, id):
     return render(request, "materialView.html", data)
 
 
+def editMaterial(request,id):
+    imageList = []
+    data = {}
+    message = None
+    success = False
+    propertyData = models.Material.objects.filter(id=id)
+    imageData = MaterialImage.objects.filter(projectName=propertyData[0])
+    imageLength = imageData.count()
+    data["length"] = imageLength
+    if(propertyData[0].user != request.user):
+        return redirect("/materials")
+
+    data["data"] = propertyData
+    for i in imageData:
+        name = str(i.image)
+        imageList.append(name)
+    data["imageData"] = imageList
+    form = forms2.Material(request.POST or None, request.FILES or None)
+    data["form"]  = form
+
+    if request.method == "POST":
+        if form.is_valid():
+            title = form.cleaned_data.get("title")
+            item = form.cleaned_data.get("item")
+            desc = form.cleaned_data.get("description")
+            address = form.cleaned_data.get("address")
+            quantity = form.cleaned_data.get("quantity")
+            price = form.cleaned_data.get("price")
+            category = form.cleaned_data.get("category")
+            currency = form.cleaned_data.get("currency")
+            weight = form.cleaned_data.get("weight")
+            image1 = form.cleaned_data.get("image")
+            image2 = request.FILES.getlist("image1")
+            try:
+                propertyData.update(Item=item, Title=title,
+                                                            Description=desc, Address=address, Quantity=quantity, Price=price, Category=category, Currency=currency, Weight=weight)
+               
+                if(image1):
+                    test =  models.Material(user=request.user,id=id,Item=item, Title=title,
+                                                            Description=desc, Address=address, Quantity=quantity, Price=price, Category=category, Currency=currency, Weight=weight,image1=image1)
+                    test.save()
+                
+                if(image2):
+                    imageData.delete()
+                    for i in image2:
+                        MaterialImage.objects.update_or_create(projectName=propertyData[0],image=i)
+
+                message = "Material Details updated"
+                success = True
+            except:
+                message = "Something error happened"
+                success =False
+            
+        else:
+            success = False
+            message = "Please Provide all details that is required Correctly"
+
+    data["message"] = message
+    data["success"] = success
+    return render(request,"editMaterial.html",data)
+
+
 def flats(request):
     data = {}
     newList = []
@@ -745,6 +1039,8 @@ def flats(request):
                 newList.append(i)
         data["flat"] = newList
     return render(request, "flats.html", data)
+
+
 
 @login_required(login_url="/login")
 def addFlat(request):
@@ -836,6 +1132,7 @@ def flatView(request, id):
     data["message"] = message
     data["success"] = success
     return render(request, "flatView.html", data)
+
 
 @login_required(login_url="/login")
 def logou(request):

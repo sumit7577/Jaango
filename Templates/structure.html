@@ -196,9 +196,11 @@
                 <li><i class="fa fa-building-o" aria-hidden="true"></i>
                   <h6>{% if i.PropertyType == "Land" %} Land {% endif %} {{ i.Rooms }} Rooms </h6>
                 </li>
-                <li><i class="fa " aria-hidden="true"></i>
-                  <h6></h6>
+                {% if request.user == i.user %}
+                <li><i class="fa "></i>
+                  <a href="/editStructure/{{i.id}}"><h6>Edit</h6></a>
                 </li>
+                {% endif %}
               </ul>
               <a class="modal-location-link" prop-location="Abuja">
                 <div class="location-tile">
