@@ -1,7 +1,6 @@
 from django.db import  models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
-from django.db.models import base
 from django.utils import timezone
 
 phone_regex = RegexValidator(regex=r'^\+1?\d{9,15}$', message="Phone number must be entered in the format: '+(country Code)99999'. Up to 18 digits allowed.")
@@ -46,6 +45,8 @@ state = [
     ("Yobe","Yobe"),
     ("Zamfara","Zamfara")
 ]
+
+
 class UserDetails(models.Model):
     UserChoice = [
         ("Company","Company"),
@@ -54,10 +55,14 @@ class UserDetails(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     mobile = models.CharField(validators=[phone_regex],max_length=18)
     userType = models.CharField(max_length=20,default="",choices=UserChoice)
+    Latitude = models.FloatField(null=True,blank=True)
+    Longitude =  models.FloatField(null=True,blank=True)
     verified = models.BooleanField(blank=True,null=True)
 
     def __str__(self) -> str:
         return self.user.username
+
+
 
 class Files(models.Model):
     userName = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -65,6 +70,8 @@ class Files(models.Model):
 
     def __str__(self):
         return self.userName.username
+
+
 
 class Property(models.Model):
     propertyChoices = [

@@ -1,7 +1,5 @@
 from django.contrib.auth import authenticate, logout, login
-from django.core.checks import messages
 from django.shortcuts import redirect, render
-from django.utils.regex_helper import ESCAPE_MAPPINGS
 from .forms import SignUpForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from .models import Files, Flat, UserDetails, Property, Structure, Equipment, Material, Service, PropertyIMage, FlatImage, ServiceImage, EquipmentImage, StructureImage, MaterialImage,Contact,SMTP
@@ -9,6 +7,7 @@ from .forms2 import contact, propertyForm, Structure, Equipment, Material, Servi
 from app import models
 from app import forms2
 from django.core.mail import send_mail
+from django.contrib.auth.forms import PasswordChangeForm
 
 message = None
 host_email =None
@@ -24,6 +23,10 @@ currency = Property.currency
 pType = Property.propertyChoices
 sale = Property.type
 
+
+login_Error = None
+login_success = False
+
 def index(request):
     form = SignUpForm(request.POST or None)
     msg = None
@@ -38,21 +41,29 @@ def index(request):
             users = authenticate(username=username, password=password)
             UserDetails.objects.update_or_create(
                 user=users, mobile=mobile, userType=userType)
-
             if users is not None:
                 return redirect("/")
-            else:
-                msg = "Invalid Credentials"
-        else:
-            msg = "Error Validating the Form"
 
-    return render(request, "sign-up.html", {"form": form, "message": msg})
+            else:
+                global login_Error,login_success
+                login_Error = "Invalid Credentials"
+                login_success = False
+                return redirect("/")
+
+        else:
+            login_Error ="Error Validating the Form"
+            login_success = False
+            return redirect("/")
+
+    return render(request, "dashboard.html", {"form": form, "message": msg})
 
 
 
 def home(request):
-    message = None
-    success = False
+    form = LoginForm(request.POST or None)
+    form2 = SignUpForm(request.POST or None)
+    message = login_Error
+    success = login_success
     data = {}
     data["ptype"] = pType
     data["mtype"] = models.Material.type
@@ -68,7 +79,8 @@ def home(request):
     data["sharedFlat"]= rentFlat
     data["material"]= material
     data["equipment"]=equipment
-   
+    data["form"] = form
+    data["form2"] = form2
     if request.method == "POST":
         document = request.FILES.getlist("files")
         for i in document:
@@ -80,9 +92,11 @@ def home(request):
     return render(request, "dashboard.html", data)
 
 
+
 def login_view(request):
-    form = LoginForm(request.POST or None)
     msg = None
+    success= False
+    form = LoginForm(request.POST or None)
     if request.method == "POST":
 
         if form.is_valid():
@@ -93,14 +107,36 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:
-                msg = 'Invalid credentials'
+                global login_Error,login_success
+                login_Error = "Invalid Credentials"
+                login_success = False
+                return redirect("/")
         else:
-            msg = 'Error validating the form'
+            login_Error = 'Error validating the form'
+            login_success = False
+            return redirect("/")
 
-    return render(request, "sign-in.html", {"form": form, "msg": msg})
+    return render(request,"dashboard.html",{"form": form, "message": msg,"success":success})
+
+
 
 def profile(request):
-    return render(request,"profile.html")
+    if(request.user.username == ""):
+        return redirect("/")
+    form = PasswordChangeForm(user=request.user)
+    message = None
+    success = False
+    if request.method == "POST":
+        latitude = request.POST.get("latitude")
+        longtitude= request.POST.get("longtitude")
+        try:
+            UserDetails.objects.update(user=request.user,Latitude=latitude,Longitude=longtitude)
+            message = "Your Location Updated"
+            success = True
+        except:
+            message ="Something error happened"
+            success= False
+    return render(request,"profile.html",{"message":message,"success":success,"form":form})
 
 
 
@@ -1134,7 +1170,8 @@ def flatView(request, id):
     return render(request, "flatView.html", data)
 
 
+
 @login_required(login_url="/login")
 def logou(request):
     logout(request)
-    return redirect("/login")
+    return redirect("/")

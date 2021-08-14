@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block css %}
 <link rel="stylesheet" href="/static/assets/css/style.css" />
+<link rel="stylesheet" href="/static/assets/css/add.css" />
 {% endblock %}
-{% block button %}{% endblock %}
+{% block button %} {% endblock %}
+
 {% block corousal %} {% endblock %}
 
 {% block body %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <style>
     .logo {
         position: absolute;
@@ -22,20 +25,25 @@
     }
 
     .navbarCustom {
-    background-color: #02acfa !important;
-    width: 100%;
-    height: inherit;
-    margin: 0px !important;
-}
-* {
-    letter-spacing: .5px !important;
-  }
+        background-color: #02acfa !important;
+        width: 100%;
+        height: inherit;
+        margin: 0px !important;
+    }
 
-  .wrap-div div:not(.dropdown-menu) {
-    display: inline-block;
-    padding-left: 0px!important;
-}
+    * {
+        letter-spacing: .5px !important;
+    }
 
+    .wrap-div div:not(.dropdown-menu) {
+        display: inline-block;
+        padding-left: 0px !important;
+    }
+
+    #map {
+        height: 50%;
+        margin-top: 50px;
+    }
 </style>
 <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0" style="margin-top: 100px;">
 
@@ -61,22 +69,22 @@
                     <path
                         d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
                 </svg> Phone Number: {{request.user.userdetails.mobile }}</p>
-                <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start"><svg
+            <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start"><svg
                     class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path
                         d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
                 </svg> Verified: {{ request.user.userdetails.verified }}</p>
 
-                <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start"><svg
+            <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start"><svg
                     class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path
                         d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
                 </svg> User Type: {{ request.user.userdetails.userType }}</p>
-            
+
 
             <div class="pt-12 pb-8">
-                <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-                    Contact Us
+                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" id="passwordChange" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+                    Change Password
                 </button>
             </div>
 
@@ -154,9 +162,152 @@
 
 </div>
 
+<div id="map"></div>
+
+
+<form method="POST" action="/profile">{% csrf_token %}
+
+    <input type="text" hidden name="latitude" id="latitude">
+    <input type="text" hidden name="longtitude" id="longtitude">
+    <button style="margin-top: 8px; margin-left: 8px;" class="btn btn-primary" type="submit">Update My Location</button>
+</form>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/changePassword">{% csrf_token %}
+            {{ form.as_p }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tippy.js@4"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoTtnI48CC0jCTXYrpHSpmvOOOdCeLEBY&callback=initMap&libraries=&v=weekly"
+    async></script>
+
 <script>
+    const lat = "{{ request.user.userdetails.Latitude }}";
+    const longer = "{{ request.user.userdetails.Longitude }}";
+
+    const lati = document.getElementById("latitude");
+    const longi = document.getElementById("longtitude");
+    
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (data) {
+            const lat = data.coords.latitude;
+            const long = data.coords.longitude;
+            lati.value = lat;
+            longi.value = long;
+        })
+    }
+    else {
+        alert("Your browser not support geolocation");
+    }
+
+
+    function initMap() {
+        const myLatlng = { lat: parseFloat(lat), lng: parseFloat(longer) };
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: { lat: parseFloat(lat), lng: parseFloat(longer) },
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_CENTER,
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_CENTER,
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP,
+            },
+            fullscreenControl: true,
+        });
+        const coordInfoWindow = new google.maps.InfoWindow();
+        coordInfoWindow.setContent(createInfoWindowContent({ lat: parseFloat(lat), lng: parseFloat(longer) }, map.getZoom()));
+        coordInfoWindow.setPosition({ lat: parseFloat(lat), lng: parseFloat(longer) });
+        coordInfoWindow.open(map);
+
+        map.addListener("zoom_changed", () => {
+            coordInfoWindow.setContent(createInfoWindowContent({ lat: parseFloat(lat), lng: parseFloat(longer) }, map.getZoom()));
+            coordInfoWindow.open(map);
+        });
+
+        let infoWindow = new google.maps.InfoWindow({
+            content: "Click the map to get Lat/Lng!",
+            position: myLatlng,
+        });
+        infoWindow.open(map);
+        // Configure the click listener.
+        map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+                JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+            );
+            infoWindow.open(map);
+            lati.value = infoWindow.position.lat();
+            longi.value = infoWindow.position.lng();
+        });
+    }
+    const TILE_SIZE = 256;
+
+
+    function createInfoWindowContent(latLng, zoom) {
+        const scale = 1 << zoom;
+        const worldCoordinate = project(latLng);
+        const pixelCoordinate = new google.maps.Point(
+            Math.floor(worldCoordinate.x * scale),
+            Math.floor(worldCoordinate.y * scale)
+        );
+        const tileCoordinate = new google.maps.Point(
+            Math.floor((worldCoordinate.x * scale) / TILE_SIZE),
+            Math.floor((worldCoordinate.y * scale) / TILE_SIZE)
+        );
+        return [
+            "Latitude: " + latLng.lat,
+            "Longtitude: " + latLng.lng,
+            "Zoom level: " + zoom,
+            "World Coordinate: " + worldCoordinate,
+            "Pixel Coordinate: " + pixelCoordinate,
+            "Tile Coordinate: " + tileCoordinate,
+        ].join("<br>");
+    }
+
+
+    function project(latLng) {
+        let siny = Math.sin((latLng.lat * Math.PI) / 180);
+        // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+        // about a third of a tile past the edge of the world tile.
+        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+        return new google.maps.Point(
+            TILE_SIZE * (0.5 + latLng.lng / 360),
+            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI))
+        );
+    }
+
     //Init tooltips
     tippy('.link', {
         placement: 'bottom'

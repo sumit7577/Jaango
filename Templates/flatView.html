@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %} Property {% endblock %}
 {% block button %} {% endblock %}
+
+{% block profile %}
+{% endblock %}
 {% block body %}
 <style>
     .item-details{
@@ -452,7 +455,7 @@ Ensuite Toilet? </p>
             <h3>Contact Us</h3>
         </button>
         {% else %}
-        <a href="/login"><button type="button"
+        <a href="/"><button type="button"
             class="btn btn-info btn-sm col-xs-12 col-sm-6 col-md-4 col-lg-3 detail-page-contact-button">
             <h3>Contact Us</h3>
         </button>
@@ -477,14 +480,14 @@ Ensuite Toilet? </p>
         <p type="Message:">{{ form.message }}</p>
         <span class="text-error">{{ form.message.errors }}</span>
         <button type="submit" style="margin-bottom: 5px;">Send Message</button>
-        <button id="close" type="button" style="margin-right: 8px; margin-bottom: 5px;">Close</button>
+        <button id="closeer" type="button" style="margin-right: 8px; margin-bottom: 5px;">Close</button>
     </form>
     </div>
     
     
     <script>
         const button = document.getElementById("send");
-        const button1 = document.getElementById("close");
+        const button1 = document.getElementById("closeer");
         var modal;
         button.addEventListener("click", (e) => {
             modal = new Custombox.modal({
